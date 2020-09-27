@@ -1,0 +1,4 @@
+node_modules
+dist/
+publishing-test-dist/
+*.log
