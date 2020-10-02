@@ -81,19 +81,25 @@ spellbook
 
 Exact matches will be looked for first, but if no cards are found with those names, a fuzzy match will be tried instead.
 
+```js
 // find combos that include Sydri using a short name
-spellbook.search({
-cards: ["Sydri"]
-}).then(function (combos) {
-// loop through combos
-});
+spellbook
+  .search({
+    cards: ["Sydri"],
+  })
+  .then(function (combos) {
+    // loop through combos
+  });
 
 // find combos that include Thornbite Staff and Basilisk Collar using a short name
-spellbook.search({
-cards: ["Thorn Staff", "Bas Colla"]
-}).then(function (combos) {
-// loop through combos
-});
+spellbook
+  .search({
+    cards: ["Thorn Staff", "Bas Colla"],
+  })
+  .then(function (combos) {
+    // loop through combos
+  });
+```
 
 ### colors
 
