@@ -89,7 +89,7 @@ describe("api", () => {
   });
 
   it("looks up google sheets api", async () => {
-    const result = await lookup();
+    await lookup();
 
     expect(superagent.get).toBeCalledWith(
       expect.stringContaining("sheets.googleapis.com")
