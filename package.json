@@ -13,7 +13,7 @@
     "build": "webpack",
     "build:watch": "webpack-dev-server",
     "predemo": "npm run build",
-    "demo": "http-server docs -p 4567",
+    "demo": "http-server docs -p 3001",
     "demo:dev": "npm run demo & npm run build:watch",
     "lint": "eslint --ext ts .",
     "pretty": "prettier --write .",
