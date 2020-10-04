@@ -10,6 +10,12 @@ describe("Commander Spellbook", () => {
     spellbook.resetCache();
   });
 
+  it("looks up all combos", async () => {
+    const combos = await spellbook.search();
+
+    expect(combos.length).toBeGreaterThan(0);
+  });
+
   it("looks up specific cards", async () => {
     const combos = await spellbook.search({
       cards: ["Sydri"],
@@ -22,6 +28,21 @@ describe("Commander Spellbook", () => {
       );
 
       expect(hasSydriInCombo).toBeTruthy();
+    });
+  });
+
+  it("looks up specific color combos", async () => {
+    const combos = await spellbook.search({
+      colorIdentity: ["w", "r"],
+    });
+
+    expect(combos.length).toBeGreaterThan(0);
+    combos.forEach((combo) => {
+      const hasOffColorCombo = combo.colorIdentity.find(
+        (color) => color !== "w" && color !== "r" && color !== "c"
+      );
+
+      expect(hasOffColorCombo).toBeFalsy();
     });
   });
 });

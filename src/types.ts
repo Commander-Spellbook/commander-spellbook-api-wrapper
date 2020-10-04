@@ -20,3 +20,5 @@ export type FormattedApiResponse = {
   steps: string[];
   result: string[];
 };
+
+export type ColorIdentity = "w" | "u" | "b" | "r" | "g" | "c";

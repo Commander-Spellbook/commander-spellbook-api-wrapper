@@ -1,31 +1,42 @@
 import lookupApi from "./spellbook-api";
+import filterByCards from "./filter-by-cards";
+import filterByColorIdentity from "./filter-by-color-identity";
+import normalizeStringInput from "./normalize-string-input";
 
-import type { FormattedApiResponse } from "./types";
+import type { ColorIdentity, FormattedApiResponse } from "./types";
 type SearchOptions = {
   cards?: string[];
+  colorIdentity?: string | ColorIdentity[];
 };
 
-function normalizeCardName(cardName: string): string {
-  return cardName.toLowerCase().replace(/[^a-zA-Z 0-9]+/g, "");
-}
-
 export default async function search(
-  options: SearchOptions
+  options: SearchOptions = {}
 ): Promise<FormattedApiResponse[]> {
+  let colorIdentity: ColorIdentity[] = [];
   const cards = options.cards || [];
 
-  const spellbook = await lookupApi();
+  if (options.colorIdentity) {
+    if (typeof options.colorIdentity === "string") {
+      colorIdentity = options.colorIdentity
+        .split("")
+        .filter((color) => /\w/.test(color)) as ColorIdentity[];
+    } else {
+      colorIdentity = options.colorIdentity;
+    }
+    colorIdentity = colorIdentity.map((color) =>
+      normalizeStringInput(color)
+    ) as ColorIdentity[];
+  }
 
-  const combos = cards
-    .map((card) => normalizeCardName(card))
-    .reduce((total, cardInput) => {
-      return total.filter((combo) => {
-        return combo.cards.find(
-          (cardInCombo) =>
-            normalizeCardName(cardInCombo).indexOf(cardInput) > -1
-        );
-      });
-    }, spellbook);
+  let combos = await lookupApi();
+
+  if (cards.length > 0) {
+    combos = filterByCards(cards, combos);
+  }
+
+  if (colorIdentity.length > 0) {
+    combos = filterByColorIdentity(colorIdentity, combos);
+  }
 
   return combos;
 }

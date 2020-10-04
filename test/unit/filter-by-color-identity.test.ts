@@ -1,0 +1,64 @@
+import filterByColorIdentity from "../../src/filter-by-color-identity";
+
+function makeCombo(colorIdentity: string[]) {
+  return {
+    commanderSpellbookId: 1,
+    permalink: "https://commanderspellbook.com/?id=1",
+    cards: ["card 1", "card 2"],
+    colorIdentity,
+    prerequisites: [],
+    steps: [],
+    result: [],
+  };
+}
+
+function makeColorIdentityCombos() {
+  return [
+    makeCombo(["r", "g"]),
+    makeCombo(["c"]),
+    makeCombo(["w", "u", "b", "r", "g"]),
+  ];
+}
+
+describe("filterByColorIdentity", () => {
+  it("resolves with only combos that encompass the specified color identity", async () => {
+    const combos = filterByColorIdentity(
+      ["r", "g", "w"],
+      makeColorIdentityCombos()
+    );
+
+    expect(combos.length).toBe(2);
+    expect(combos[0].colorIdentity).toEqual(["r", "g"]);
+    expect(combos[1].colorIdentity).toEqual(["c"]);
+  });
+
+  it("resolves with only colorless combos when specified", async () => {
+    const combos = filterByColorIdentity(["c"], makeColorIdentityCombos());
+
+    expect(combos.length).toBe(1);
+    expect(combos[0].colorIdentity).toEqual(["c"]);
+  });
+
+  it("resolves with all combos when wubrg is specified", async () => {
+    const combos = filterByColorIdentity(
+      ["w", "u", "b", "r", "g"],
+      makeColorIdentityCombos()
+    );
+
+    expect(combos.length).toBe(3);
+    expect(combos[0].colorIdentity).toEqual(["r", "g"]);
+    expect(combos[1].colorIdentity).toEqual(["c"]);
+    expect(combos[2].colorIdentity).toEqual(["w", "u", "b", "r", "g"]);
+  });
+
+  it("handles specifying 'c' along with other colors", async () => {
+    const combos = filterByColorIdentity(
+      ["r", "g", "c"],
+      makeColorIdentityCombos()
+    );
+
+    expect(combos.length).toBe(2);
+    expect(combos[0].colorIdentity).toEqual(["r", "g"]);
+    expect(combos[1].colorIdentity).toEqual(["c"]);
+  });
+});

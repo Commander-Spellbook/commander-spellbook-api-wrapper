@@ -1,117 +1,80 @@
 import search from "../../src/search";
 import lookup from "../../src/spellbook-api";
+import filterByCards from "../../src/filter-by-cards";
+import filterByColorIdentity from "../../src/filter-by-color-identity";
 
-import { mocked } from "ts-jest/utils";
 jest.mock("../../src/spellbook-api");
-
-function makeCombo(cards: string[]) {
-  return {
-    commanderSpellbookId: 1,
-    permalink: "https://commanderspellbook.com/?id=1",
-    cards,
-    colorIdentity: [],
-    prerequisites: [],
-    steps: [],
-    result: [],
-  };
-}
-
-function makeArjunBasedCombos() {
-  return [
-    makeCombo([
-      "Arjun, the Shifting Flame",
-      "Psychosis Crawler",
-      "Teferi's Ageless Insight",
-    ]),
-    makeCombo([
-      "Arjun, the Shifting Flame",
-      "Niv Mizzet the Firemind",
-      "Alhamarett's Archive",
-    ]),
-    makeCombo([
-      "Arjun, the Shifting Flame",
-      "Psychosis Crawler",
-      "Alhamarett's Archive",
-    ]),
-  ];
-}
+jest.mock("../../src/filter-by-cards");
+jest.mock("../../src/filter-by-color-identity");
 
 describe("search", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("looks up combos from api", async () => {
-    await search({
-      cards: ["Sydri"],
-    });
+    await search();
 
     expect(lookup).toBeCalledTimes(1);
   });
 
-  it("resolves with only combos that include the specified cards", async () => {
-    mocked(lookup).mockResolvedValue(makeArjunBasedCombos());
-
-    const combos = await search({
-      cards: ["Psychosis Crawler"],
+  it("can filter by cards", async () => {
+    await search({
+      cards: ["Sydri", "Arjun", "Rashmi"],
     });
 
-    expect(combos.length).toBe(2);
-    expect(combos[0].cards).toEqual([
-      "Arjun, the Shifting Flame",
-      "Psychosis Crawler",
-      "Teferi's Ageless Insight",
-    ]);
-    expect(combos[1].cards).toEqual([
-      "Arjun, the Shifting Flame",
-      "Psychosis Crawler",
-      "Alhamarett's Archive",
-    ]);
+    expect(filterByCards).toBeCalledTimes(1);
+    expect(filterByCards).toBeCalledWith(
+      ["Sydri", "Arjun", "Rashmi"],
+      expect.anything()
+    );
   });
 
-  it("ignores casing and punctuation", async () => {
-    mocked(lookup).mockResolvedValue(makeArjunBasedCombos());
-
-    const combos = await search({
-      cards: ["alhamaretts archive"],
+  it("can filter by color identity array", async () => {
+    await search({
+      colorIdentity: ["g", "r", "w"],
     });
 
-    expect(combos.length).toBe(2);
-    expect(combos[0].cards).toEqual([
-      "Arjun, the Shifting Flame",
-      "Niv Mizzet the Firemind",
-      "Alhamarett's Archive",
-    ]);
-    expect(combos[1].cards).toEqual([
-      "Arjun, the Shifting Flame",
-      "Psychosis Crawler",
-      "Alhamarett's Archive",
-    ]);
+    expect(filterByColorIdentity).toBeCalledTimes(1);
+    expect(filterByColorIdentity).toBeCalledWith(
+      ["g", "r", "w"],
+      expect.anything()
+    );
   });
 
-  it("matches partial names", async () => {
-    mocked(lookup).mockResolvedValue(makeArjunBasedCombos());
-
-    const combos = await search({
-      cards: ["niv"],
+  it("can filter by color identity string", async () => {
+    await search({
+      colorIdentity: "g,r,w",
     });
 
-    expect(combos.length).toBe(1);
-    expect(combos[0].cards).toEqual([
-      "Arjun, the Shifting Flame",
-      "Niv Mizzet the Firemind",
-      "Alhamarett's Archive",
-    ]);
+    expect(filterByColorIdentity).toBeCalledTimes(1);
+    expect(filterByColorIdentity).toBeCalledWith(
+      ["g", "r", "w"],
+      expect.anything()
+    );
   });
 
-  it("resolves with only combos that match all cards passed", async () => {
-    mocked(lookup).mockResolvedValue(makeArjunBasedCombos());
-
-    const combos = await search({
-      cards: ["psyc", "tef"],
+  it("can filter by color identity string with spaces", async () => {
+    await search({
+      colorIdentity: "g r w",
     });
 
-    expect(combos.length).toBe(1);
-    expect(combos[0].cards).toEqual([
-      "Arjun, the Shifting Flame",
-      "Psychosis Crawler",
-      "Teferi's Ageless Insight",
-    ]);
+    expect(filterByColorIdentity).toBeCalledTimes(1);
+    expect(filterByColorIdentity).toBeCalledWith(
+      ["g", "r", "w"],
+      expect.anything()
+    );
+  });
+
+  it("can filter by color identity without deliminator", async () => {
+    await search({
+      colorIdentity: "grw",
+    });
+
+    expect(filterByColorIdentity).toBeCalledTimes(1);
+    expect(filterByColorIdentity).toBeCalledWith(
+      ["g", "r", "w"],
+      expect.anything()
+    );
   });
 });
