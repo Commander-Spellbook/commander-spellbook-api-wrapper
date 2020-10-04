@@ -193,8 +193,80 @@ describe("api", () => {
     });
   });
 
+  it("handles malformed color idenitity strings", async () => {
+    values[0][11] = "w,u,";
+
+    const combos = await lookup();
+
+    expect(combos[0].colorIdentity).toEqual(["u", "w"]);
+  });
+
   it("ignores combo results with fewer than the correct number of columns in the spreadsheet", async () => {
     values[1] = ["foo"];
+
+    const combos = await lookup();
+
+    expect(combos.length).toBe(2);
+    expect(combos[0]).toEqual({
+      commanderSpellbookId: 1,
+      permalink: "https://commanderspellbook.com/?id=1",
+      cards: ["Guilded Lotus", "Voltaic Servant"],
+      colorIdentity: ["c"],
+      prerequisites: ["prereq 1", "prereq 2", "prereq 3"],
+      steps: ["step 1", "step 2", "step 3"],
+      result: ["result 1", "result 2", "result 3"],
+    });
+
+    expect(combos[1]).toEqual({
+      commanderSpellbookId: 3,
+      permalink: "https://commanderspellbook.com/?id=3",
+      cards: [
+        "Sidar Kondo of Jamurra",
+        "Tana the Bloodsower",
+        "Breath of Furt",
+        "Fervor",
+      ],
+      colorIdentity: ["g", "r", "w"],
+      prerequisites: ["prereq"],
+      steps: ["step"],
+      result: ["result"],
+    });
+  });
+
+  it("ignores combo results without a card 1 value", async () => {
+    values[1][1] = "";
+
+    const combos = await lookup();
+
+    expect(combos.length).toBe(2);
+    expect(combos[0]).toEqual({
+      commanderSpellbookId: 1,
+      permalink: "https://commanderspellbook.com/?id=1",
+      cards: ["Guilded Lotus", "Voltaic Servant"],
+      colorIdentity: ["c"],
+      prerequisites: ["prereq 1", "prereq 2", "prereq 3"],
+      steps: ["step 1", "step 2", "step 3"],
+      result: ["result 1", "result 2", "result 3"],
+    });
+
+    expect(combos[1]).toEqual({
+      commanderSpellbookId: 3,
+      permalink: "https://commanderspellbook.com/?id=3",
+      cards: [
+        "Sidar Kondo of Jamurra",
+        "Tana the Bloodsower",
+        "Breath of Furt",
+        "Fervor",
+      ],
+      colorIdentity: ["g", "r", "w"],
+      prerequisites: ["prereq"],
+      steps: ["step"],
+      result: ["result"],
+    });
+  });
+
+  it("ignores combo results without a color identity value", async () => {
+    values[1][11] = "";
 
     const combos = await lookup();
 

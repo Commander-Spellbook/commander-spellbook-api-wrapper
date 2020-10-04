@@ -19,7 +19,8 @@ function formatApiResponse(
   return apiResponse
     .filter((combo) => {
       // ensures the spreadsheet has all values needed
-      return combo.length > 13;
+      // in particular, the first card and a color identity
+      return combo.length > 13 && combo[1] && combo[11];
     })
     .map((combo) => {
       const id = combo[0];
@@ -36,7 +37,10 @@ function formatApiResponse(
         combo[10],
       ].filter((cardName) => cardName);
 
-      const colorIdentity = combo[11].split(",").sort();
+      const colorIdentity = combo[11]
+        .split(",")
+        .sort()
+        .filter((c) => c);
       const prerequisites = combo[12].split(/\.\s?/).filter((c) => c);
       const steps = combo[13].split(/\.\s?/).filter((c) => c);
       const result = combo[14].split(/\.\s?/).filter((c) => c);
