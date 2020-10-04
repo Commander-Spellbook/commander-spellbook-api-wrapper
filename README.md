@@ -20,12 +20,20 @@ The API that Commander Spellbook provides is a JSON version of the underlying Go
 
 # Usage
 
-The main method on the module is `search`, which takes a configuration object like:
+Look up all the combos with the `search` method:
+
+```js
+spellbook.seach().then((combos) => {
+  // loop over the array of combos
+});
+```
+
+In addition, `search` takes an optional configuration object to filter the results:
 
 ```js
 {
-  cards: Array<"strings representing card names">;
-  colors: string | Array<string>;
+  cards?: Array<"strings representing card names">;
+  colors?: string | Array<string>;
 }
 ```
 
@@ -35,7 +43,7 @@ One or both properties must be used. The resulting object will be an array of co
 {
   commanderSpellbookId: number;
   permalink: "https://commanderspellbook.com/?id=" + commanderSpellbookId;
-  cards: Array<ScryfallCardObjects>;
+  cards: Array<string>;
   colorIdentity: Array<string>;
   prerequisites: Array<string>;
   steps: Array<string>;
@@ -45,7 +53,7 @@ One or both properties must be used. The resulting object will be an array of co
 
 - `commanderSpellbookId` is the id in the commander spellbook database.
 - `permalink` is the link available to view the combo on the commander spellbook website.
-- `cards` is an array of [Scryfall](https://scryfall.com/) [card objects](https://scryfall.com/docs/api/cards) provided by the [Scryfall Client module](https://www.npmjs.com/package/scryfall-client).
+- `cards` is an array of strings representing the card names.
 - `colorIdentity` is an array of single character strings indicating the color identity of the combo
 - `prerequisites` is an array of strings listing the things required before doing the combo.
 - `steps` is an array of strings listing the steps to do the combo.
@@ -79,7 +87,7 @@ spellbook
   });
 ```
 
-Exact matches will be looked for first, but if no cards are found with those names, a fuzzy match will be tried instead.
+Partial matches also work:
 
 ```js
 // find combos that include Sydri using a short name
@@ -95,6 +103,21 @@ spellbook
 spellbook
   .search({
     cards: ["Thorn Staff", "Bas Colla"],
+  })
+  .then(function (combos) {
+    // loop through combos
+  });
+```
+
+Punctuation, capitalization and spaces are ignored:
+
+```js
+
+```js
+// find combos that include Alhammarret's Archive
+spellbook
+  .search({
+    cards: ["mMaRrEts aR"],
   })
   .then(function (combos) {
     // loop through combos
