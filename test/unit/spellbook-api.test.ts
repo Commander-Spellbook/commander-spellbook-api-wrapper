@@ -1,4 +1,5 @@
 import lookup, { resetCache } from "../../src/spellbook-api";
+import SpellbookList from "../../src/models/list";
 import {
   CommanderSpellbookCombos,
   CommanderSpellbookAPIResponse,
@@ -157,40 +158,46 @@ describe("api", () => {
   it("formats spreadsheet into usable object", async () => {
     const combos = await lookup();
 
-    expect(combos[0]).toEqual({
-      commanderSpellbookId: 1,
-      permalink: "https://commanderspellbook.com/?id=1",
-      cards: ["Guilded Lotus", "Voltaic Servant"],
-      colorIdentity: ["c"],
-      prerequisites: ["prereq 1", "prereq 2", "prereq 3"],
-      steps: ["step 1", "step 2", "step 3"],
-      result: ["result 1", "result 2", "result 3"],
-    });
+    expect(combos[0]).toEqual(
+      expect.objectContaining({
+        commanderSpellbookId: 1,
+        permalink: "https://commanderspellbook.com/?id=1",
+        cards: ["Guilded Lotus", "Voltaic Servant"],
+        colorIdentity: ["c"],
+      })
+    );
+    expect(combos[0].prerequisites).toBeInstanceOf(SpellbookList);
+    expect(combos[0].steps).toBeInstanceOf(SpellbookList);
+    expect(combos[0].result).toBeInstanceOf(SpellbookList);
 
-    expect(combos[1]).toEqual({
-      commanderSpellbookId: 2,
-      permalink: "https://commanderspellbook.com/?id=2",
-      cards: ["Mindmoil", "Psychosis Crawler", "Teferi's Ageless Insight"],
-      colorIdentity: ["r", "u"],
-      prerequisites: ["prereq"],
-      steps: ["step"],
-      result: ["result"],
-    });
+    expect(combos[1]).toEqual(
+      expect.objectContaining({
+        commanderSpellbookId: 2,
+        permalink: "https://commanderspellbook.com/?id=2",
+        cards: ["Mindmoil", "Psychosis Crawler", "Teferi's Ageless Insight"],
+        colorIdentity: ["r", "u"],
+      })
+    );
+    expect(combos[1].prerequisites).toBeInstanceOf(SpellbookList);
+    expect(combos[1].steps).toBeInstanceOf(SpellbookList);
+    expect(combos[1].result).toBeInstanceOf(SpellbookList);
 
-    expect(combos[2]).toEqual({
-      commanderSpellbookId: 3,
-      permalink: "https://commanderspellbook.com/?id=3",
-      cards: [
-        "Sidar Kondo of Jamurra",
-        "Tana the Bloodsower",
-        "Breath of Furt",
-        "Fervor",
-      ],
-      colorIdentity: ["g", "r", "w"],
-      prerequisites: ["prereq"],
-      steps: ["step"],
-      result: ["result"],
-    });
+    expect(combos[2]).toEqual(
+      expect.objectContaining({
+        commanderSpellbookId: 3,
+        permalink: "https://commanderspellbook.com/?id=3",
+        cards: [
+          "Sidar Kondo of Jamurra",
+          "Tana the Bloodsower",
+          "Breath of Furt",
+          "Fervor",
+        ],
+        colorIdentity: ["g", "r", "w"],
+      })
+    );
+    expect(combos[2].prerequisites).toBeInstanceOf(SpellbookList);
+    expect(combos[2].steps).toBeInstanceOf(SpellbookList);
+    expect(combos[2].result).toBeInstanceOf(SpellbookList);
   });
 
   it("handles malformed color idenitity strings", async () => {
@@ -207,30 +214,8 @@ describe("api", () => {
     const combos = await lookup();
 
     expect(combos.length).toBe(2);
-    expect(combos[0]).toEqual({
-      commanderSpellbookId: 1,
-      permalink: "https://commanderspellbook.com/?id=1",
-      cards: ["Guilded Lotus", "Voltaic Servant"],
-      colorIdentity: ["c"],
-      prerequisites: ["prereq 1", "prereq 2", "prereq 3"],
-      steps: ["step 1", "step 2", "step 3"],
-      result: ["result 1", "result 2", "result 3"],
-    });
-
-    expect(combos[1]).toEqual({
-      commanderSpellbookId: 3,
-      permalink: "https://commanderspellbook.com/?id=3",
-      cards: [
-        "Sidar Kondo of Jamurra",
-        "Tana the Bloodsower",
-        "Breath of Furt",
-        "Fervor",
-      ],
-      colorIdentity: ["g", "r", "w"],
-      prerequisites: ["prereq"],
-      steps: ["step"],
-      result: ["result"],
-    });
+    expect(combos[0].commanderSpellbookId).toBe(1);
+    expect(combos[1].commanderSpellbookId).toBe(3);
   });
 
   it("ignores combo results without a card 1 value", async () => {
@@ -239,30 +224,8 @@ describe("api", () => {
     const combos = await lookup();
 
     expect(combos.length).toBe(2);
-    expect(combos[0]).toEqual({
-      commanderSpellbookId: 1,
-      permalink: "https://commanderspellbook.com/?id=1",
-      cards: ["Guilded Lotus", "Voltaic Servant"],
-      colorIdentity: ["c"],
-      prerequisites: ["prereq 1", "prereq 2", "prereq 3"],
-      steps: ["step 1", "step 2", "step 3"],
-      result: ["result 1", "result 2", "result 3"],
-    });
-
-    expect(combos[1]).toEqual({
-      commanderSpellbookId: 3,
-      permalink: "https://commanderspellbook.com/?id=3",
-      cards: [
-        "Sidar Kondo of Jamurra",
-        "Tana the Bloodsower",
-        "Breath of Furt",
-        "Fervor",
-      ],
-      colorIdentity: ["g", "r", "w"],
-      prerequisites: ["prereq"],
-      steps: ["step"],
-      result: ["result"],
-    });
+    expect(combos[0].commanderSpellbookId).toBe(1);
+    expect(combos[1].commanderSpellbookId).toBe(3);
   });
 
   it("ignores combo results without a color identity value", async () => {
@@ -271,29 +234,7 @@ describe("api", () => {
     const combos = await lookup();
 
     expect(combos.length).toBe(2);
-    expect(combos[0]).toEqual({
-      commanderSpellbookId: 1,
-      permalink: "https://commanderspellbook.com/?id=1",
-      cards: ["Guilded Lotus", "Voltaic Servant"],
-      colorIdentity: ["c"],
-      prerequisites: ["prereq 1", "prereq 2", "prereq 3"],
-      steps: ["step 1", "step 2", "step 3"],
-      result: ["result 1", "result 2", "result 3"],
-    });
-
-    expect(combos[1]).toEqual({
-      commanderSpellbookId: 3,
-      permalink: "https://commanderspellbook.com/?id=3",
-      cards: [
-        "Sidar Kondo of Jamurra",
-        "Tana the Bloodsower",
-        "Breath of Furt",
-        "Fervor",
-      ],
-      colorIdentity: ["g", "r", "w"],
-      prerequisites: ["prereq"],
-      steps: ["step"],
-      result: ["result"],
-    });
+    expect(combos[0].commanderSpellbookId).toBe(1);
+    expect(combos[1].commanderSpellbookId).toBe(3);
   });
 });

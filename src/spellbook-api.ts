@@ -1,4 +1,5 @@
 import superagent from "superagent";
+import SpellbookList from "./models/list";
 import type {
   CommanderSpellbookCombos,
   CommanderSpellbookAPIResponse,
@@ -41,9 +42,9 @@ function formatApiResponse(
         .split(",")
         .sort()
         .filter((c) => c);
-      const prerequisites = combo[12].split(/\.\s?/).filter((c) => c);
-      const steps = combo[13].split(/\.\s?/).filter((c) => c);
-      const result = combo[14].split(/\.\s?/).filter((c) => c);
+      const prerequisites = SpellbookList.create(combo[12]);
+      const steps = SpellbookList.create(combo[13]);
+      const result = SpellbookList.create(combo[14]);
 
       return {
         commanderSpellbookId: Number(id),

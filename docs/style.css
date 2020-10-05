@@ -1,3 +1,9 @@
+.spellbook-list img {
+  max-width: 14px;
+  top: 2px;
+  position: relative;
+}
+
 #search-wrapper {
   display: flex;
   align-items: center;

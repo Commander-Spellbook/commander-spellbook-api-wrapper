@@ -54,11 +54,12 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "scryfall-client": "^0.18.3",
     "superagent": "^6.1.0"
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "./test/helpers/setup.ts"
     ]

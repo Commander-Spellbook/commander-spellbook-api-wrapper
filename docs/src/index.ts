@@ -8,7 +8,7 @@ const button = document.getElementById("submit") as HTMLButtonElement;
 function wrapInParagraph(items: string[]): string {
   const listItems = items.map((item) => "<li>" + item + "</li>").join("\n");
 
-  return `<ol>${listItems}</ol>`;
+  return `<ul>${listItems}</ul>`;
 }
 
 function renderResults(combos: FormattedApiResponse[]) {
@@ -24,10 +24,14 @@ function renderResults(combos: FormattedApiResponse[]) {
       <p>${combo.colorIdentity.join(",")}</p>
       ${wrapInParagraph(combo.cards)}
       </td>
-      <td>${wrapInParagraph(combo.prerequisites)}</td>
-      <td>${wrapInParagraph(combo.steps)}</td>
-      <td>${wrapInParagraph(combo.result)}</td>
     `;
+    [combo.prerequisites, combo.steps, combo.result].forEach((list) => {
+      const td = document.createElement("td");
+      td.classList.add("spellbook-list");
+      td.appendChild(list.toHTMLOrderedList());
+
+      row.appendChild(td);
+    });
 
     table.appendChild(row);
   });

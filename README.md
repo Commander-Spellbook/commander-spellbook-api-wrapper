@@ -45,9 +45,9 @@ One or both properties must be used. The resulting object will be an array of co
   permalink: "https://commanderspellbook.com/?id=" + commanderSpellbookId;
   cards: Array<string>;
   colorIdentity: Array<string>;
-  prerequisites: Array<string>;
-  steps: Array<string>;
-  result: Array<string>;
+  prerequisites: SpellbookList;
+  steps: SpellbookList;
+  result: SpellbookList;
 }
 ```
 
@@ -55,9 +55,11 @@ One or both properties must be used. The resulting object will be an array of co
 - `permalink` is the link available to view the combo on the commander spellbook website.
 - `cards` is an array of strings representing the card names.
 - `colorIdentity` is an array of single character strings indicating the color identity of the combo
-- `prerequisites` is an array of strings listing the things required before doing the combo.
-- `steps` is an array of strings listing the steps to do the combo.
-- `result` is an array of strings listing the results from doing the combo.
+- `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
+- `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
+- `result` is a [SpellbookList](#spellbooklist) object that contains the results from doing the combo.
+
+See the [Models](#models) section for more information on the custom classes.
 
 ## Search Options
 
@@ -112,8 +114,6 @@ spellbook
 Punctuation, capitalization and spaces are ignored:
 
 ```js
-
-```js
 // find combos that include Alhammarret's Archive
 spellbook
   .search({
@@ -151,6 +151,115 @@ spellbook
 ```
 
 This is of course best used in conjunction with the `cards` option.
+
+## Models
+
+### SpellbookList
+
+An Array-like object that has a few convenience methods for rendering the data.
+
+The raw spellbook API gives the prerquisites, steps and results data in the form of a single string deliminated by `.`.
+
+For the following examples, we'll assume that the raw Spellbook API gave us this information:
+
+```
+Step 1. Step 2. Step 3.
+```
+
+The `SpellbookList` model has various methods to access the data:
+
+#### Array Methods
+
+You can use any Array methods to access the data:
+
+```js
+list.length; // 3
+list[0]; // Step 1
+list[1]; // Step 2
+list[2]; // Step 3
+list.forEach((step) => {
+  // render step
+});
+```
+
+#### toString
+
+Provides the raw string given to us by the Spellbook API.
+
+```js
+list.toString();
+// Step 1. Step 2. Step 3.
+```
+
+This method will be envoked when it is interpolated:
+
+```
+const text = `Here are the steps: ${list}`;
+// Here are the steps: Step 1. Step 2. Step 3.
+```
+
+#### toHTMLUnorderedList
+
+Provides the list as an `HTMLUListElement`.
+
+```js
+list.toHTMLUnorderedList();
+// <ul>
+//   <li>Step 1</li>
+//   <li>Step 2</li>
+//   <li>Step 3</li>
+// </ul>
+```
+
+If a step includes a mana symbol, it is automatically converted to an svg:
+
+```js
+list[1] === "Step 2 :manaw:";
+list.toHTMLUnorderedList();
+// <ul>
+//   <li>Step 1</li>
+//   <li>Step 2 <svg src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></svg></li>
+//   <li>Step 3</li>
+// </ul>
+```
+
+#### toHTMLOrderedList
+
+Provides the list as an `HTMLOListElement`.
+
+```js
+list.toHTMLOrderedList();
+// <ol>
+//   <li>Step 1</li>
+//   <li>Step 2</li>
+//   <li>Step 3</li>
+// </ol>
+```
+
+If a step includes a mana symbol, it is automatically converted to an svg:
+
+```js
+list[1] === "Step 2 :manaw:";
+list.toHTMLOrderedList();
+// <ol>
+//   <li>Step 1</li>
+//   <li>Step 2 <svg src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></svg></li>
+//   <li>Step 3</li>
+// </ol>
+```
+
+#### toMarkdown
+
+Provides the list as a markdown string.
+
+```js
+list.toMarkdown();
+// * Step 1
+// * Step 2
+// * Step 3
+```
+
+If a step includes a mana symbol, it is assumed that your markdown parser will handle the conversion.
 
 # Browser Support
 
