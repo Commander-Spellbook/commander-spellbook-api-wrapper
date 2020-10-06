@@ -1,4 +1,5 @@
 import type SpellbookList from "./models/list";
+import type ColorIdentity from "./models/color-identity";
 
 export type CommanderSpellbookCombos = Array<string[]>;
 
@@ -17,10 +18,10 @@ export type FormattedApiResponse = {
   commanderSpellbookId: number;
   permalink: string;
   cards: string[];
-  colorIdentity: string[];
+  colorIdentity: ColorIdentity;
   prerequisites: SpellbookList;
   steps: SpellbookList;
   result: SpellbookList;
 };
 
-export type ColorIdentity = "w" | "u" | "b" | "r" | "g" | "c";
+export type ColorIdentityColors = "w" | "u" | "b" | "r" | "g" | "c";

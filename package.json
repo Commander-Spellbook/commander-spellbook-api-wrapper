@@ -60,6 +60,7 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "restoreMocks": true,
     "setupFilesAfterEnv": [
       "./test/helpers/setup.ts"
     ]

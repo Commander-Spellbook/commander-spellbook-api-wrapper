@@ -38,7 +38,7 @@ describe("Commander Spellbook", () => {
 
     expect(combos.length).toBeGreaterThan(0);
     combos.forEach((combo) => {
-      const hasOffColorCombo = combo.colorIdentity.find(
+      const hasOffColorCombo = combo.colorIdentity.colors.find(
         (color) => color !== "w" && color !== "r" && color !== "c"
       );
 

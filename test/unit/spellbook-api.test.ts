@@ -1,5 +1,6 @@
 import lookup, { resetCache } from "../../src/spellbook-api";
 import SpellbookList from "../../src/models/list";
+import ColorIdentity from "../../src/models/color-identity";
 import {
   CommanderSpellbookCombos,
   CommanderSpellbookAPIResponse,
@@ -163,9 +164,9 @@ describe("api", () => {
         commanderSpellbookId: 1,
         permalink: "https://commanderspellbook.com/?id=1",
         cards: ["Guilded Lotus", "Voltaic Servant"],
-        colorIdentity: ["c"],
       })
     );
+    expect(combos[0].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[0].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[0].steps).toBeInstanceOf(SpellbookList);
     expect(combos[0].result).toBeInstanceOf(SpellbookList);
@@ -175,9 +176,9 @@ describe("api", () => {
         commanderSpellbookId: 2,
         permalink: "https://commanderspellbook.com/?id=2",
         cards: ["Mindmoil", "Psychosis Crawler", "Teferi's Ageless Insight"],
-        colorIdentity: ["r", "u"],
       })
     );
+    expect(combos[1].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[1].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[1].steps).toBeInstanceOf(SpellbookList);
     expect(combos[1].result).toBeInstanceOf(SpellbookList);
@@ -192,20 +193,12 @@ describe("api", () => {
           "Breath of Furt",
           "Fervor",
         ],
-        colorIdentity: ["g", "r", "w"],
       })
     );
+    expect(combos[2].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[2].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[2].steps).toBeInstanceOf(SpellbookList);
     expect(combos[2].result).toBeInstanceOf(SpellbookList);
-  });
-
-  it("handles malformed color idenitity strings", async () => {
-    values[0][11] = "w,u,";
-
-    const combos = await lookup();
-
-    expect(combos[0].colorIdentity).toEqual(["u", "w"]);
   });
 
   it("ignores combo results with fewer than the correct number of columns in the spreadsheet", async () => {

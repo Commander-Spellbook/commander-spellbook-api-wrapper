@@ -1,3 +1,5 @@
+import SpellbookList from "../../src/models/list";
+import ColorIdentity from "../../src/models/color-identity";
 import filterByCards from "../../src/filter-by-cards";
 
 function makeCombo(cards: string[]) {
@@ -5,10 +7,10 @@ function makeCombo(cards: string[]) {
     commanderSpellbookId: 1,
     permalink: "https://commanderspellbook.com/?id=1",
     cards,
-    colorIdentity: [],
-    prerequisites: [],
-    steps: [],
-    result: [],
+    colorIdentity: new ColorIdentity(""),
+    prerequisites: SpellbookList.create(""),
+    steps: SpellbookList.create(""),
+    result: SpellbookList.create(""),
   };
 }
 

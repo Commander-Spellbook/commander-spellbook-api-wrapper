@@ -1,5 +1,6 @@
 import superagent from "superagent";
 import SpellbookList from "./models/list";
+import ColorIdentity from "./models/color-identity";
 import type {
   CommanderSpellbookCombos,
   CommanderSpellbookAPIResponse,
@@ -38,10 +39,7 @@ function formatApiResponse(
         combo[10],
       ].filter((cardName) => cardName);
 
-      const colorIdentity = combo[11]
-        .split(",")
-        .sort()
-        .filter((c) => c);
+      const colorIdentity = new ColorIdentity(combo[11]);
       const prerequisites = SpellbookList.create(combo[12]);
       const steps = SpellbookList.create(combo[13]);
       const result = SpellbookList.create(combo[14]);

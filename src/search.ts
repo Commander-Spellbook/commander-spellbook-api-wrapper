@@ -3,29 +3,29 @@ import filterByCards from "./filter-by-cards";
 import filterByColorIdentity from "./filter-by-color-identity";
 import normalizeStringInput from "./normalize-string-input";
 
-import type { ColorIdentity, FormattedApiResponse } from "./types";
+import type { ColorIdentityColors, FormattedApiResponse } from "./types";
 type SearchOptions = {
   cards?: string[];
-  colorIdentity?: string | ColorIdentity[];
+  colorIdentity?: string | ColorIdentityColors[];
 };
 
 export default async function search(
   options: SearchOptions = {}
 ): Promise<FormattedApiResponse[]> {
-  let colorIdentity: ColorIdentity[] = [];
+  let colorIdentity: ColorIdentityColors[] = [];
   const cards = options.cards || [];
 
   if (options.colorIdentity) {
     if (typeof options.colorIdentity === "string") {
       colorIdentity = options.colorIdentity
         .split("")
-        .filter((color) => /\w/.test(color)) as ColorIdentity[];
+        .filter((color) => /\w/.test(color)) as ColorIdentityColors[];
     } else {
       colorIdentity = options.colorIdentity;
     }
     colorIdentity = colorIdentity.map((color) =>
       normalizeStringInput(color)
-    ) as ColorIdentity[];
+    ) as ColorIdentityColors[];
   }
 
   let combos = await lookupApi();

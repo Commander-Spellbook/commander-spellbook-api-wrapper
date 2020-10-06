@@ -44,7 +44,7 @@ One or both properties must be used. The resulting object will be an array of co
   commanderSpellbookId: number;
   permalink: "https://commanderspellbook.com/?id=" + commanderSpellbookId;
   cards: Array<string>;
-  colorIdentity: Array<string>;
+  colorIdentity: ColorIdentity;
   prerequisites: SpellbookList;
   steps: SpellbookList;
   result: SpellbookList;
@@ -54,7 +54,7 @@ One or both properties must be used. The resulting object will be an array of co
 - `commanderSpellbookId` is the id in the commander spellbook database.
 - `permalink` is the link available to view the combo on the commander spellbook website.
 - `cards` is an array of strings representing the card names.
-- `colorIdentity` is an array of single character strings indicating the color identity of the combo
+- `colorIdentity` is a [ColorIdentity](#coloridentity) object indicating the color identity of the combo
 - `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
 - `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
 - `result` is a [SpellbookList](#spellbooklist) object that contains the results from doing the combo.
@@ -154,6 +154,42 @@ This is of course best used in conjunction with the `cards` option.
 
 ## Models
 
+### ColorIdentity
+
+An object that has a few convenience methods for rendering the color identity.
+
+The raw spellbook API gives the color identity in the form of a string. For a white/blue identity, the string would look like: "w,u".
+
+The colors can be accessed with the `colors` array.
+
+```js
+ci.colors; // ["w", "u"]
+```
+
+#### toString
+
+Returns the raw result from the Commander Spellbook API.
+
+```js
+ci.toString(); // w,u
+```
+
+### toMarkdown
+
+Returns a string that renders teh color identity as markdown.
+
+```js
+ci.toMarkdown(); // :manaw::manau:
+```
+
+### toHTML
+
+Returns a document fragment that includes the colors as mana symbols in img tags.
+
+```js
+ci.toHTML(); // <img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"><img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/U.svg">
+```
+
 ### SpellbookList
 
 An Array-like object that has a few convenience methods for rendering the data.
@@ -218,7 +254,7 @@ list[1] === "Step 2 :manaw:";
 list.toHTMLUnorderedList();
 // <ul>
 //   <li>Step 1</li>
-//   <li>Step 2 <svg src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></svg></li>
+//   <li>Step 2 <img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></li>
 //   <li>Step 3</li>
 // </ul>
 ```
@@ -243,7 +279,7 @@ list[1] === "Step 2 :manaw:";
 list.toHTMLOrderedList();
 // <ol>
 //   <li>Step 1</li>
-//   <li>Step 2 <svg src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></svg></li>
+//   <li>Step 2 <img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></li>
 //   <li>Step 3</li>
 // </ol>
 ```

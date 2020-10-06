@@ -1,23 +1,21 @@
+import ColorIdentity from "../../src/models/color-identity";
+import SpellbookList from "../../src/models/list";
 import filterByColorIdentity from "../../src/filter-by-color-identity";
 
-function makeCombo(colorIdentity: string[]) {
+function makeCombo(colorIdentity: string) {
   return {
     commanderSpellbookId: 1,
     permalink: "https://commanderspellbook.com/?id=1",
     cards: ["card 1", "card 2"],
-    colorIdentity,
-    prerequisites: [],
-    steps: [],
-    result: [],
+    colorIdentity: new ColorIdentity(colorIdentity),
+    prerequisites: SpellbookList.create(""),
+    steps: SpellbookList.create(""),
+    result: SpellbookList.create(""),
   };
 }
 
 function makeColorIdentityCombos() {
-  return [
-    makeCombo(["r", "g"]),
-    makeCombo(["c"]),
-    makeCombo(["w", "u", "b", "r", "g"]),
-  ];
+  return [makeCombo("r,g"), makeCombo("c"), makeCombo("w,u,b,r,g")];
 }
 
 describe("filterByColorIdentity", () => {
@@ -28,15 +26,15 @@ describe("filterByColorIdentity", () => {
     );
 
     expect(combos.length).toBe(2);
-    expect(combos[0].colorIdentity).toEqual(["r", "g"]);
-    expect(combos[1].colorIdentity).toEqual(["c"]);
+    expect(combos[0].colorIdentity.colors).toEqual(["r", "g"]);
+    expect(combos[1].colorIdentity.colors).toEqual(["c"]);
   });
 
   it("resolves with only colorless combos when specified", async () => {
     const combos = filterByColorIdentity(["c"], makeColorIdentityCombos());
 
     expect(combos.length).toBe(1);
-    expect(combos[0].colorIdentity).toEqual(["c"]);
+    expect(combos[0].colorIdentity.colors).toEqual(["c"]);
   });
 
   it("resolves with all combos when wubrg is specified", async () => {
@@ -46,9 +44,9 @@ describe("filterByColorIdentity", () => {
     );
 
     expect(combos.length).toBe(3);
-    expect(combos[0].colorIdentity).toEqual(["r", "g"]);
-    expect(combos[1].colorIdentity).toEqual(["c"]);
-    expect(combos[2].colorIdentity).toEqual(["w", "u", "b", "r", "g"]);
+    expect(combos[0].colorIdentity.colors).toEqual(["r", "g"]);
+    expect(combos[1].colorIdentity.colors).toEqual(["c"]);
+    expect(combos[2].colorIdentity.colors).toEqual(["w", "u", "b", "r", "g"]);
   });
 
   it("handles specifying 'c' along with other colors", async () => {
@@ -58,7 +56,7 @@ describe("filterByColorIdentity", () => {
     );
 
     expect(combos.length).toBe(2);
-    expect(combos[0].colorIdentity).toEqual(["r", "g"]);
-    expect(combos[1].colorIdentity).toEqual(["c"]);
+    expect(combos[0].colorIdentity.colors).toEqual(["r", "g"]);
+    expect(combos[1].colorIdentity.colors).toEqual(["c"]);
   });
 });
