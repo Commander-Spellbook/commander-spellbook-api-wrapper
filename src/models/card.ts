@@ -1,4 +1,5 @@
 import scryfall from "scryfall-client";
+import normalizeStringInput from "../normalize-string-input";
 
 const CARD_BACK = "https://c2.scryfall.com/file/scryfall-errors/missing.jpg";
 
@@ -7,6 +8,7 @@ let cardImg: HTMLImageElement;
 
 export default class Card {
   name: string;
+  private normalizedName: string;
 
   static IMAGE_CACHE: Record<string, Promise<string>> = {};
   static HAS_TOOLTIP = false;
@@ -35,6 +37,11 @@ export default class Card {
 
   constructor(cardName: string) {
     this.name = cardName;
+    this.normalizedName = normalizeStringInput(cardName);
+  }
+
+  matches(cardName: string): boolean {
+    return this.normalizedName.indexOf(normalizeStringInput(cardName)) > -1;
   }
 
   getScryfallData(): ReturnType<typeof scryfall.getCard> {

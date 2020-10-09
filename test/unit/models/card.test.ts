@@ -20,12 +20,6 @@ describe("Card", () => {
     expect(card.name).toEqual("Sydri, Galvanic Genius");
   });
 
-  it("has a normalized name attribute", () => {
-    const card = new Card("Sydri, Galvanic Genius");
-
-    expect(card.normalizedName).toEqual("sydri galvanic genius");
-  });
-
   describe("matches", () => {
     it("returns true when the input is the name", () => {
       const card = new Card("Sydri, Galvanic Genius");

@@ -1,6 +1,6 @@
 {
   "name": "comander-spellbook",
-  "version": "0.18.0",
+  "version": "0.0.1",
   "description": "A wrapper for parsing the commander spellbook api.",
   "main": "dist/index.js",
   "files": [
@@ -9,7 +9,7 @@
   "scripts": {
     "prepublishOnly": "npm run typescript",
     "prebuild": "npm run pretty",
-    "typescript": "tsc --declaration",
+    "typescript": "tsc --declaration --project tsconfig.production.json",
     "build": "webpack",
     "build:watch": "webpack-dev-server",
     "predemo": "npm run build",

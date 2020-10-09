@@ -1,5 +1,3 @@
-"use strict";
-
 /* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require("webpack");
 const checkES5 = require("check-ecmascript-version-compatibility");
