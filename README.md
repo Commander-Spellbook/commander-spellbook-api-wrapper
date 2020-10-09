@@ -53,7 +53,7 @@ One or both properties must be used. The resulting object will be an array of co
 
 - `commanderSpellbookId` is the id in the commander spellbook database.
 - `permalink` is the link available to view the combo on the commander spellbook website.
-- `cards` is an array of [Card](#card) objects..
+- `cards` is an array of [Card](#card) objects.
 - `colorIdentity` is a [ColorIdentity](#coloridentity) object indicating the color identity of the combo
 - `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
 - `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
