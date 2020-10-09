@@ -1,6 +1,4 @@
 import lookupApi from "./spellbook-api";
-import filterByCards from "./filter-by-cards";
-import filterByColorIdentity from "./filter-by-color-identity";
 import normalizeStringInput from "./normalize-string-input";
 
 import type { ColorIdentityColors, FormattedApiResponse } from "./types";
@@ -31,11 +29,13 @@ export default async function search(
   let combos = await lookupApi();
 
   if (cards.length > 0) {
-    combos = filterByCards(cards, combos);
+    combos = combos.filter((combo) => combo.cards.matches(cards));
   }
 
   if (colorIdentity.length > 0) {
-    combos = filterByColorIdentity(colorIdentity, combos);
+    combos = combos.filter((combo) =>
+      combo.colorIdentity.hasColors(colorIdentity)
+    );
   }
 
   return combos;

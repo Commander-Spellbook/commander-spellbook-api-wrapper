@@ -1,4 +1,4 @@
-import type Card from "./models/card";
+import type CardGrouping from "./models/card-grouping";
 import type SpellbookList from "./models/list";
 import type ColorIdentity from "./models/color-identity";
 
@@ -18,7 +18,7 @@ export type CommanderSpellbookAPIResponse = {
 export type FormattedApiResponse = {
   commanderSpellbookId: number;
   permalink: string;
-  cards: Card[];
+  cards: CardGrouping;
   colorIdentity: ColorIdentity;
   prerequisites: SpellbookList;
   steps: SpellbookList;

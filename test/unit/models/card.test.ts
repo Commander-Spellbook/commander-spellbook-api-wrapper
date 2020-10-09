@@ -4,8 +4,6 @@ import Card from "../../../src/models/card";
 
 import { mocked } from "ts-jest/utils";
 
-jest.mock("../../../src/generate-tooltip");
-
 type FakeEvent = {
   clientX: number;
   clientY: number;
@@ -20,6 +18,35 @@ describe("Card", () => {
     const card = new Card("Sydri, Galvanic Genius");
 
     expect(card.name).toEqual("Sydri, Galvanic Genius");
+  });
+
+  it("has a normalized name attribute", () => {
+    const card = new Card("Sydri, Galvanic Genius");
+
+    expect(card.normalizedName).toEqual("sydri galvanic genius");
+  });
+
+  describe("matches", () => {
+    it("returns true when the input is the name", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.matches("Sydri, Galvanic Genius")).toBe(true);
+      expect(card.matches("Arjun, the Shifting Flame")).toBe(false);
+    });
+
+    it("returns true for partial matches", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.matches("Sydri")).toBe(true);
+      expect(card.matches("alv")).toBe(true);
+      expect(card.matches("nius")).toBe(true);
+    });
+
+    it("disregards punctuation and casing", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.matches("sYd~Ri G!alva??nIc GENIUS")).toBe(true);
+    });
   });
 
   describe("toString", () => {

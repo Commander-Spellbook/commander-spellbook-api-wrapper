@@ -1,5 +1,5 @@
 import superagent from "superagent";
-import Card from "./models/card";
+import CardGrouping from "./models/card-grouping";
 import SpellbookList from "./models/list";
 import ColorIdentity from "./models/color-identity";
 import type {
@@ -27,7 +27,7 @@ function formatApiResponse(
     })
     .map((combo) => {
       const id = combo[0];
-      const cards = [
+      const cardNames = [
         combo[1],
         combo[2],
         combo[3],
@@ -38,12 +38,9 @@ function formatApiResponse(
         combo[8],
         combo[9],
         combo[10],
-      ]
-        .filter((cardName) => cardName)
-        .map((cardName) => {
-          return new Card(cardName);
-        });
+      ].filter((cardName) => cardName);
 
+      const cards = CardGrouping.create(cardNames);
       const colorIdentity = new ColorIdentity(combo[11]);
       const prerequisites = SpellbookList.create(combo[12]);
       const steps = SpellbookList.create(combo[13]);

@@ -1,13 +1,30 @@
 import search from "../../src/search";
 import lookup from "../../src/spellbook-api";
-import filterByCards from "../../src/filter-by-cards";
-import filterByColorIdentity from "../../src/filter-by-color-identity";
+import CardGrouping from "../../src/models/card-grouping";
+import SpellbookList from "../../src/models/list";
+import ColorIdentity from "../../src/models/color-identity";
 
+import { mocked } from "ts-jest/utils";
 jest.mock("../../src/spellbook-api");
-jest.mock("../../src/filter-by-cards");
-jest.mock("../../src/filter-by-color-identity");
 
 describe("search", () => {
+  beforeEach(() => {
+    mocked(lookup).mockResolvedValue([
+      {
+        commanderSpellbookId: 1,
+        permalink: "https://commanderspellbook.com/?id=1",
+        cards: CardGrouping.create(["Card 1", "Card 2"]),
+        colorIdentity: new ColorIdentity("r,g"),
+        prerequisites: SpellbookList.create("Step 1. Step 2"),
+        steps: SpellbookList.create("Step 1. Step 2"),
+        result: SpellbookList.create("Step 1. Step 2"),
+      },
+    ]);
+
+    jest.spyOn(CardGrouping.prototype, "matches");
+    jest.spyOn(ColorIdentity.prototype, "hasColors");
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -23,11 +40,12 @@ describe("search", () => {
       cards: ["Sydri", "Arjun", "Rashmi"],
     });
 
-    expect(filterByCards).toBeCalledTimes(1);
-    expect(filterByCards).toBeCalledWith(
-      ["Sydri", "Arjun", "Rashmi"],
-      expect.anything()
-    );
+    expect(CardGrouping.prototype.matches).toBeCalledTimes(1);
+    expect(CardGrouping.prototype.matches).toBeCalledWith([
+      "Sydri",
+      "Arjun",
+      "Rashmi",
+    ]);
   });
 
   it("can filter by color identity array", async () => {
@@ -35,11 +53,8 @@ describe("search", () => {
       colorIdentity: ["g", "r", "w"],
     });
 
-    expect(filterByColorIdentity).toBeCalledTimes(1);
-    expect(filterByColorIdentity).toBeCalledWith(
-      ["g", "r", "w"],
-      expect.anything()
-    );
+    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
+    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
   });
 
   it("can filter by color identity string", async () => {
@@ -47,11 +62,8 @@ describe("search", () => {
       colorIdentity: "g,r,w",
     });
 
-    expect(filterByColorIdentity).toBeCalledTimes(1);
-    expect(filterByColorIdentity).toBeCalledWith(
-      ["g", "r", "w"],
-      expect.anything()
-    );
+    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
+    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
   });
 
   it("can filter by color identity string with spaces", async () => {
@@ -59,11 +71,8 @@ describe("search", () => {
       colorIdentity: "g r w",
     });
 
-    expect(filterByColorIdentity).toBeCalledTimes(1);
-    expect(filterByColorIdentity).toBeCalledWith(
-      ["g", "r", "w"],
-      expect.anything()
-    );
+    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
+    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
   });
 
   it("can filter by color identity without deliminator", async () => {
@@ -71,10 +80,7 @@ describe("search", () => {
       colorIdentity: "grw",
     });
 
-    expect(filterByColorIdentity).toBeCalledTimes(1);
-    expect(filterByColorIdentity).toBeCalledWith(
-      ["g", "r", "w"],
-      expect.anything()
-    );
+    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
+    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
   });
 });
