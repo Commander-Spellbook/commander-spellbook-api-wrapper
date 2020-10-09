@@ -33,7 +33,7 @@ In addition, `search` takes an optional configuration object to filter the resul
 ```js
 {
   cards?: Array<"strings representing card names">;
-  colors?: string | Array<string>;
+  colorIdentity?: string | Array<string>;
 }
 ```
 
@@ -124,14 +124,14 @@ spellbook
   });
 ```
 
-### colors
+### colorIdentity
 
 Pass either a string representing the color combination you're looking for:
 
 ```js
 spellbook
   .search({
-    colors: "bug",
+    colorIdentity: "bug",
   })
   .then(function (combos) {
     // loop through all combos in the sultai colors
@@ -143,7 +143,7 @@ Or an array of single digit strings representing the color combination:
 ```js
 spellbook
   .search({
-    colors: ["b", "u", "g"],
+    colorIdentity: ["b", "u", "g"],
   })
   .then(function (combos) {
     // loop through all combos in the sultai colors
