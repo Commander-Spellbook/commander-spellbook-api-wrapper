@@ -1,4 +1,5 @@
 import superagent from "superagent";
+import Card from "./models/card";
 import SpellbookList from "./models/list";
 import ColorIdentity from "./models/color-identity";
 import type {
@@ -37,7 +38,11 @@ function formatApiResponse(
         combo[8],
         combo[9],
         combo[10],
-      ].filter((cardName) => cardName);
+      ]
+        .filter((cardName) => cardName)
+        .map((cardName) => {
+          return new Card(cardName);
+        });
 
       const colorIdentity = new ColorIdentity(combo[11]);
       const prerequisites = SpellbookList.create(combo[12]);

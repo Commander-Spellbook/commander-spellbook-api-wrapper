@@ -1,4 +1,5 @@
 import ColorIdentity from "../../src/models/color-identity";
+import Card from "../../src/models/card";
 import SpellbookList from "../../src/models/list";
 import filterByColorIdentity from "../../src/filter-by-color-identity";
 
@@ -6,7 +7,7 @@ function makeCombo(colorIdentity: string) {
   return {
     commanderSpellbookId: 1,
     permalink: "https://commanderspellbook.com/?id=1",
-    cards: ["card 1", "card 2"],
+    cards: [new Card("card 1"), new Card("card 2")],
     colorIdentity: new ColorIdentity(colorIdentity),
     prerequisites: SpellbookList.create(""),
     steps: SpellbookList.create(""),

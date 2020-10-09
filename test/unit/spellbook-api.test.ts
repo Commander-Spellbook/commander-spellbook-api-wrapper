@@ -1,4 +1,5 @@
 import lookup, { resetCache } from "../../src/spellbook-api";
+import Card from "../../src/models/card";
 import SpellbookList from "../../src/models/list";
 import ColorIdentity from "../../src/models/color-identity";
 import {
@@ -163,9 +164,11 @@ describe("api", () => {
       expect.objectContaining({
         commanderSpellbookId: 1,
         permalink: "https://commanderspellbook.com/?id=1",
-        cards: ["Guilded Lotus", "Voltaic Servant"],
       })
     );
+    expect(combos[0].cards.length).toBe(2);
+    expect(combos[0].cards[0]).toBeInstanceOf(Card);
+    expect(combos[0].cards[1]).toBeInstanceOf(Card);
     expect(combos[0].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[0].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[0].steps).toBeInstanceOf(SpellbookList);
@@ -175,9 +178,12 @@ describe("api", () => {
       expect.objectContaining({
         commanderSpellbookId: 2,
         permalink: "https://commanderspellbook.com/?id=2",
-        cards: ["Mindmoil", "Psychosis Crawler", "Teferi's Ageless Insight"],
       })
     );
+    expect(combos[1].cards.length).toBe(3);
+    expect(combos[1].cards[0]).toBeInstanceOf(Card);
+    expect(combos[1].cards[1]).toBeInstanceOf(Card);
+    expect(combos[1].cards[2]).toBeInstanceOf(Card);
     expect(combos[1].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[1].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[1].steps).toBeInstanceOf(SpellbookList);
@@ -187,14 +193,13 @@ describe("api", () => {
       expect.objectContaining({
         commanderSpellbookId: 3,
         permalink: "https://commanderspellbook.com/?id=3",
-        cards: [
-          "Sidar Kondo of Jamurra",
-          "Tana the Bloodsower",
-          "Breath of Furt",
-          "Fervor",
-        ],
       })
     );
+    expect(combos[2].cards.length).toBe(4);
+    expect(combos[2].cards[0]).toBeInstanceOf(Card);
+    expect(combos[2].cards[1]).toBeInstanceOf(Card);
+    expect(combos[2].cards[2]).toBeInstanceOf(Card);
+    expect(combos[2].cards[3]).toBeInstanceOf(Card);
     expect(combos[2].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[2].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[2].steps).toBeInstanceOf(SpellbookList);

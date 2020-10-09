@@ -11,7 +11,7 @@ export default function filterByCards(
       return total.filter((combo) => {
         return combo.cards.find(
           (cardInCombo) =>
-            normalizeStringInput(cardInCombo).indexOf(cardInput) > -1
+            normalizeStringInput(cardInCombo.name).indexOf(cardInput) > -1
         );
       });
     }, combos);

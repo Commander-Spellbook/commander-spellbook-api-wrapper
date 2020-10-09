@@ -43,7 +43,7 @@ One or both properties must be used. The resulting object will be an array of co
 {
   commanderSpellbookId: number;
   permalink: "https://commanderspellbook.com/?id=" + commanderSpellbookId;
-  cards: Array<string>;
+  cards: Card[];
   colorIdentity: ColorIdentity;
   prerequisites: SpellbookList;
   steps: SpellbookList;
@@ -53,7 +53,7 @@ One or both properties must be used. The resulting object will be an array of co
 
 - `commanderSpellbookId` is the id in the commander spellbook database.
 - `permalink` is the link available to view the combo on the commander spellbook website.
-- `cards` is an array of strings representing the card names.
+- `cards` is an array of [Card](#card) objects..
 - `colorIdentity` is a [ColorIdentity](#coloridentity) object indicating the color identity of the combo
 - `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
 - `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
@@ -153,6 +153,43 @@ spellbook
 This is of course best used in conjunction with the `cards` option.
 
 ## Models
+
+### Card
+
+An object that has a few convenience methods for rendering the card.
+
+The name of the card can accessed via the `name` property. The Scryfall URI can be accessed via the `scryfallURI` property;
+
+```js
+card.name; // "Rashmi, Eternities Crafter"
+card.scryfallURI; // "https://scryfall.com/search?q=!%22Rasmi,+Eternities+Crafter%22"
+```
+
+#### getScryfallData
+
+Resolves a promise with the [Scryfall object from the `scryfall-client` module](https://github.com/crookedneighbor/scryfall-client#card) for the card.
+
+```js
+card.getScryfallData().then((cardData) => {
+  // inspect card data
+});
+```
+
+#### toString
+
+Returns the raw result from the Commander Spellbook API.
+
+```js
+ci.toString(); // Rashmi, Eternities Crafter
+```
+
+### toHTML
+
+Returns a `span` tag of the card name that displays the card image when hovered over.
+
+```js
+ci.toHTML(); // <span>Rashmi, Eternities Crafter</span>
+```
 
 ### ColorIdentity
 

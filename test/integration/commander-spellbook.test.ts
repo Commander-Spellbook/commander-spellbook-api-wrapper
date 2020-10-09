@@ -24,7 +24,7 @@ describe("Commander Spellbook", () => {
     expect(combos.length).toBeGreaterThan(0);
     combos.forEach((combo) => {
       const hasSydriInCombo = combo.cards.find(
-        (card) => card === "Sydri, Galvanic Genius"
+        (card) => card.name === "Sydri, Galvanic Genius"
       );
 
       expect(hasSydriInCombo).toBeTruthy();

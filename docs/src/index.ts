@@ -5,12 +5,6 @@ import type { FormattedApiResponse } from "../../src/types";
 
 const button = document.getElementById("submit") as HTMLButtonElement;
 
-function wrapInParagraph(items: string[]): string {
-  const listItems = items.map((item) => "<li>" + item + "</li>").join("\n");
-
-  return `<ul>${listItems}</ul>`;
-}
-
 function renderResults(combos: FormattedApiResponse[]) {
   const table = document.getElementById(
     "table-body"
@@ -20,11 +14,16 @@ function renderResults(combos: FormattedApiResponse[]) {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td></td>
-      <td>
-      <p>${combo.colorIdentity.join(",")}</p>
-      ${wrapInParagraph(combo.cards)}
-      </td>
     `;
+
+    const td = document.createElement("td");
+    td.classList.add("spellbook-image");
+    combo.cards.forEach((card) => {
+      const p = document.createElement("p");
+      p.appendChild(card.toHTML());
+      td.appendChild(p);
+    });
+    row.appendChild(td);
     [combo.prerequisites, combo.steps, combo.result].forEach((list) => {
       const td = document.createElement("td");
       td.classList.add("spellbook-list");
@@ -52,14 +51,11 @@ button.addEventListener("click", () => {
     return;
   }
 
-  console.log("cards inputs", cards);
-
   spellbook
     .search({
       cards,
     })
     .then((combos) => {
-      console.log(combos);
       renderResults(combos);
 
       button.removeAttribute("disabled");
