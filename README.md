@@ -384,4 +384,4 @@ npm run test:publishing
 
 ## Bugs
 
-If you find a bug, feel free to [open an issue](https://github.com/crookedneighbor/commander-spellbook/issues/new) or [a Pull Request](https://github.com/crookedneighbor/commander-spellbook/compare).
+If you find a bug, feel free to [open an issue](https://github.com/Commander-Spellbook/commander-spellbook-api-wrapper/issues/new) or [a Pull Request](https://github.com/Commander-Spellbook/commander-spellbook-api-wrapper/compare).
