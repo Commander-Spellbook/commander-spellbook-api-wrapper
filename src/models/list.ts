@@ -1,12 +1,15 @@
 import scryfall from "scryfall-client";
 
+type HTMLListOptions = {
+  className?: string;
+};
+
 // based on https://blog.simontest.net/extend-array-with-typescript-965cc1134b3
 export default class SpellbookList extends Array<string> {
   private rawString: string;
 
   private constructor(items: string[]) {
     super(...items);
-
     this.rawString = "";
   }
 
@@ -27,12 +30,12 @@ export default class SpellbookList extends Array<string> {
     return this.rawString;
   }
 
-  toHTMLOrderedList(): HTMLOListElement {
-    return this.toHTMLList("ol");
+  toHTMLOrderedList(options: HTMLListOptions = {}): HTMLOListElement {
+    return this.toHTMLList("ol", options);
   }
 
-  toHTMLUnorderedList(): HTMLUListElement {
-    return this.toHTMLList("ul");
+  toHTMLUnorderedList(options: HTMLListOptions = {}): HTMLUListElement {
+    return this.toHTMLList("ul", options);
   }
 
   toMarkdown(): string {
@@ -51,13 +54,21 @@ export default class SpellbookList extends Array<string> {
     });
   }
 
-  private toHTMLList(kind: "ul"): HTMLUListElement;
-  private toHTMLList(kind: "ol"): HTMLOListElement;
-  private toHTMLList(kind: string): HTMLElement {
+  private toHTMLList(kind: "ul", options: HTMLListOptions): HTMLUListElement;
+  private toHTMLList(kind: "ol", options: HTMLListOptions): HTMLOListElement;
+  private toHTMLList(kind: string, options: HTMLListOptions = {}): HTMLElement {
+    let root = `<${kind}`;
+
+    if (options.className) {
+      root += ` class="${options.className}"`;
+    }
+    root += ">";
+
     const items = this.map((item) => {
       return `<li>${this.replaceManaEmoijiWithHTMLImageString(item)}</li>`;
     }).join("");
-    const htmlString = `<${kind}>
+
+    const htmlString = `${root}
   ${items}
 </${kind}>`;
     const fragment = document.createDocumentFragment();

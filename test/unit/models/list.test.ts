@@ -68,6 +68,15 @@ describe("SpellbookList", () => {
         expect.stringMatching(/<img src=".*G.svg">Step 3/)
       );
     });
+
+    it("can pass a className", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+      const ol = list.toHTMLOrderedList({
+        className: "custom class name",
+      });
+
+      expect(ol.className).toBe("custom class name");
+    });
   });
 
   describe("toHTMLUnorderedList", () => {
@@ -100,6 +109,15 @@ describe("SpellbookList", () => {
       expect(lis[2].innerHTML).toEqual(
         expect.stringMatching(/<img src=".*G.svg">Step 3/)
       );
+    });
+
+    it("can pass a className", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+      const ul = list.toHTMLUnorderedList({
+        className: "custom class name",
+      });
+
+      expect(ul.className).toBe("custom class name");
     });
   });
 
