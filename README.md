@@ -183,6 +183,27 @@ Returns the raw result from the Commander Spellbook API.
 ci.toString(); // Rashmi, Eternities Crafter
 ```
 
+### toImage
+
+Returns a `img` tag of the card.
+
+```js
+ci.toImage(); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter" />
+```
+
+A string may be passed as an argument to specify what kind of image you would like. See the [Scryfyall `version` documentation](https://scryfall.com/docs/api/cards/named) for more details. The possible values are:
+
+* small
+* normal
+* large
+* png
+* art_crop
+* border_crop
+
+```js
+ci.toImage("art_crop"); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter&version=art_crop" />
+```
+
 ### toHTML
 
 Returns a `span` tag of the card name that displays the card image when hovered over.
@@ -190,6 +211,22 @@ Returns a `span` tag of the card name that displays the card image when hovered 
 ```js
 ci.toHTML(); // <span>Rashmi, Eternities Crafter</span>
 ```
+
+It takes an options object:
+
+```
+{
+  skipName?: boolean;
+  skipTooltip?: boolean;
+  className?: string;
+}
+```
+
+`skipName` will not include the name of the card in the span, but will still attach the listeners for display the card image tooltip.
+
+`skipTooltip` will skip adding code to generate the tooltip when hovering over the card name.
+
+`className` will add any classes as the `className` attribute on the `span`.
 
 ### ColorIdentity
 

@@ -11,7 +11,7 @@ type FakeEvent = {
 
 describe("Card", () => {
   afterEach(() => {
-    Card.clearImageCache();
+    Card.clearTooltipCache();
   });
 
   it("has a name attribute", () => {
@@ -81,18 +81,31 @@ describe("Card", () => {
     });
   });
 
-  describe("toHTML", () => {
-    beforeEach(() => {
-      const scryfallPayload = {
-        getImage: jest.fn().mockReturnValue("https://example.com/card.png"),
-      };
+  describe("toImage", () => {
+    it("returns an img element", () => {
+      const card = new Card("Sydri, Galvanic Genius");
 
-      jest
-        .spyOn(Card.prototype, "getScryfallData")
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .mockResolvedValue(scryfallPayload as any);
+      const img = card.toImage();
+
+      expect(img).toBeInstanceOf(HTMLImageElement);
+      expect(img.src).toBe(
+        "https://api.scryfall.com/cards/named?format=image&exact=Sydri%2C%20Galvanic%20Genius"
+      );
     });
 
+    it("can specifiy a version", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      const img = card.toImage("art_crop");
+
+      expect(img).toBeInstanceOf(HTMLImageElement);
+      expect(img.src).toBe(
+        "https://api.scryfall.com/cards/named?format=image&exact=Sydri%2C%20Galvanic%20Genius&version=art_crop"
+      );
+    });
+  });
+
+  describe("toHTML", () => {
     it("returns a span element", () => {
       const card = new Card("Sydri, Galvanic Genius");
 
@@ -100,6 +113,28 @@ describe("Card", () => {
 
       expect(span).toBeInstanceOf(HTMLSpanElement);
       expect(span.innerText).toBe("Sydri, Galvanic Genius");
+    });
+
+    it("can opt out of name", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      const span = card.toHTML({
+        skipName: true,
+      });
+
+      expect(span).toBeInstanceOf(HTMLSpanElement);
+      expect(span.innerText).toBeFalsy();
+    });
+
+    it("can add a class name", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      const span = card.toHTML({
+        className: "some custom classes",
+      });
+
+      expect(span).toBeInstanceOf(HTMLSpanElement);
+      expect(span.className).toBe("some custom classes");
     });
 
     it("creates mouse event listeners for tooltip", () => {
@@ -146,7 +181,7 @@ describe("Card", () => {
       expect(tooltip.style.top).toBe("972px");
     });
 
-    it("looks up Scryfall image", async () => {
+    it("creates tooltip with scryfall image", async () => {
       const tooltip = document.createElement("div");
       tooltip.style.display = "none";
       const card = new Card("Sydri, Galvanic Genius");
@@ -168,97 +203,20 @@ describe("Card", () => {
       });
 
       expect(tooltip.querySelector("img")!.src).toBe(
-        "https://c2.scryfall.com/file/scryfall-errors/missing.jpg"
-      );
-
-      expect(card.getScryfallData).toBeCalledTimes(1);
-
-      // wait for img to be found and set
-      await Promise.resolve();
-      await Promise.resolve();
-
-      expect(tooltip.querySelector("img")!.src).toBe(
-        "https://example.com/card.png"
+        "https://api.scryfall.com/cards/named?format=image&exact=Sydri%2C%20Galvanic%20Genius"
       );
     });
 
-    it("looks up Scryfall image exactly once for the same card name", async () => {
-      const tooltip = document.createElement("div");
-      tooltip.style.display = "none";
+    it("can opt out of tooltip", () => {
       const card = new Card("Sydri, Galvanic Genius");
 
       jest.spyOn(HTMLSpanElement.prototype, "addEventListener");
 
-      const span = card.toHTML();
-      const mousemoveHandler = (mocked(span.addEventListener).mock.calls.find(
-        (call) => {
-          return call[0] === "mousemove";
-        }
-      )![1] as unknown) as (event: FakeEvent) => void;
-
-      jest.spyOn(Card, "generateTooltip").mockReturnValue(tooltip);
-
-      mousemoveHandler({
-        clientX: 54,
-        clientY: 1002,
-      });
-      mousemoveHandler({
-        clientX: 4,
-        clientY: 102,
-      });
-      mousemoveHandler({
-        clientX: 24,
-        clientY: 10,
-      });
-      mousemoveHandler({
-        clientX: 74,
-        clientY: 202,
+      const span = card.toHTML({
+        skipTooltip: true,
       });
 
-      // wait for img to be found and set
-      await Promise.resolve();
-      await Promise.resolve();
-
-      expect(card.getScryfallData).toBeCalledTimes(1);
-    });
-
-    it("looks up Scryfall image exactly once for the same card name across different Card instances", async () => {
-      const tooltip = document.createElement("div");
-      tooltip.style.display = "none";
-      const card = new Card("Sydri, Galvanic Genius");
-      const card2 = new Card("Sydri, Galvanic Genius");
-
-      jest.spyOn(HTMLSpanElement.prototype, "addEventListener");
-
-      card.toHTML();
-      card2.toHTML();
-
-      const mousemoveHandlers = (mocked(
-        HTMLSpanElement.prototype.addEventListener
-      )
-        .mock.calls.filter((call) => {
-          return call[0] === "mousemove";
-        })
-        .map((call) => {
-          return call[1];
-        }) as unknown) as Array<(event: FakeEvent) => void>;
-
-      jest.spyOn(Card, "generateTooltip").mockReturnValue(tooltip);
-
-      mousemoveHandlers[0]({
-        clientX: 54,
-        clientY: 1002,
-      });
-      mousemoveHandlers[1]({
-        clientX: 4,
-        clientY: 102,
-      });
-
-      // wait for img to be found and set
-      await Promise.resolve();
-      await Promise.resolve();
-
-      expect(card.getScryfallData).toBeCalledTimes(1);
+      expect(span.addEventListener).toBeCalledTimes(0);
     });
   });
 });

@@ -1,7 +1,15 @@
 import scryfall from "scryfall-client";
 import normalizeStringInput from "../normalize-string-input";
 
+type ToHTMLOptions = {
+  skipName?: boolean;
+  skipTooltip?: boolean;
+  className?: string;
+};
+
 const CARD_BACK = "https://c2.scryfall.com/file/scryfall-errors/missing.jpg";
+const CARD_IMAGE_NAMED_BASE_URL =
+  "https://api.scryfall.com/cards/named?format=image&exact=";
 
 let tooltip: HTMLDivElement;
 let cardImg: HTMLImageElement;
@@ -9,11 +17,10 @@ let cardImg: HTMLImageElement;
 export default class Card {
   name: string;
   private normalizedName: string;
+  private cardImageURI: string;
 
-  static IMAGE_CACHE: Record<string, Promise<string>> = {};
   static HAS_TOOLTIP = false;
-  static clearImageCache(): void {
-    Card.IMAGE_CACHE = {};
+  static clearTooltipCache(): void {
     Card.HAS_TOOLTIP = false;
 
     if (tooltip) {
@@ -38,6 +45,8 @@ export default class Card {
   constructor(cardName: string) {
     this.name = cardName;
     this.normalizedName = normalizeStringInput(cardName);
+    this.cardImageURI =
+      CARD_IMAGE_NAMED_BASE_URL + encodeURIComponent(this.name);
   }
 
   matches(cardName: string): boolean {
@@ -52,54 +61,64 @@ export default class Card {
     return this.name;
   }
 
-  toHTML(): HTMLSpanElement {
+  toImage(version?: string): HTMLImageElement {
+    const img = document.createElement("img");
+    img.alt = this.name;
+    img.src = this.cardImageURI;
+
+    if (version) {
+      img.src = `${img.src}&version=art_crop`;
+    }
+
+    return img;
+  }
+
+  toHTML(options: ToHTMLOptions = {}): HTMLSpanElement {
     const span = document.createElement("span");
 
-    span.innerText = this.name;
+    if (!options.skipName) {
+      span.innerText = this.name;
+    }
+    if (options.className) {
+      span.className = options.className;
+    }
 
-    span.addEventListener("mousemove", (event) => {
-      if (window.innerWidth < 768) {
-        // window is too small to bother with presenting card image
-        return;
-      }
+    if (!options.skipTooltip) {
+      span.addEventListener("mousemove", (event) => {
+        if (window.innerWidth < 768) {
+          // window is too small to bother with presenting card image
+          return;
+        }
 
-      if (!Card.HAS_TOOLTIP) {
-        Card.HAS_TOOLTIP = true;
-        tooltip = Card.generateTooltip();
+        if (!Card.HAS_TOOLTIP) {
+          Card.HAS_TOOLTIP = true;
+          tooltip = Card.generateTooltip();
 
-        cardImg = document.createElement("img");
-        cardImg.src = CARD_BACK;
-        tooltip.appendChild(cardImg);
+          cardImg = document.createElement("img");
+          cardImg.src = CARD_BACK;
+          tooltip.appendChild(cardImg);
 
-        document.body.appendChild(tooltip);
-      }
+          document.body.appendChild(tooltip);
+        }
 
-      if (tooltip.style.display !== "block") {
-        tooltip.style.display = "block";
-      }
+        if (tooltip.style.display !== "block") {
+          tooltip.style.display = "block";
+        }
 
-      tooltip.style.left = event.clientX + 50 + "px";
-      tooltip.style.top = event.clientY - 30 + "px";
+        tooltip.style.left = event.clientX + 50 + "px";
+        tooltip.style.top = event.clientY - 30 + "px";
 
-      if (!Card.IMAGE_CACHE[this.name]) {
-        cardImg.src = CARD_BACK;
-        Card.IMAGE_CACHE[this.name] = this.getScryfallData().then((data) => {
-          return data.getImage();
-        });
-      }
-
-      Card.IMAGE_CACHE[this.name].then((image) => {
-        if (cardImg.src !== image) {
-          cardImg.src = image;
+        if (cardImg.src !== this.cardImageURI) {
+          cardImg.src = this.cardImageURI;
         }
       });
-    });
 
-    span.addEventListener("mouseout", () => {
-      if (Card.HAS_TOOLTIP) {
-        tooltip.style.display = "none";
-      }
-    });
+      span.addEventListener("mouseout", () => {
+        if (Card.HAS_TOOLTIP) {
+          tooltip.style.display = "none";
+        }
+      });
+    }
 
     return span;
   }
