@@ -175,12 +175,34 @@ card.getScryfallData().then((cardData) => {
 });
 ```
 
+#### getScryfallImageUrl
+
+Returns a url that can be used to display the card using an image from Scryfall.
+
+```js
+const url = card.getScryfallImageUrl(); // https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter
+
+```
+
+A string may be passed as an argument to specify what kind of image you would like. See the [Scryfyall `version` documentation](https://scryfall.com/docs/api/cards/named) for more details. The possible values are:
+
+- small
+- normal
+- large
+- png
+- art_crop
+- border_crop
+
+```js
+const url = card.getScryfallImageUrl("art_crop"); // https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter&version=art_crop
+```
+
 #### toString
 
 Returns the raw result from the Commander Spellbook API.
 
 ```js
-ci.toString(); // Rashmi, Eternities Crafter
+card.toString(); // Rashmi, Eternities Crafter
 ```
 
 ### toImage
@@ -188,20 +210,20 @@ ci.toString(); // Rashmi, Eternities Crafter
 Returns a `img` tag of the card.
 
 ```js
-ci.toImage(); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter" />
+card.toImage(); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter" />
 ```
 
 A string may be passed as an argument to specify what kind of image you would like. See the [Scryfyall `version` documentation](https://scryfall.com/docs/api/cards/named) for more details. The possible values are:
 
-* small
-* normal
-* large
-* png
-* art_crop
-* border_crop
+- small
+- normal
+- large
+- png
+- art_crop
+- border_crop
 
 ```js
-ci.toImage("art_crop"); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter&version=art_crop" />
+card.toImage("art_crop"); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter&version=art_crop" />
 ```
 
 ### toHTML
@@ -209,7 +231,7 @@ ci.toImage("art_crop"); // <img src="https://api.scryfall.com/cards/named?format
 Returns a `span` tag of the card name that displays the card image when hovered over.
 
 ```js
-ci.toHTML(); // <span>Rashmi, Eternities Crafter</span>
+card.toHTML(); // <span>Rashmi, Eternities Crafter</span>
 ```
 
 It takes an options object:
@@ -333,6 +355,16 @@ list.toHTMLUnorderedList();
 // </ul>
 ```
 
+An options object can be passed when creating the list:
+
+```
+{
+  className?: string;
+}
+```
+
+`className` will apply a class name string to the `ul` element.
+
 #### toHTMLOrderedList
 
 Provides the list as an `HTMLOListElement`.
@@ -357,6 +389,16 @@ list.toHTMLOrderedList();
 //   <li>Step 3</li>
 // </ol>
 ```
+
+An options object can be passed when creating the list:
+
+```
+{
+  className?: string;
+}
+```
+
+`className` will apply a class name string to the `ol` element.
 
 #### toMarkdown
 

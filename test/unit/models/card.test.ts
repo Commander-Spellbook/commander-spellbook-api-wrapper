@@ -72,6 +72,24 @@ describe("Card", () => {
     });
   });
 
+  describe("getScryfallImageUrl", () => {
+    it("returns a url for the card image", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.getScryfallImageUrl()).toBe(
+        "https://api.scryfall.com/cards/named?format=image&exact=Sydri%2C%20Galvanic%20Genius"
+      );
+    });
+
+    it("can pass a version string", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.getScryfallImageUrl("art_crop")).toBe(
+        "https://api.scryfall.com/cards/named?format=image&exact=Sydri%2C%20Galvanic%20Genius&version=art_crop"
+      );
+    });
+  });
+
   describe("toString", () => {
     it("returns the raw name", () => {
       const card = new Card("Sydri, Galvanic Genius");

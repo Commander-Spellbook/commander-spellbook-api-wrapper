@@ -57,6 +57,16 @@ export default class Card {
     return scryfall.getCard(this.name, "exactName");
   }
 
+  getScryfallImageUrl(version?: string): string {
+    let src = this.cardImageURI;
+
+    if (version) {
+      src = `${src}&version=art_crop`;
+    }
+
+    return src;
+  }
+
   toString(): string {
     return this.name;
   }
@@ -64,11 +74,7 @@ export default class Card {
   toImage(version?: string): HTMLImageElement {
     const img = document.createElement("img");
     img.alt = this.name;
-    img.src = this.cardImageURI;
-
-    if (version) {
-      img.src = `${img.src}&version=art_crop`;
-    }
+    img.src = this.getScryfallImageUrl(version);
 
     return img;
   }
