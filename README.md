@@ -181,7 +181,6 @@ Returns a url that can be used to display the card using an image from Scryfall.
 
 ```js
 const url = card.getScryfallImageUrl(); // https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter
-
 ```
 
 A string may be passed as an argument to specify what kind of image you would like. See the [Scryfyall `version` documentation](https://scryfall.com/docs/api/cards/named) for more details. The possible values are:
