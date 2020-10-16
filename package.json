@@ -1,6 +1,6 @@
 {
   "name": "comander-spellbook",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A wrapper for parsing the commander spellbook api.",
   "main": "dist/index.js",
   "files": [
