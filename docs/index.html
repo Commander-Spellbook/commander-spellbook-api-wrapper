@@ -4,235 +4,79 @@
     <meta charset="UTF-8" />
     <title>Commander Spellbook Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"
-    />
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-    <section class="hero">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">Commander Spellbook API</h1>
+    <section class="container mx-auto">
+      <form id="combo-form" class="w-full m-2">
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="px-3 w-1/4"></div>
+          <div class="px-3 w-1/2">
+            <label
+              class="block tracking-wide text-gray-700 text-xs mb-2"
+              for="cards-input"
+            >
+              <span class="font-bold">Cards</span>
+              <span class="text-gray-600"
+                >(separate card names with new lines)</span
+              >
+            </label>
+            <textarea
+              class="text-input"
+              type="text"
+              id="cards-input"
+              placeholder="Card Name"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="px-3 w-1/4"></div>
+          <div class="px-3 w-1/2">
+            <label class="block tracking-wide text-gray-700 text-xs mb-2">
+              <span class="font-bold">Color Identity Filter</span>
+            </label>
+            <div
+              class="flex flex-wrap items-center justify-center text-center border border-gray-400 rounded p-2"
+            >
+              <div
+                data-mana-symbol="w"
+                class="color-filter-input mana-symbol"
+              ></div>
+              <div
+                data-mana-symbol="u"
+                class="color-filter-input mana-symbol"
+              ></div>
+              <div
+                data-mana-symbol="b"
+                class="color-filter-input mana-symbol"
+              ></div>
+              <div
+                data-mana-symbol="r"
+                class="color-filter-input mana-symbol"
+              ></div>
+              <div
+                data-mana-symbol="g"
+                class="color-filter-input mana-symbol"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="container mx-auto">
+      <div id="loader" class="mt-8 flex flex-col justify-center items-center">
+        <div
+          class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-400"
+        ></div>
+        <div id="loader-text" class="mt-4 text-gray-700 text-sm">
+          (waiting for you to input card names)
         </div>
       </div>
+      <div id="results" class="flex flex-wrap"></div>
     </section>
-    <section class="section">
-      <div class="container">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-1">Card 1</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-1"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-2">Card 2</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-2"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-3">Card 3</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-3"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-4">Card 4</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-4"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-5">Card 5</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-5"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-6">Card 6</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-6"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-7">Card 7</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-7"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-8">Card 8</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-8"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-9">Card 9</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-9"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label" for="card-10">Card 10</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input
-                  class="input"
-                  id="card-10"
-                  type="text"
-                  placeholder="Card Name"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <!-- Left empty for spacing -->
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <button id="submit" class="button is-primary">
-                  Look up Combos
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="table-container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th style="width: 13%">Cards</th>
-              <th style="width: 33%">Prerequisites</th>
-              <th style="width: 33%">Steps</th>
-              <th style="width: 21%">Result</th>
-            </tr>
-          </thead>
-          <tbody id="table-body"></tbody>
-        </table>
-      </div>
-    </section>
     <script src="script.js"></script>
   </body>
 </html>

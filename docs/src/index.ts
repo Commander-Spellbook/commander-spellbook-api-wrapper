@@ -1,63 +1,71 @@
-"use strict";
-
+import scryfall = require("scryfall-client");
 import spellbook = require("../../src/");
-import type { FormattedApiResponse } from "../../src/types";
+import debounce from "./debounce";
+import renderResults from "./render-results";
+import "./index.css";
 
-const button = document.getElementById("submit") as HTMLButtonElement;
+const form = document.getElementById("combo-form") as HTMLFormElement;
+const results = document.getElementById("results") as HTMLDivElement;
+const colorIdentity = ["w", "u", "b", "r", "g"];
 
-function renderResults(combos: FormattedApiResponse[]) {
-  const table = document.getElementById(
-    "table-body"
-  ) as HTMLTableSectionElement;
-  table.innerHTML = "";
-  combos.forEach((combo) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td></td>
-    `;
+const cards = document.getElementById("cards-input") as HTMLTextAreaElement;
+Array.from(document.querySelectorAll<HTMLSpanElement>(".mana-symbol")).forEach(
+  (manaSymbolElement) => {
+    const manaSymbol = manaSymbolElement.getAttribute(
+      "data-mana-symbol"
+    ) as string;
+    const img = document.createElement("img");
 
-    const td = document.createElement("td");
-    td.classList.add("spellbook-image");
-    combo.cards.forEach((card) => {
-      const p = document.createElement("p");
-      p.appendChild(card.toHTML());
-      td.appendChild(p);
-    });
-    row.appendChild(td);
-    [combo.prerequisites, combo.steps, combo.result].forEach((list) => {
-      const td = document.createElement("td");
-      td.classList.add("spellbook-list");
-      td.appendChild(list.toHTMLOrderedList());
+    img.src = scryfall.getSymbolUrl(manaSymbol);
 
-      row.appendChild(td);
-    });
+    manaSymbolElement.appendChild(img);
+  }
+);
+Array.from(
+  document.querySelectorAll<HTMLSpanElement>(".color-filter-input")
+).forEach((el) => {
+  const manaSymbol = el.getAttribute("data-mana-symbol") as string;
+  el.addEventListener("click", () => {
+    if (el.classList.contains("opacity-25")) {
+      el.classList.remove("opacity-25");
+      colorIdentity.push(manaSymbol);
+    } else {
+      el.classList.add("opacity-25");
+      const index = colorIdentity.indexOf(manaSymbol);
+      colorIdentity.splice(index, 1);
+    }
 
-    table.appendChild(row);
+    search(colorIdentity.join(""));
   });
-}
+});
 
-button.addEventListener("click", () => {
-  button.setAttribute("disabled", "true");
-  const cards = Array.from(
-    document.querySelectorAll<HTMLInputElement>("input.input")
-  )
-    .map((input) => {
-      return input.value;
-    })
-    .filter((value) => value);
+function search(colorIdentity: string) {
+  if (!cards.value || cards.value.length < 4) {
+    return;
+  }
 
-  if (cards.length === 0) {
-    button.removeAttribute("disabled");
+  const value = cards.value.split("\n").filter((v) => v);
+
+  if (value.length === 0) {
     return;
   }
 
   spellbook
     .search({
-      cards,
+      cards: value,
+      colorIdentity,
     })
     .then((combos) => {
-      renderResults(combos);
-
-      button.removeAttribute("disabled");
+      renderResults(results, combos);
     });
-});
+}
+cards.addEventListener(
+  "input",
+  debounce(
+    () => {
+      search(colorIdentity.join(""));
+    },
+    500,
+    false
+  )
+);

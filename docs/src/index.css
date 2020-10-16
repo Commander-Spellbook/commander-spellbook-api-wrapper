@@ -1,0 +1,68 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.btn {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 border-b-4 border-blue-700 rounded;
+}
+
+.btn:active {
+  @apply border-b-2;
+}
+
+.btn:hover {
+  @apply bg-blue-400 border-blue-500;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed border-b-2;
+}
+
+.btn:disabled:hover {
+  @apply bg-blue-500 border-blue-700;
+}
+
+.text-input {
+  @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+}
+
+.text-input:focus {
+  @apply outline-none bg-white border-gray-500;
+}
+
+.spellbook-ci,
+.spellbook-card-names {
+  width: 100%;
+}
+
+.spellbook-ci img {
+  display: inline;
+  width: 30px;
+  @apply mx-1;
+}
+
+.spellbook-card-prerequisites img,
+.spellbook-card-steps img {
+  width: 15px;
+  display: inline-block;
+  margin-top: -3px;
+}
+
+.spellbook-art-crop {
+  display: block;
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.mana-symbol {
+  @apply m-2;
+}
+
+.mana-symbol img {
+  width: 50px;
+  display: inline-block;
+}
