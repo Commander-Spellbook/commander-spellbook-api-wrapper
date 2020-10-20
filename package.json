@@ -1,5 +1,5 @@
 {
-  "name": "comander-spellbook",
+  "name": "commander-spellbook",
   "version": "0.1.0",
   "description": "A wrapper for parsing the commander spellbook api.",
   "main": "dist/index.js",
