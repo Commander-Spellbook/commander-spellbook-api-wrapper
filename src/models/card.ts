@@ -61,7 +61,7 @@ export default class Card {
     let src = this.cardImageURI;
 
     if (version) {
-      src = `${src}&version=art_crop`;
+      src = `${src}&version=${version}`;
     }
 
     return src;
