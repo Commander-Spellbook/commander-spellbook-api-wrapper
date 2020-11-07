@@ -11,16 +11,16 @@ describe("built file (be patient, this can take a while)", function () {
   let pathToBuild: string;
 
   beforeAll((done) => {
-    config.entry = path.resolve(__dirname, "..", "..", "src", "index.ts");
-    config.output.path = path.resolve(
+    const outputPath = path.resolve(
       __dirname,
       "..",
       "..",
       "publishing-test-dist"
     );
+    config.entry = path.resolve(__dirname, "..", "..", "src", "index.ts");
+    config.output.path = outputPath;
     config.output.filename = "browser.js";
-
-    console.log(config.output.path);
+    fs.mkdirSync(outputPath);
 
     pathToBuild = path.resolve(config.output.path, config.output.filename);
 
