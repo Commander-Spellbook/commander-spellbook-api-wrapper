@@ -10,7 +10,7 @@ import fs = require("fs");
 describe("built file (be patient, this can take a while)", function () {
   let pathToBuild: string;
 
-  beforeAll(function (done) {
+  beforeAll((done) => {
     config.entry = path.resolve(__dirname, "..", "..", "src", "index.ts");
     config.output.path = path.resolve(
       __dirname,
@@ -38,7 +38,7 @@ describe("built file (be patient, this can take a while)", function () {
 
   it("is es5 compliant", function (done) {
     checkES5(pathToBuild, done);
-  });
+  }, 20000);
 
   it("is less then 90 KiB unminified", function (done) {
     fs.stat(pathToBuild, function (err, stats) {
