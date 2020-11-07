@@ -36,11 +36,11 @@ describe("built file (be patient, this can take a while)", function () {
 
       done();
     });
-  });
+  }, 20000);
 
   it("is es5 compliant", function (done) {
     checkES5(pathToBuild, done);
-  });
+  }, 20000);
 
   it("is less then 90 KiB unminified", function (done) {
     fs.stat(pathToBuild, function (err, stats) {
