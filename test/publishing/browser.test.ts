@@ -20,6 +20,8 @@ describe("built file (be patient, this can take a while)", function () {
     );
     config.output.filename = "browser.js";
 
+    console.log(config.output.path);
+
     pathToBuild = path.resolve(config.output.path, config.output.filename);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,7 +40,7 @@ describe("built file (be patient, this can take a while)", function () {
 
   it("is es5 compliant", function (done) {
     checkES5(pathToBuild, done);
-  }, 20000);
+  });
 
   it("is less then 90 KiB unminified", function (done) {
     fs.stat(pathToBuild, function (err, stats) {
