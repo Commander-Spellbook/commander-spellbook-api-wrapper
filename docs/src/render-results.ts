@@ -3,7 +3,7 @@ import type { FormattedApiResponse } from "../../src/types";
 export default function renderResults(
   resultsNode: HTMLDivElement,
   combos: FormattedApiResponse[]
-) {
+): void {
   const cardElements = combos.map((combo) => {
     const id = String(combo.commanderSpellbookId);
     const existingNode = document.querySelector(`[data-spellbook-id="${id}"]`);

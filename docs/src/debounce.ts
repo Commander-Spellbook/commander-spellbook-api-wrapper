@@ -1,10 +1,12 @@
 // adapted from https://davidwalsh.name/javascript-debounce-function
 
+type UnknownFunction = (...args: unknown[]) => void;
+
 export default function debounce(
-  func: (...args: unknown[]) => void,
+  func: UnknownFunction,
   wait: number,
   immediate: boolean
-) {
+): UnknownFunction {
   let timeout: ReturnType<typeof setTimeout> | null;
 
   return (...args: unknown[]) => {

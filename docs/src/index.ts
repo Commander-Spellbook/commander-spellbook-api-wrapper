@@ -4,7 +4,6 @@ import debounce from "./debounce";
 import renderResults from "./render-results";
 import "./index.css";
 
-const form = document.getElementById("combo-form") as HTMLFormElement;
 const results = document.getElementById("results") as HTMLDivElement;
 const colorIdentity = ["w", "u", "b", "r", "g"];
 
