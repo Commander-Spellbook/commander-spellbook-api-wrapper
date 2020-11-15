@@ -10,10 +10,8 @@ import type {
 
 const API_ENDPOINT =
   "https://sheets.googleapis.com/v4/spreadsheets/1JJo8MzkpuhfvsaKVFVlOoNymscCt-Aw-1sob2IhpwXY/values:batchGet?ranges=combos!A2:Q&key=AIzaSyDzQ0jCf3teHnUK17ubaLaV6rcWf9ZjG5E";
-const SIX_HOURS = 2160000;
 
 let cachedPromise: Promise<FormattedApiResponse[]>;
-let cachePromiseTimeout: ReturnType<typeof setTimeout>;
 let useCachedResponse = false;
 
 function formatApiResponse(
@@ -74,14 +72,9 @@ export default function lookupApi(): Promise<FormattedApiResponse[]> {
 
   useCachedResponse = true;
 
-  cachePromiseTimeout = setTimeout(() => {
-    useCachedResponse = false;
-  }, SIX_HOURS);
-
   return cachedPromise;
 }
 
 export function resetCache(): void {
-  clearTimeout(cachePromiseTimeout);
   useCachedResponse = false;
 }
