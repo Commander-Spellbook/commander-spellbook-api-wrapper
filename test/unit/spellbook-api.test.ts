@@ -124,9 +124,7 @@ describe("api", () => {
     expect(superagent.get).toBeCalledTimes(1);
   });
 
-  it("caches for 6 hours", async () => {
-    jest.useFakeTimers();
-
+  it("can do a fresh lookup when resetting the cache manually", async () => {
     const firstResult = await lookup();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -144,15 +142,11 @@ describe("api", () => {
       },
     });
 
-    jest.advanceTimersByTime(2159999);
+    resetCache();
 
     const secondResult = await lookup();
-    expect(firstResult).toBe(secondResult);
 
-    jest.advanceTimersByTime(2);
-
-    const thirdResult = await lookup();
-    expect(firstResult).not.toBe(thirdResult);
+    expect(firstResult).not.toBe(secondResult);
 
     expect(superagent.get).toBeCalledTimes(2);
   });
