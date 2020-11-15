@@ -7,7 +7,7 @@ const config = require("../../webpack.config");
 import path = require("path");
 import fs = require("fs");
 
-describe("built file (be patient, this can take a while)", function () {
+describe("built file (be patient, this can take a while)", () => {
   let pathToBuild: string;
 
   beforeAll((done) => {
@@ -20,6 +20,7 @@ describe("built file (be patient, this can take a while)", function () {
     config.entry = path.resolve(__dirname, "..", "..", "src", "index.ts");
     config.output.path = outputPath;
     config.output.filename = "browser.js";
+    fs.rmdirSync(outputPath, { recursive: true });
     fs.mkdirSync(outputPath);
 
     pathToBuild = path.resolve(config.output.path, config.output.filename);
@@ -27,7 +28,7 @@ describe("built file (be patient, this can take a while)", function () {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     webpack(config, (err: Error, stats: any) => {
       if (err || stats.hasErrors()) {
-        console.log(err);
+        console.log(err.message);
         console.log(stats && stats.toJson("minimal"));
         done(new Error("something went wrong"));
 
@@ -38,12 +39,12 @@ describe("built file (be patient, this can take a while)", function () {
     });
   }, 20000);
 
-  it("is es5 compliant", function (done) {
+  it("is es5 compliant", (done) => {
     checkES5(pathToBuild, done);
   }, 20000);
 
-  it("is less then 90 KiB unminified", function (done) {
-    fs.stat(pathToBuild, function (err, stats) {
+  it("is less then 90 KiB unminified", (done) => {
+    fs.stat(pathToBuild, (err, stats) => {
       if (err) {
         done(err);
 
