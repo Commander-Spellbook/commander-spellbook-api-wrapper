@@ -1,4 +1,4 @@
-# unreleased
+# 0.2.0
 
 - Add support for searching by id
 - Add support for searching by prerequisites, steps and results
