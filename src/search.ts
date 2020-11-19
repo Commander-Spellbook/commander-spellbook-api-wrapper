@@ -67,14 +67,14 @@ export default async function search(
     );
   }
 
-  if (searchParams.result.include.length > 0) {
+  if (searchParams.results.include.length > 0) {
     combos = combos.filter((combo) =>
-      combo.result.matches(searchParams.result.include)
+      combo.results.matches(searchParams.results.include)
     );
   }
-  if (searchParams.result.exclude.length > 0) {
+  if (searchParams.results.exclude.length > 0) {
     combos = combos.filter(
-      (combo) => !combo.result.matches(searchParams.result.exclude)
+      (combo) => !combo.results.matches(searchParams.results.exclude)
     );
   }
 

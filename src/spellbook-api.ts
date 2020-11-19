@@ -42,7 +42,7 @@ function formatApiResponse(
       const colorIdentity = new ColorIdentity(combo[11]);
       const prerequisites = SpellbookList.create(combo[12]);
       const steps = SpellbookList.create(combo[13]);
-      const result = SpellbookList.create(combo[14]);
+      const results = SpellbookList.create(combo[14]);
 
       return {
         commanderSpellbookId: id,
@@ -51,7 +51,7 @@ function formatApiResponse(
         colorIdentity,
         prerequisites,
         steps,
-        result,
+        results,
       };
     });
 }

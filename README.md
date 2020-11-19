@@ -70,7 +70,7 @@ The resulting object will be an array of combos that have this shape:
   colorIdentity: ColorIdentity;
   prerequisites: SpellbookList;
   steps: SpellbookList;
-  result: SpellbookList;
+  results: SpellbookList;
 }
 ```
 

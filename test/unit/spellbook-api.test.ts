@@ -166,7 +166,7 @@ describe("api", () => {
     expect(combos[0].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[0].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[0].steps).toBeInstanceOf(SpellbookList);
-    expect(combos[0].result).toBeInstanceOf(SpellbookList);
+    expect(combos[0].results).toBeInstanceOf(SpellbookList);
 
     expect(combos[1]).toEqual(
       expect.objectContaining({
@@ -181,7 +181,7 @@ describe("api", () => {
     expect(combos[1].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[1].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[1].steps).toBeInstanceOf(SpellbookList);
-    expect(combos[1].result).toBeInstanceOf(SpellbookList);
+    expect(combos[1].results).toBeInstanceOf(SpellbookList);
 
     expect(combos[2]).toEqual(
       expect.objectContaining({
@@ -197,7 +197,7 @@ describe("api", () => {
     expect(combos[2].colorIdentity).toBeInstanceOf(ColorIdentity);
     expect(combos[2].prerequisites).toBeInstanceOf(SpellbookList);
     expect(combos[2].steps).toBeInstanceOf(SpellbookList);
-    expect(combos[2].result).toBeInstanceOf(SpellbookList);
+    expect(combos[2].results).toBeInstanceOf(SpellbookList);
   });
 
   it("ignores combo results with fewer than the correct number of columns in the spreadsheet", async () => {

@@ -22,7 +22,7 @@ export type FormattedApiResponse = {
   colorIdentity: ColorIdentity;
   prerequisites: SpellbookList;
   steps: SpellbookList;
-  result: SpellbookList;
+  results: SpellbookList;
 };
 
 export type ColorIdentityColors = "w" | "u" | "b" | "r" | "g" | "c";
@@ -42,7 +42,7 @@ export type SearchParameters = {
   cards: IncludeExclude;
   prerequisites: IncludeExclude;
   steps: IncludeExclude;
-  result: IncludeExclude;
+  results: IncludeExclude;
   id?: string;
   colorIdentity?: ColorIdentityColors[];
   errors: SearchError[];

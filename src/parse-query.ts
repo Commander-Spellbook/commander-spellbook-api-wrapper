@@ -47,19 +47,29 @@ function collectKeywordedQueries(
       case "-card":
         params.cards.exclude.push(value);
         break;
+      case "prerequisite":
       case "prerequisites":
-      case "steps":
-      case "result":
-        params[key].include.push(value);
+        params.prerequisites.include.push(value);
         break;
+      case "-prerequisite":
       case "-prerequisites":
         params.prerequisites.exclude.push(value);
         break;
+      case "step":
+      case "steps":
+        params.steps.include.push(value);
+        break;
+      case "-step":
       case "-steps":
         params.steps.exclude.push(value);
         break;
+      case "result":
+      case "results":
+        params.results.include.push(value);
+        break;
       case "-result":
-        params.result.exclude.push(value);
+      case "-results":
+        params.results.exclude.push(value);
         break;
       default:
         params.errors = params.errors || [];
@@ -107,7 +117,7 @@ export default function parseQuery(query: string): SearchParameters {
       include: [],
       exclude: [],
     },
-    result: {
+    results: {
       include: [],
       exclude: [],
     },

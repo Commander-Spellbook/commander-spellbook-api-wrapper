@@ -17,7 +17,7 @@ describe("search", () => {
         colorIdentity: new ColorIdentity("r,g"),
         prerequisites: SpellbookList.create("Step 1. Step 2"),
         steps: SpellbookList.create("Step 1. Step 2"),
-        result: SpellbookList.create("Step 1. Step 2"),
+        results: SpellbookList.create("Step 1. Step 2"),
       },
     ]);
 

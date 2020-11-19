@@ -31,7 +31,7 @@ describe("parseQuery", () => {
         include: [],
         exclude: [],
       },
-      result: {
+      results: {
         include: [],
         exclude: [],
       },
@@ -73,7 +73,7 @@ describe("parseQuery", () => {
 
   it("can parse a mix of all queries", () => {
     const result = parseQuery(
-      "Kiki ci:wbr card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step result:result -prerequisites:xprereq -steps:xstep -result:xresult"
+      "Kiki ci:wbr card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
     );
 
     expect(result).toEqual({
@@ -91,7 +91,7 @@ describe("parseQuery", () => {
         include: ["step"],
         exclude: ["xstep"],
       },
-      result: {
+      results: {
         include: ["result"],
         exclude: ["xresult"],
       },
@@ -276,7 +276,7 @@ describe("parseQuery", () => {
     );
   });
 
-  it.each(["prerequisites", "steps", "result"])("parses %s", (kind) => {
+  it.each(["prerequisites", "steps", "results"])("parses %s", (kind) => {
     const result = parseQuery(
       `${kind}:foo ${kind}:"thing in quotes" -${kind}:"excluded thing"`
     );
@@ -291,4 +291,23 @@ describe("parseQuery", () => {
       })
     );
   });
+
+  it.each(["prerequisite", "step", "result"])(
+    "parses %ss in singluar form",
+    (kind) => {
+      const result = parseQuery(
+        `${kind}:foo ${kind}:"thing in quotes" -${kind}:"excluded thing"`
+      );
+
+      expect(result).toEqual(
+        expect.objectContaining({
+          [`${kind}s`]: {
+            exclude: ["excluded thing"],
+            include: ["foo", "thing in quotes"],
+          },
+          errors: [],
+        })
+      );
+    }
+  );
 });

@@ -80,11 +80,11 @@ describe("Commander Spellbook", () => {
   });
 
   it("looks up specific result in combos", async () => {
-    const combos = await spellbook.search("result:Infinite");
+    const combos = await spellbook.search("results:Infinite");
 
     expect(combos.length).toBeGreaterThan(0);
     const hasWordInfiniteInResult = combos.every((combo) => {
-      return combo.result.find(
+      return combo.results.find(
         (res) => res.toLowerCase().indexOf("infinite") > -1
       );
     });
