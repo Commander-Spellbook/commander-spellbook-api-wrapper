@@ -43,20 +43,18 @@ function search(colorIdentity: string) {
     return;
   }
 
-  const value = cards.value.split("\n").filter((v) => v);
+  const value = cards.value
+    .split("\n")
+    .filter((v) => v)
+    .join("");
 
   if (value.length === 0) {
     return;
   }
 
-  spellbook
-    .search({
-      cards: value,
-      colorIdentity,
-    })
-    .then((combos) => {
-      renderResults(results, combos);
-    });
+  spellbook.search(`${value} ci:${colorIdentity}`).then((combos) => {
+    renderResults(results, combos);
+  });
 }
 cards.addEventListener(
   "input",

@@ -39,9 +39,11 @@ spellbook.seach("sydri scepter").then((combos) => {
 Full or partial card names can also be used.
 
 ```js
-spellbook.seach("card:'Arjun, the Shifting Flame' card:\"Thought Reflection\"").then((combos) => {
-  // all combos that include cards with the name Arjun, the Shifting Flrame and Thought Reflection
-});
+spellbook
+  .seach("card:'Arjun, the Shifting Flame' card:\"Thought Reflection\"")
+  .then((combos) => {
+    // all combos that include cards with the name Arjun, the Shifting Flrame and Thought Reflection
+  });
 ```
 
 You can also query by color identity using `ci` or `coloridentity`.
@@ -55,9 +57,13 @@ spellbook.seach("Kiki ci:wbr").then((combos) => {
 You can also query by the prequisites, steps and results in the combo.
 
 ```js
-spellbook.seach("prequisites:'all permanents' steps:'Untap all' results:'infinite' results:'mana'").then((combos) => {
-  // all combos that include the prerequisites, steps and results
-});
+spellbook
+  .seach(
+    "prequisites:'all permanents' steps:'Untap all' results:'infinite' results:'mana'"
+  )
+  .then((combos) => {
+    // all combos that include the prerequisites, steps and results
+  });
 ```
 
 The resulting object will be an array of combos that have this shape:

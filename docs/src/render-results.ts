@@ -45,7 +45,7 @@ export default function renderResults(
                 Results
               </p>
               <div class="mt-2">
-                ${combo.result
+                ${combo.results
                   .map((r) => {
                     return (
                       '<span class="inline-block bg-gray-200 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">' +
