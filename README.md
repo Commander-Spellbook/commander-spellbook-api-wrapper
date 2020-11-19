@@ -51,7 +51,7 @@ One or both properties must be used. The resulting object will be an array of co
 }
 ```
 
-- `commanderSpellbookId` is the id in the commander spellbook database.
+- `commanderSpellbookId` is the id in the commander spellbook database as a string.
 - `permalink` is the link available to view the combo on the commander spellbook website.
 - `cards` is an array of [Card](#card) objects.
 - `colorIdentity` is a [ColorIdentity](#coloridentity) object indicating the color identity of the combo

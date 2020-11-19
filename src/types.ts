@@ -16,7 +16,7 @@ export type CommanderSpellbookAPIResponse = {
 };
 
 export type FormattedApiResponse = {
-  commanderSpellbookId: number;
+  commanderSpellbookId: string;
   permalink: string;
   cards: CardGrouping;
   colorIdentity: ColorIdentity;

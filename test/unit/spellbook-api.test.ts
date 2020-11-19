@@ -156,7 +156,7 @@ describe("api", () => {
 
     expect(combos[0]).toEqual(
       expect.objectContaining({
-        commanderSpellbookId: 1,
+        commanderSpellbookId: "1",
         permalink: "https://commanderspellbook.com/?id=1",
       })
     );
@@ -170,7 +170,7 @@ describe("api", () => {
 
     expect(combos[1]).toEqual(
       expect.objectContaining({
-        commanderSpellbookId: 2,
+        commanderSpellbookId: "2",
         permalink: "https://commanderspellbook.com/?id=2",
       })
     );
@@ -185,7 +185,7 @@ describe("api", () => {
 
     expect(combos[2]).toEqual(
       expect.objectContaining({
-        commanderSpellbookId: 3,
+        commanderSpellbookId: "3",
         permalink: "https://commanderspellbook.com/?id=3",
       })
     );
@@ -206,8 +206,8 @@ describe("api", () => {
     const combos = await lookup();
 
     expect(combos.length).toBe(2);
-    expect(combos[0].commanderSpellbookId).toBe(1);
-    expect(combos[1].commanderSpellbookId).toBe(3);
+    expect(combos[0].commanderSpellbookId).toBe("1");
+    expect(combos[1].commanderSpellbookId).toBe("3");
   });
 
   it("ignores combo results without a card 1 value", async () => {
@@ -216,8 +216,8 @@ describe("api", () => {
     const combos = await lookup();
 
     expect(combos.length).toBe(2);
-    expect(combos[0].commanderSpellbookId).toBe(1);
-    expect(combos[1].commanderSpellbookId).toBe(3);
+    expect(combos[0].commanderSpellbookId).toBe("1");
+    expect(combos[1].commanderSpellbookId).toBe("3");
   });
 
   it("ignores combo results without a color identity value", async () => {
@@ -226,7 +226,7 @@ describe("api", () => {
     const combos = await lookup();
 
     expect(combos.length).toBe(2);
-    expect(combos[0].commanderSpellbookId).toBe(1);
-    expect(combos[1].commanderSpellbookId).toBe(3);
+    expect(combos[0].commanderSpellbookId).toBe("1");
+    expect(combos[1].commanderSpellbookId).toBe("3");
   });
 });

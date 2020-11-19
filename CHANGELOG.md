@@ -1,6 +1,9 @@
 # unreleased
 
-- Require manual cache busting
+_Breaking Changes_
+
+- Spellbook lookup now requires manually cache busting instead of automatically refreshing after 6 hours
+- `commanderSpellbookId` is now a `string` instead of a `number`
 
 # 0.1.1
 

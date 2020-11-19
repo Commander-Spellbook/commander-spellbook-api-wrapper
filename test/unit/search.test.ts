@@ -11,7 +11,7 @@ describe("search", () => {
   beforeEach(() => {
     mocked(lookup).mockResolvedValue([
       {
-        commanderSpellbookId: 1,
+        commanderSpellbookId: "1",
         permalink: "https://commanderspellbook.com/?id=1",
         cards: CardGrouping.create(["Card 1", "Card 2"]),
         colorIdentity: new ColorIdentity("r,g"),

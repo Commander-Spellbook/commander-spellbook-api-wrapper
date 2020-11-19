@@ -45,7 +45,7 @@ function formatApiResponse(
       const result = SpellbookList.create(combo[14]);
 
       return {
-        commanderSpellbookId: Number(id),
+        commanderSpellbookId: id,
         permalink: `https://commanderspellbook.com/?id=${id}`,
         cards,
         colorIdentity,
