@@ -26,3 +26,18 @@ export type FormattedApiResponse = {
 };
 
 export type ColorIdentityColors = "w" | "u" | "b" | "r" | "g" | "c";
+
+export type SearchError = {
+  key: string;
+  value: string;
+  message: string;
+};
+export type SearchParameters = {
+  cards: {
+    include: string[];
+    exclude: string[];
+  };
+  id?: string;
+  colorIdentity?: ColorIdentityColors[];
+  errors: SearchError[];
+};
