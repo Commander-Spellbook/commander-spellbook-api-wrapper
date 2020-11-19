@@ -1,5 +1,8 @@
 # unreleased
 
+- Add support for searching by id
+- Add support for searching by prerequisites, steps and result
+
 _Breaking Changes_
 
 - Spellbook lookup now requires manually cache busting instead of automatically refreshing after 6 hours

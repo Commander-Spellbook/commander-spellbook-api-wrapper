@@ -28,6 +28,20 @@ describe("SpellbookList", () => {
     });
   });
 
+  describe("matches", () => {
+    it("returns true if every item matches", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+
+      expect(list.matches(["step", "2", "3"])).toBe(true);
+    });
+
+    it("returns false if any item does not match", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+
+      expect(list.matches(["step", "foo", "2", "3"])).toBe(false);
+    });
+  });
+
   describe("toString", () => {
     it("renders as the raw string passed in", () => {
       const list = SpellbookList.create("Step 1. Step 2. Step 3.");

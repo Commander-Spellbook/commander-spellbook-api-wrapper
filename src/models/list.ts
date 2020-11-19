@@ -26,6 +26,12 @@ export default class SpellbookList extends Array<string> {
     return list;
   }
 
+  matches(items: string[]): boolean {
+    return items.every((item) =>
+      this.find((i) => i.toLowerCase().indexOf(item.toLowerCase()) > -1)
+    );
+  }
+
   toString(): string {
     return this.rawString;
   }

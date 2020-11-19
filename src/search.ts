@@ -44,5 +44,39 @@ export default async function search(
     );
   }
 
+  if (searchParams.prerequisites.include.length > 0) {
+    combos = combos.filter((combo) =>
+      combo.prerequisites.matches(searchParams.prerequisites.include)
+    );
+  }
+  if (searchParams.prerequisites.exclude.length > 0) {
+    combos = combos.filter(
+      (combo) =>
+        !combo.prerequisites.matches(searchParams.prerequisites.exclude)
+    );
+  }
+
+  if (searchParams.steps.include.length > 0) {
+    combos = combos.filter((combo) =>
+      combo.steps.matches(searchParams.steps.include)
+    );
+  }
+  if (searchParams.steps.exclude.length > 0) {
+    combos = combos.filter(
+      (combo) => !combo.steps.matches(searchParams.steps.exclude)
+    );
+  }
+
+  if (searchParams.result.include.length > 0) {
+    combos = combos.filter((combo) =>
+      combo.result.matches(searchParams.result.include)
+    );
+  }
+  if (searchParams.result.exclude.length > 0) {
+    combos = combos.filter(
+      (combo) => !combo.result.matches(searchParams.result.exclude)
+    );
+  }
+
   return combos;
 }

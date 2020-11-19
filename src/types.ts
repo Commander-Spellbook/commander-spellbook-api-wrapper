@@ -32,11 +32,17 @@ export type SearchError = {
   value: string;
   message: string;
 };
+
+export type IncludeExclude = {
+  include: string[];
+  exclude: string[];
+};
+
 export type SearchParameters = {
-  cards: {
-    include: string[];
-    exclude: string[];
-  };
+  cards: IncludeExclude;
+  prerequisites: IncludeExclude;
+  steps: IncludeExclude;
+  result: IncludeExclude;
   id?: string;
   colorIdentity?: ColorIdentityColors[];
   errors: SearchError[];

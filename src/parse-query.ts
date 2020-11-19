@@ -47,6 +47,20 @@ function collectKeywordedQueries(
       case "-card":
         params.cards.exclude.push(value);
         break;
+      case "prerequisites":
+      case "steps":
+      case "result":
+        params[key].include.push(value);
+        break;
+      case "-prerequisites":
+        params.prerequisites.exclude.push(value);
+        break;
+      case "-steps":
+        params.steps.exclude.push(value);
+        break;
+      case "-result":
+        params.result.exclude.push(value);
+        break;
       default:
         params.errors = params.errors || [];
         params.errors.push({
@@ -82,6 +96,18 @@ function collectPlainNameQueries(
 export default function parseQuery(query: string): SearchParameters {
   const parameters = {
     cards: {
+      include: [],
+      exclude: [],
+    },
+    prerequisites: {
+      include: [],
+      exclude: [],
+    },
+    steps: {
+      include: [],
+      exclude: [],
+    },
+    result: {
       include: [],
       exclude: [],
     },
