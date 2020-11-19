@@ -47,10 +47,12 @@ function collectKeywordedQueries(
       case "-card":
         params.cards.exclude.push(value);
         break;
+      case "pre":
       case "prerequisite":
       case "prerequisites":
         params.prerequisites.include.push(value);
         break;
+      case "-pre":
       case "-prerequisite":
       case "-prerequisites":
         params.prerequisites.exclude.push(value);

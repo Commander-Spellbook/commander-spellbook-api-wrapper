@@ -310,4 +310,20 @@ describe("parseQuery", () => {
       );
     }
   );
+
+  it("parses pre as prerequisites", () => {
+    const result = parseQuery(
+      `pre:foo pre:"thing in quotes" -pre:"excluded thing"`
+    );
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        prerequisites: {
+          exclude: ["excluded thing"],
+          include: ["foo", "thing in quotes"],
+        },
+        errors: [],
+      })
+    );
+  });
 });
