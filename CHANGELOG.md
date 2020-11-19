@@ -4,6 +4,7 @@ _Breaking Changes_
 
 - Spellbook lookup now requires manually cache busting instead of automatically refreshing after 6 hours
 - `commanderSpellbookId` is now a `string` instead of a `number`
+- Change signature for `search` to take a string instead of an object
 
 # 0.1.1
 

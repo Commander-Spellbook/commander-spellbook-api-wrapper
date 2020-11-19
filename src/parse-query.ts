@@ -5,7 +5,7 @@ function collectKeywordedQueries(
   query: string
 ): void {
   // captures keywords in the form key:value
-  const simpleQueryGroups = query.match(/(-)?\b[\w_]+:[^'"]\S+\b/gi) || [];
+  const simpleQueryGroups = query.match(/(-)?\b[\w_]+:[^'"\s]+\b/gi) || [];
   // captures keywords in the form key:"value inside double quotes'
   const queryGroupsWithDoubleQuotes =
     query.match(/(-)?\b[\w_]+:"[^"]+"/gi) || [];

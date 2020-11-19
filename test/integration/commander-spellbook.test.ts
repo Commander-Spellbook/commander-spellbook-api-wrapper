@@ -11,15 +11,20 @@ describe("Commander Spellbook", () => {
   });
 
   it("looks up all combos", async () => {
-    const combos = await spellbook.search();
+    const combos = await spellbook.search("");
 
     expect(combos.length).toBeGreaterThan(0);
   });
 
+  it("looks up specific id", async () => {
+    const combos = await spellbook.search("id:123");
+
+    expect(combos.length).toBe(1);
+    expect(combos[0].commanderSpellbookId).toBe("123");
+  });
+
   it("looks up specific cards", async () => {
-    const combos = await spellbook.search({
-      cards: ["Sydri"],
-    });
+    const combos = await spellbook.search("Sydri");
 
     expect(combos.length).toBeGreaterThan(0);
     combos.forEach((combo) => {
@@ -31,10 +36,21 @@ describe("Commander Spellbook", () => {
     });
   });
 
-  it("looks up specific color combos", async () => {
-    const combos = await spellbook.search({
-      colorIdentity: ["w", "r"],
+  it("can filter out specific cards", async () => {
+    const combos = await spellbook.search("-card:Sydri");
+
+    expect(combos.length).toBeGreaterThan(0);
+    combos.forEach((combo) => {
+      const hasSydriInCombo = combo.cards.find(
+        (card) => card.name === "Sydri, Galvanic Genius"
+      );
+
+      expect(hasSydriInCombo).toBeFalsy();
     });
+  });
+
+  it("looks up specific color combos", async () => {
+    const combos = await spellbook.search("ci:wr");
 
     expect(combos.length).toBeGreaterThan(0);
     combos.forEach((combo) => {

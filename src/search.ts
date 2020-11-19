@@ -1,26 +1,17 @@
 import lookupApi from "./spellbook-api";
+import parseQuery from "./parse-query";
 import normalizeStringInput from "./normalize-string-input";
 
 import type { ColorIdentityColors, FormattedApiResponse } from "./types";
-type SearchOptions = {
-  cards?: string[];
-  colorIdentity?: string | ColorIdentityColors[];
-};
 
 export default async function search(
-  options: SearchOptions = {}
+  query = ""
 ): Promise<FormattedApiResponse[]> {
-  let colorIdentity: ColorIdentityColors[] = [];
-  const cards = options.cards || [];
+  const searchParams = parseQuery(query);
+  const cards = searchParams.cards;
+  let colorIdentity = searchParams.colorIdentity || [];
 
-  if (options.colorIdentity) {
-    if (typeof options.colorIdentity === "string") {
-      colorIdentity = options.colorIdentity
-        .split("")
-        .filter((color) => /\w/.test(color)) as ColorIdentityColors[];
-    } else {
-      colorIdentity = options.colorIdentity;
-    }
+  if (colorIdentity) {
     colorIdentity = colorIdentity.map((color) =>
       normalizeStringInput(color)
     ) as ColorIdentityColors[];
@@ -28,8 +19,23 @@ export default async function search(
 
   let combos = await lookupApi();
 
-  if (cards.length > 0) {
-    combos = combos.filter((combo) => combo.cards.matches(cards));
+  if (searchParams.id) {
+    const matchingCombo = combos.find(
+      (combo) => combo.commanderSpellbookId === searchParams.id
+    );
+    if (matchingCombo) {
+      return [matchingCombo];
+    }
+
+    return [];
+  }
+
+  if (cards.include.length > 0) {
+    combos = combos.filter((combo) => combo.cards.matches(cards.include));
+  }
+
+  if (cards.exclude.length > 0) {
+    combos = combos.filter((combo) => !combo.cards.matches(cards.exclude));
   }
 
   if (colorIdentity.length > 0) {

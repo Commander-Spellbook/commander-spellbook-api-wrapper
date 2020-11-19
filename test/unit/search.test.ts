@@ -30,15 +30,13 @@ describe("search", () => {
   });
 
   it("looks up combos from api", async () => {
-    await search();
+    await search("");
 
     expect(lookup).toBeCalledTimes(1);
   });
 
   it("can filter by cards", async () => {
-    await search({
-      cards: ["Sydri", "Arjun", "Rashmi"],
-    });
+    await search("Sydri Arjun Rashmi");
 
     expect(CardGrouping.prototype.matches).toBeCalledTimes(1);
     expect(CardGrouping.prototype.matches).toBeCalledWith([
@@ -48,37 +46,15 @@ describe("search", () => {
     ]);
   });
 
+  it("can filter out cards", async () => {
+    await search("-card:Sydri");
+
+    expect(CardGrouping.prototype.matches).toBeCalledTimes(1);
+    expect(CardGrouping.prototype.matches).toBeCalledWith(["Sydri"]);
+  });
+
   it("can filter by color identity array", async () => {
-    await search({
-      colorIdentity: ["g", "r", "w"],
-    });
-
-    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
-    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
-  });
-
-  it("can filter by color identity string", async () => {
-    await search({
-      colorIdentity: "g,r,w",
-    });
-
-    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
-    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
-  });
-
-  it("can filter by color identity string with spaces", async () => {
-    await search({
-      colorIdentity: "g r w",
-    });
-
-    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
-    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
-  });
-
-  it("can filter by color identity without deliminator", async () => {
-    await search({
-      colorIdentity: "grw",
-    });
+    await search("ci:grw");
 
     expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
     expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);

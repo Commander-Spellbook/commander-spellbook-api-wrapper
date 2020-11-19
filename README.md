@@ -28,16 +28,31 @@ spellbook.seach().then((combos) => {
 });
 ```
 
-In addition, `search` takes an optional configuration object to filter the results:
+In addition, `search` takes an optional query string to filter the results.
 
 ```js
-{
-  cards?: Array<"strings representing card names">;
-  colorIdentity?: string | Array<string>;
-}
+spellbook.seach("sydri scepter").then((combos) => {
+  // all combos that include cards with the name sydri and scepter in them
+});
 ```
 
-One or both properties must be used. The resulting object will be an array of combos that have this shape:
+Full or partial card names can also be used.
+
+```js
+spellbook.seach("card:'Arjun, the Shifting Flame' card:\"Thought Reflection\"").then((combos) => {
+  // all combos that include cards with the name Arjun, the Shifting Flrame and Thought Reflection
+});
+```
+
+You can also query by color identity using `ci` or `coloridentity`.
+
+```js
+spellbook.seach("Kiki ci:wbr").then((combos) => {
+  // all combos that include cards with the name Kiki and have a white/black/red color identity
+});
+```
+
+The resulting object will be an array of combos that have this shape:
 
 ```js
 {
