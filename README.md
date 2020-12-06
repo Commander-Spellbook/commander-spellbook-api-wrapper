@@ -94,6 +94,16 @@ spellbook
   });
 ```
 
+## Random
+
+Look up a random combo using the `random` method:
+
+```js
+spellbook.seach().then((combo) => {
+  combo; // a randomly chosen combo
+});
+```
+
 ## Models
 
 The methods provided in the module typically return a combo object with with some special classes. The special classes are documented here:

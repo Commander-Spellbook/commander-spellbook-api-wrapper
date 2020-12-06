@@ -1,3 +1,7 @@
+# unreleased
+
+- Add `random` method
+
 # 0.2.0
 
 - Add support for searching by id
