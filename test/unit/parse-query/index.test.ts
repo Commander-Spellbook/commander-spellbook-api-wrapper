@@ -1,4 +1,4 @@
-import parseQuery from "../../src/parse-query";
+import parseQuery from "../../../src/parse-query";
 
 describe("parseQuery", () => {
   it("parses plain text into cards", () => {

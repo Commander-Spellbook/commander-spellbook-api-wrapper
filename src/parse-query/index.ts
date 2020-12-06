@@ -1,4 +1,4 @@
-import type { SearchParameters, ColorIdentityColors } from "./types";
+import type { SearchParameters, ColorIdentityColors } from "../types";
 
 function collectKeywordedQueries(
   params: SearchParameters,
