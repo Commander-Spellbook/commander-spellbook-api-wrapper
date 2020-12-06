@@ -3,6 +3,32 @@
 import spellbook = require("../../src/");
 
 describe("Commander Spellbook", () => {
+  describe("findById", () => {
+    it("returns a specified combo", async () => {
+      const combo = await spellbook.findById("1");
+
+      expect(combo.commanderSpellbookId).toBeTruthy();
+      expect(combo.permalink).toBeTruthy();
+      expect(combo.cards).toBeTruthy();
+      expect(combo.colorIdentity).toBeTruthy();
+      expect(combo.prerequisites).toBeTruthy();
+      expect(combo.steps).toBeTruthy();
+      expect(combo.results).toBeTruthy();
+    });
+
+    it("rejects when combo does not exist", async () => {
+      expect.assertions(1);
+
+      try {
+        await spellbook.findById("does-not-exist");
+      } catch (err) {
+        expect(err.message).toBe(
+          'Combo with id "does-not-exist" could not be found.'
+        );
+      }
+    });
+  });
+
   describe("search", () => {
     it("looks up all combos", async () => {
       const combos = await spellbook.search("");

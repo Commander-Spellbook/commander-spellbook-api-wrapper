@@ -1,6 +1,7 @@
 # unreleased
 
 - Add `random` method
+- Add `findById` method
 
 # 0.2.0
 

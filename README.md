@@ -46,6 +46,32 @@ The methods in this module typically resolve with an object or an array of objec
 
 See the [Models](#models) section for more information on the custom classes.
 
+## findById
+
+Look up a specific combo by the combos id
+
+```js
+spellbook.findById('123').then((combo) => {
+  combo; // combo with commanderSpellbookId '123'
+});
+```
+
+If a number is passed as the id, it will automatically be converted to a string:
+
+```js
+spellbook.findById(123).then((combo) => {
+  combo; // combo with commanderSpellbookId '123'
+});
+```
+
+If a combo with the specified id does not exist, the promise will reject.
+
+```js
+spellbook.findById('not-an-id').catch((err) => {
+  err.message; // 'Combo with id "not-an-id" could not be found.'
+});
+```
+
 ## Search
 
 Look up all the combos with the `search` method:
