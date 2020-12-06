@@ -20,6 +20,34 @@ The API that Commander Spellbook provides is a JSON version of the underlying Go
 
 # Usage
 
+## Overview
+
+The methods in this module typically resolve with an object or an array of objects representing the data of the combo(s). The object(s) typically have this shape:
+
+```js
+{
+  commanderSpellbookId: number;
+  permalink: "https://commanderspellbook.com/?id=" + commanderSpellbookId;
+  cards: Card[];
+  colorIdentity: ColorIdentity;
+  prerequisites: SpellbookList;
+  steps: SpellbookList;
+  results: SpellbookList;
+}
+```
+
+- `commanderSpellbookId` is the id in the commander spellbook database as a string.
+- `permalink` is the link available to view the combo on the commander spellbook website.
+- `cards` is an array of [Card](#card) objects.
+- `colorIdentity` is a [ColorIdentity](#coloridentity) object indicating the color identity of the combo
+- `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
+- `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
+- `result` is a [SpellbookList](#spellbooklist) object that contains the results from doing the combo.
+
+See the [Models](#models) section for more information on the custom classes.
+
+## Search
+
 Look up all the combos with the `search` method:
 
 ```js
@@ -66,122 +94,9 @@ spellbook
   });
 ```
 
-The resulting object will be an array of combos that have this shape:
-
-```js
-{
-  commanderSpellbookId: number;
-  permalink: "https://commanderspellbook.com/?id=" + commanderSpellbookId;
-  cards: Card[];
-  colorIdentity: ColorIdentity;
-  prerequisites: SpellbookList;
-  steps: SpellbookList;
-  results: SpellbookList;
-}
-```
-
-- `commanderSpellbookId` is the id in the commander spellbook database as a string.
-- `permalink` is the link available to view the combo on the commander spellbook website.
-- `cards` is an array of [Card](#card) objects.
-- `colorIdentity` is a [ColorIdentity](#coloridentity) object indicating the color identity of the combo
-- `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
-- `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
-- `result` is a [SpellbookList](#spellbooklist) object that contains the results from doing the combo.
-
-See the [Models](#models) section for more information on the custom classes.
-
-## Search Options
-
-### cards
-
-Pass an array of card names (up to 10) to look for combos for those cards.
-
-When passing a `cards` array, at least one value must be passed.
-
-```js
-// find combos that include one card
-spellbook
-  .search({
-    cards: ["Sydri, Galvanic Genius"],
-  })
-  .then(function (combos) {
-    // loop through combos
-  });
-
-// find combos that include more than 1 card
-spellbook
-  .search({
-    cards: ["Thornbite Staff", "Basilisk Collar"],
-  })
-  .then(function (combos) {
-    // loop through combos
-  });
-```
-
-Partial matches also work:
-
-```js
-// find combos that include Sydri using a short name
-spellbook
-  .search({
-    cards: ["Sydri"],
-  })
-  .then(function (combos) {
-    // loop through combos
-  });
-
-// find combos that include Thornbite Staff and Basilisk Collar using a short name
-spellbook
-  .search({
-    cards: ["Thorn Staff", "Bas Colla"],
-  })
-  .then(function (combos) {
-    // loop through combos
-  });
-```
-
-Punctuation, capitalization and spaces are ignored:
-
-```js
-// find combos that include Alhammarret's Archive
-spellbook
-  .search({
-    cards: ["mMaRrEts aR"],
-  })
-  .then(function (combos) {
-    // loop through combos
-  });
-```
-
-### colorIdentity
-
-Pass either a string representing the color combination you're looking for:
-
-```js
-spellbook
-  .search({
-    colorIdentity: "bug",
-  })
-  .then(function (combos) {
-    // loop through all combos in the sultai colors
-  });
-```
-
-Or an array of single digit strings representing the color combination:
-
-```js
-spellbook
-  .search({
-    colorIdentity: ["b", "u", "g"],
-  })
-  .then(function (combos) {
-    // loop through all combos in the sultai colors
-  });
-```
-
-This is of course best used in conjunction with the `cards` option.
-
 ## Models
+
+The methods provided in the module typically return a combo object with with some special classes. The special classes are documented here:
 
 ### Card
 
