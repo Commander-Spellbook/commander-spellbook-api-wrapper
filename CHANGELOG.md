@@ -2,6 +2,7 @@
 
 - Add `random` method
 - Add `findById` method
+- support colloquial color names for color identity param
 
 # 0.2.0
 

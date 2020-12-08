@@ -1,4 +1,6 @@
-import type { SearchParameters, ColorIdentityColors } from "../types";
+import parseColorIdentity from "./parse-color-identity";
+
+import type { SearchParameters } from "../types";
 
 function collectKeywordedQueries(
   params: SearchParameters,
@@ -39,7 +41,7 @@ function collectKeywordedQueries(
       case "ci":
       case "color_identity":
       case "coloridentity":
-        params.colorIdentity = value.split("") as ColorIdentityColors[];
+        params.colorIdentity = parseColorIdentity(value);
         break;
       case "card":
         params.cards.include.push(value);
