@@ -22,15 +22,24 @@ export default class ColorIdentity {
     return this.colors.length === 1 && this.colors[0] === "c";
   }
 
-  hasColors(colors: ColorIdentityColors[]): boolean {
+  isWithin(colors: ColorIdentityColors[]): boolean {
     if (this.isColorless()) {
       return true;
     }
 
-    const allColors = this.colors.concat(colors);
-    const colorSet = new Set(allColors);
+    return !this.colors.find((color) => colors.indexOf(color) === -1);
+  }
 
-    return colorSet.size === colors.length;
+  is(colors: ColorIdentityColors[]): boolean {
+    if (this.colors.length !== new Set(colors).size) {
+      return false;
+    }
+
+    return this.isWithin(colors);
+  }
+
+  includes(colors: ColorIdentityColors[]): boolean {
+    return !colors.find((color) => this.colors.indexOf(color) === -1);
   }
 
   toString(): string {

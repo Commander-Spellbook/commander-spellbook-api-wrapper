@@ -40,7 +40,7 @@ export default async function search(
 
   if (colorIdentity.length > 0) {
     combos = combos.filter((combo) =>
-      combo.colorIdentity.hasColors(colorIdentity)
+      combo.colorIdentity.isWithin(colorIdentity)
     );
   }
 
