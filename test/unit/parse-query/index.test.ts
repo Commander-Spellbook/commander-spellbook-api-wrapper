@@ -23,6 +23,10 @@ describe("parseQuery", () => {
         include: [],
         exclude: [],
       },
+      colorIdentity: {
+        method: "none",
+        colors: [],
+      },
       prerequisites: {
         include: [],
         exclude: [],
@@ -82,7 +86,10 @@ describe("parseQuery", () => {
         exclude: ["Food"],
         include: ["Kiki", "Daxos", "Akroma", "Grave Titan"],
       },
-      colorIdentity: ["w", "b", "r"],
+      colorIdentity: {
+        method: "isWithin",
+        colors: ["w", "b", "r"],
+      },
       prerequisites: {
         include: ["prereq"],
         exclude: ["xprereq"],
@@ -122,7 +129,10 @@ describe("parseQuery", () => {
     expect(result).toEqual(
       expect.objectContaining({
         errors: [],
-        colorIdentity: ["w", "b", "r"],
+        colorIdentity: {
+          method: "isWithin",
+          colors: ["w", "b", "r"],
+        },
       })
     );
   });
@@ -133,7 +143,10 @@ describe("parseQuery", () => {
     expect(result).toEqual(
       expect.objectContaining({
         errors: [],
-        colorIdentity: ["w", "b", "r"],
+        colorIdentity: {
+          method: "isWithin",
+          colors: ["w", "b", "r"],
+        },
       })
     );
   });
@@ -144,7 +157,10 @@ describe("parseQuery", () => {
     expect(result).toEqual(
       expect.objectContaining({
         errors: [],
-        colorIdentity: ["w", "b", "r"],
+        colorIdentity: {
+          method: "isWithin",
+          colors: ["w", "b", "r"],
+        },
       })
     );
   });
@@ -155,7 +171,10 @@ describe("parseQuery", () => {
     expect(result).toEqual(
       expect.objectContaining({
         errors: [],
-        colorIdentity: ["g", "r"],
+        colorIdentity: {
+          method: "isWithin",
+          colors: ["g", "r"],
+        },
       })
     );
   });

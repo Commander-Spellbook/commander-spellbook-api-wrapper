@@ -44,6 +44,9 @@ export type SearchParameters = {
   steps: IncludeExclude;
   results: IncludeExclude;
   id?: string;
-  colorIdentity?: ColorIdentityColors[];
+  colorIdentity: {
+    method: string;
+    colors: ColorIdentityColors[];
+  };
   errors: SearchError[];
 };

@@ -22,7 +22,7 @@ describe("search", () => {
     ]);
 
     jest.spyOn(CardGrouping.prototype, "matches");
-    jest.spyOn(ColorIdentity.prototype, "hasColors");
+    jest.spyOn(ColorIdentity.prototype, "isWithin");
   });
 
   afterEach(() => {
@@ -56,7 +56,7 @@ describe("search", () => {
   it("can filter by color identity array", async () => {
     await search("ci:grw");
 
-    expect(ColorIdentity.prototype.hasColors).toBeCalledTimes(1);
-    expect(ColorIdentity.prototype.hasColors).toBeCalledWith(["g", "r", "w"]);
+    expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
+    expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
   });
 });

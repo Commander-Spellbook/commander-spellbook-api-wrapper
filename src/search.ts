@@ -9,7 +9,7 @@ export default async function search(
 ): Promise<FormattedApiResponse[]> {
   const searchParams = parseQuery(query);
   const cards = searchParams.cards;
-  let colorIdentity = searchParams.colorIdentity || [];
+  let colorIdentity = searchParams.colorIdentity.colors;
 
   if (colorIdentity) {
     colorIdentity = colorIdentity.map((color) =>
@@ -39,9 +39,14 @@ export default async function search(
   }
 
   if (colorIdentity.length > 0) {
-    combos = combos.filter((combo) =>
-      combo.colorIdentity.isWithin(colorIdentity)
-    );
+    combos = combos.filter((combo) => {
+      switch (searchParams.colorIdentity.method) {
+        case "isWithin":
+          return combo.colorIdentity.isWithin(colorIdentity);
+        default:
+          return true;
+      }
+    });
   }
 
   if (searchParams.prerequisites.include.length > 0) {
