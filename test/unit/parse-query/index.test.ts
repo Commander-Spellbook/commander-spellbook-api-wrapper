@@ -179,6 +179,76 @@ describe("parseQuery", () => {
     );
   });
 
+  it("supports ci= with method is", () => {
+    const result = parseQuery("ci=gr");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          method: "is",
+          colors: ["g", "r"],
+        },
+      })
+    );
+  });
+
+  it("supports ci> with method isGreater", () => {
+    const result = parseQuery("ci>gr");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          method: "isGreater",
+          colors: ["g", "r"],
+        },
+      })
+    );
+  });
+
+  it("supports ci>= with method isGreaterOrEqual", () => {
+    const result = parseQuery("ci>=gr");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          method: "isGreaterOrEqual",
+          colors: ["g", "r"],
+        },
+      })
+    );
+  });
+
+  it("supports ci< with method isLesser", () => {
+    const result = parseQuery("ci<gr");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          method: "isLesser",
+          colors: ["g", "r"],
+        },
+      })
+    );
+  });
+
+  it("supports ci<= with method isLesserOrEqual", () => {
+    const result = parseQuery("ci<=gr");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          method: "isLesserOrEqual",
+          colors: ["g", "r"],
+        },
+      })
+    );
+  });
+
   it("parses card query into cards", () => {
     const result = parseQuery("card:Rashmi");
 

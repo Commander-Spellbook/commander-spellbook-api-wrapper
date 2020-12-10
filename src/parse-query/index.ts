@@ -2,24 +2,36 @@ import parseColorIdentity from "./parse-color-identity";
 
 import type { SearchParameters } from "../types";
 
+const OPERATOR_REGEX = /(:|=|>=|<=|<|>)/;
+const OPERATOR_TO_METHOD_MAP: Record<string, string> = {
+  ":": "isWithin",
+  "=": "is",
+  ">=": "isGreaterOrEqual",
+  "<=": "isLesserOrEqual",
+  ">": "isGreater",
+  "<": "isLesser",
+};
+
 function collectKeywordedQueries(
   params: SearchParameters,
   query: string
 ): void {
   // captures keywords in the form key:value
-  const simpleQueryGroups = query.match(/(-)?\b[\w_]+:[^'"\s]+\b/gi) || [];
+  const simpleQueryGroups =
+    query.match(/(-)?\b[\w_]+(:|=|>=|<=|<|>)[^'"\s]+\b/gi) || [];
   // captures keywords in the form key:"value inside double quotes'
   const queryGroupsWithDoubleQuotes =
-    query.match(/(-)?\b[\w_]+:"[^"]+"/gi) || [];
+    query.match(/(-)?\b[\w_]+(:|=|>=|<=|<|>)"[^"]+"/gi) || [];
   // captures keywords in the form key:'value inside single quotes'
   const queryGroupsWithSingleQuotes =
-    query.match(/(-)?\b[\w_]+:'[^']+'/gi) || [];
+    query.match(/(-)?\b[\w_]+(:|=|>=|<=|<|>)'[^']+'/gi) || [];
   const queries = simpleQueryGroups
     .concat(queryGroupsWithDoubleQuotes)
     .concat(queryGroupsWithSingleQuotes);
 
   queries.forEach((group) => {
-    const pair = group.split(/:/);
+    const operator = (group.match(OPERATOR_REGEX) || [":"])[0];
+    const pair = group.split(operator);
     const key = pair[0];
     let value = pair[1];
 
@@ -41,7 +53,7 @@ function collectKeywordedQueries(
       case "ci":
       case "color_identity":
       case "coloridentity":
-        params.colorIdentity.method = "isWithin";
+        params.colorIdentity.method = OPERATOR_TO_METHOD_MAP[operator];
         params.colorIdentity.colors = parseColorIdentity(value);
         break;
       case "card":
