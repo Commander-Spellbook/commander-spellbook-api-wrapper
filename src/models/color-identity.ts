@@ -1,7 +1,7 @@
 import scryfall from "scryfall-client";
 import type { ColorIdentityColors } from "../types";
 
-const WUBRG_ORDER: ColorIdentityColors[] = ["c", "w", "u", "b", "r", "g"];
+const WUBRG_ORDER: ColorIdentityColors[] = ["w", "u", "b", "r", "g"];
 
 export default class ColorIdentity {
   private rawString: string;
@@ -12,6 +12,10 @@ export default class ColorIdentity {
     this.colors = WUBRG_ORDER.filter((color) => {
       return colors.indexOf(color) > -1;
     });
+
+    if (this.colors.length === 0) {
+      this.colors.push("c");
+    }
   }
 
   private isColorless(): boolean {
