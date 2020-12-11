@@ -2,15 +2,8 @@ import parseColorIdentity from "./parse-color-identity";
 
 import type { SearchParameters } from "../types";
 
-const OPERATOR_REGEX = /(:|=|>=|<=|<|>)/;
-const OPERATOR_TO_METHOD_MAP: Record<string, string> = {
-  ":": "isWithin",
-  "=": "is",
-  ">=": "isGreaterOrEqual",
-  "<=": "isLesserOrEqual",
-  ">": "isGreater",
-  "<": "isLesser",
-};
+const OPERATORS = [":", "=", ">=", "<=", "<", ">"];
+const OPERATOR_REGEX = new RegExp(`(${OPERATORS.join("|")})`);
 
 function collectKeywordedQueries(
   params: SearchParameters,
@@ -53,7 +46,7 @@ function collectKeywordedQueries(
       case "ci":
       case "color_identity":
       case "coloridentity":
-        params.colorIdentity.method = OPERATOR_TO_METHOD_MAP[operator];
+        params.colorIdentity.method = operator;
         params.colorIdentity.colors = parseColorIdentity(value);
         break;
       case "card":

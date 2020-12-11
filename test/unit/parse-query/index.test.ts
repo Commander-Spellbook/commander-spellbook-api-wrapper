@@ -87,7 +87,7 @@ describe("parseQuery", () => {
         include: ["Kiki", "Daxos", "Akroma", "Grave Titan"],
       },
       colorIdentity: {
-        method: "isWithin",
+        method: ":",
         colors: ["w", "b", "r"],
       },
       prerequisites: {
@@ -130,7 +130,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isWithin",
+          method: ":",
           colors: ["w", "b", "r"],
         },
       })
@@ -144,7 +144,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isWithin",
+          method: ":",
           colors: ["w", "b", "r"],
         },
       })
@@ -158,7 +158,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isWithin",
+          method: ":",
           colors: ["w", "b", "r"],
         },
       })
@@ -172,7 +172,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isWithin",
+          method: ":",
           colors: ["g", "r"],
         },
       })
@@ -186,7 +186,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "is",
+          method: "=",
           colors: ["g", "r"],
         },
       })
@@ -200,7 +200,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isGreater",
+          method: ">",
           colors: ["g", "r"],
         },
       })
@@ -214,7 +214,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isGreaterOrEqual",
+          method: ">=",
           colors: ["g", "r"],
         },
       })
@@ -228,7 +228,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isLesser",
+          method: "<",
           colors: ["g", "r"],
         },
       })
@@ -242,7 +242,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "isLesserOrEqual",
+          method: "<=",
           colors: ["g", "r"],
         },
       })
