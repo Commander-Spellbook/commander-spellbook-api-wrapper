@@ -22,7 +22,6 @@ describe("search", () => {
     ]);
 
     jest.spyOn(CardGrouping.prototype, "matches");
-    jest.spyOn(ColorIdentity.prototype, "isWithin");
   });
 
   afterEach(() => {
@@ -53,10 +52,71 @@ describe("search", () => {
     expect(CardGrouping.prototype.matches).toBeCalledWith(["Sydri"]);
   });
 
-  it("can filter by color identity array", async () => {
-    await search("ci:grw");
+  describe("color identity", () => {
+    it("can filter by color identity array with : operator", async () => {
+      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "is");
 
-    expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
-    expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
+      await search("ci:grw");
+
+      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.is).not.toBeCalled();
+    });
+
+    it("can filter by color identity array with >= operator", async () => {
+      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "is");
+
+      await search("ci>=grw");
+
+      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.is).not.toBeCalled();
+    });
+
+    it("can filter by color identity array with > operator", async () => {
+      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "is");
+
+      await search("ci>grw");
+
+      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
+    });
+
+    it("can filter by color identity array with < operator", async () => {
+      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "is");
+
+      await search("ci<grw");
+
+      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
+    });
+
+    it("can filter by color identity array with <= operator", async () => {
+      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "is");
+
+      await search("ci<=grw");
+
+      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.is).not.toBeCalled();
+    });
+
+    it("can filter by color identity array with = operator", async () => {
+      jest.spyOn(ColorIdentity.prototype, "is").mockReturnValue(true);
+
+      await search("ci=grw");
+
+      expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
+    });
   });
 });

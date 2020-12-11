@@ -69,16 +69,105 @@ describe("Commander Spellbook", () => {
       });
     });
 
-    it("looks up specific color combos", async () => {
-      const combos = await spellbook.search("ci:wr");
+    describe("color identity", () => {
+      it("looks up specific color combos", async () => {
+        const combos = await spellbook.search("ci:wr");
 
-      expect(combos.length).toBeGreaterThan(0);
-      combos.forEach((combo) => {
-        const hasOffColorCombo = combo.colorIdentity.colors.find(
-          (color) => color !== "w" && color !== "r" && color !== "c"
-        );
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          const hasOffColorCombo = combo.colorIdentity.colors.find(
+            (color) => color !== "w" && color !== "r" && color !== "c"
+          );
 
-        expect(hasOffColorCombo).toBeFalsy();
+          expect(hasOffColorCombo).toBeFalsy();
+        });
+      });
+
+      it("looks up exact color combos", async () => {
+        const combos = await spellbook.search("ci=wr");
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          expect(combo.colorIdentity.colors).toEqual(["w", "r"]);
+        });
+      });
+
+      it("looks up greater than color combos", async () => {
+        const combos = await spellbook.search("ci>wr");
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          const { colors } = combo.colorIdentity;
+          expect(colors.length).toBeGreaterThan(2);
+          expect(colors).toContain("w");
+          expect(colors).toContain("r");
+        });
+      });
+
+      it("looks up greater than or equal color combos", async () => {
+        const combos = await spellbook.search("ci>=wr");
+
+        let hasExactMatch = false;
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          const { colors } = combo.colorIdentity;
+          expect(colors.length).toBeGreaterThan(1);
+          expect(colors).toContain("w");
+          expect(colors).toContain("r");
+
+          if (colors.length === 2) {
+            hasExactMatch = true;
+          }
+        });
+
+        expect(hasExactMatch).toBe(true);
+      });
+
+      it("looks up less than color combos", async () => {
+        const combos = await spellbook.search("ci<wru");
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          const { colors } = combo.colorIdentity;
+          expect(colors.length).toBeLessThan(3);
+          expect(
+            colors.every((item) => {
+              const containsItem =
+                item === "c" || item === "w" || item === "r" || item == "u";
+              const doesNotContain = item !== "b" && item !== "g";
+
+              return containsItem && doesNotContain;
+            })
+          ).toBe(true);
+        });
+      });
+
+      it("looks up less than or equal color combos", async () => {
+        const combos = await spellbook.search("ci<=wru");
+
+        let hasExactMatch = false;
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          const { colors } = combo.colorIdentity;
+          expect(colors.length).toBeLessThan(4);
+          expect(
+            colors.every((item) => {
+              const containsItem =
+                item === "c" || item === "w" || item === "r" || item == "u";
+              const doesNotContain = item !== "b" && item !== "g";
+
+              return containsItem && doesNotContain;
+            })
+          ).toBe(true);
+
+          if (colors.length === 3) {
+            hasExactMatch = true;
+          }
+        });
+
+        expect(hasExactMatch).toBe(true);
       });
     });
 

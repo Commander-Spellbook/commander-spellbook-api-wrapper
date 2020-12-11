@@ -41,7 +41,22 @@ export default async function search(
   if (colorIdentity.length > 0) {
     combos = combos.filter((combo) => {
       switch (searchParams.colorIdentity.method) {
-        case "isWithin":
+        case "=":
+          return combo.colorIdentity.is(colorIdentity);
+        case ">":
+          return (
+            combo.colorIdentity.includes(colorIdentity) &&
+            !combo.colorIdentity.is(colorIdentity)
+          );
+        case ">=":
+          return combo.colorIdentity.includes(colorIdentity);
+        case "<":
+          return (
+            combo.colorIdentity.isWithin(colorIdentity) &&
+            !combo.colorIdentity.is(colorIdentity)
+          );
+        case "<=":
+        case ":":
           return combo.colorIdentity.isWithin(colorIdentity);
         default:
           return true;
