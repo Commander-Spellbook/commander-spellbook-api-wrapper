@@ -1,4 +1,4 @@
-# unreleased
+# 0.3.0
 
 - Add `random` method
 - Add `findById` method
