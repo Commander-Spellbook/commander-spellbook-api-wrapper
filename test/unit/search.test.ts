@@ -65,48 +65,48 @@ describe("search", () => {
     });
 
     it("can filter by color identity array with >= operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
       jest.spyOn(ColorIdentity.prototype, "is");
 
       await search("ci>=grw");
 
-      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
       expect(ColorIdentity.prototype.is).not.toBeCalled();
     });
 
     it("can filter by color identity array with > operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
       jest.spyOn(ColorIdentity.prototype, "is");
 
       await search("ci>grw");
 
-      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
       expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
       expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
     });
 
     it("can filter by color identity array with < operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
       jest.spyOn(ColorIdentity.prototype, "is");
 
       await search("ci<grw");
 
-      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
       expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
       expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
     });
 
     it("can filter by color identity array with <= operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
+      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
       jest.spyOn(ColorIdentity.prototype, "is");
 
       await search("ci<=grw");
 
-      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
+      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
       expect(ColorIdentity.prototype.is).not.toBeCalled();
     });
 
