@@ -64,6 +64,30 @@ export default async function search(
     });
   }
 
+  if (searchParams.colorIdentity.sizeFilter.method !== "none") {
+    const sizeValue = searchParams.colorIdentity.sizeFilter.value;
+
+    combos = combos.filter((combo) => {
+      const numberOfColors = combo.colorIdentity.numberOfColors();
+
+      switch (searchParams.colorIdentity.sizeFilter.method) {
+        case ":":
+        case "=":
+          return numberOfColors === sizeValue;
+        case ">":
+          return numberOfColors > sizeValue;
+        case ">=":
+          return numberOfColors >= sizeValue;
+        case "<":
+          return numberOfColors < sizeValue;
+        case "<=":
+          return numberOfColors <= sizeValue;
+        default:
+          return true;
+      }
+    });
+  }
+
   if (searchParams.prerequisites.include.length > 0) {
     combos = combos.filter((combo) =>
       combo.prerequisites.matches(searchParams.prerequisites.include)

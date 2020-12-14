@@ -108,6 +108,22 @@ spellbook.seach("Kiki ci:wbr").then((combos) => {
 });
 ```
 
+The `:`, `=`, `>`, `>=`, `<`, and `<=` operators are supported.
+
+```js
+spellbook.seach("Kiki ci=wbr").then((combos) => {
+  // all combos that include cards with the name Kiki and have an identity of exactly white/black/red
+});
+```
+
+Using numbers are also supported:
+
+```js
+spellbook.seach("Kiki ci>2").then((combos) => {
+  // all combos that include cards with the name Kiki and have 3 or more colors in her identity
+});
+```
+
 You can also query by the prequisites, steps and results in the combo.
 
 ```js

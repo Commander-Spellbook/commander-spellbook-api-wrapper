@@ -52,7 +52,7 @@ describe("search", () => {
     expect(CardGrouping.prototype.matches).toBeCalledWith(["Sydri"]);
   });
 
-  describe("color identity", () => {
+  describe("color identity: color filter", () => {
     it("can filter by color identity array with : operator", async () => {
       jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
       jest.spyOn(ColorIdentity.prototype, "is");
@@ -117,6 +117,107 @@ describe("search", () => {
 
       expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
       expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
+    });
+  });
+
+  describe("color identity: size filter", () => {
+    beforeEach(() => {
+      jest.spyOn(ColorIdentity.prototype, "numberOfColors");
+    });
+
+    it.each([":", "="])(
+      "can filter by color identity number of colors using %s",
+      async (operator) => {
+        mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
+
+        let result = await search(`ci${operator}3`);
+        expect(result.length).toBe(1);
+        expect(result[0].commanderSpellbookId).toBe("1");
+
+        mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
+
+        result = await search(`ci${operator}3`);
+        expect(result.length).toBe(0);
+
+        mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
+
+        result = await search(`ci${operator}3`);
+        expect(result.length).toBe(0);
+      }
+    );
+
+    it("can filter by color identity number of colors using >", async () => {
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
+
+      let result = await search("ci>3");
+      expect(result.length).toBe(1);
+      expect(result[0].commanderSpellbookId).toBe("1");
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
+
+      result = await search("ci>3");
+      expect(result.length).toBe(0);
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
+
+      result = await search("ci>3");
+      expect(result.length).toBe(0);
+    });
+
+    it("can filter by color identity number of colors using >=", async () => {
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
+
+      let result = await search("ci>=3");
+      expect(result.length).toBe(1);
+      expect(result[0].commanderSpellbookId).toBe("1");
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
+
+      result = await search("ci>=3");
+      expect(result.length).toBe(1);
+      expect(result[0].commanderSpellbookId).toBe("1");
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
+
+      result = await search("ci>=3");
+      expect(result.length).toBe(0);
+    });
+
+    it("can filter by color identity number of colors using <", async () => {
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
+
+      let result = await search("ci<3");
+      expect(result.length).toBe(1);
+      expect(result[0].commanderSpellbookId).toBe("1");
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
+
+      result = await search("ci<3");
+      expect(result.length).toBe(0);
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
+
+      result = await search("ci<3");
+      expect(result.length).toBe(0);
+    });
+
+    it("can filter by color identity number of colors using <=", async () => {
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
+
+      let result = await search("ci<=3");
+      expect(result.length).toBe(1);
+      expect(result[0].commanderSpellbookId).toBe("1");
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
+
+      result = await search("ci<=3");
+      expect(result.length).toBe(1);
+      expect(result[0].commanderSpellbookId).toBe("1");
+
+      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
+
+      result = await search("ci<=3");
+      expect(result.length).toBe(0);
     });
   });
 });

@@ -49,6 +49,10 @@ export type SearchParameters = {
       method: string;
       value: ColorIdentityColors[];
     };
+    sizeFilter: {
+      method: string;
+      value: number;
+    };
   };
   errors: SearchError[];
 };

@@ -46,8 +46,13 @@ function collectKeywordedQueries(
       case "ci":
       case "color_identity":
       case "coloridentity":
-        params.colorIdentity.colorFilter.method = operator;
-        params.colorIdentity.colorFilter.value = parseColorIdentity(value);
+        if (Number(value) >= 0 && Number(value) < 6) {
+          params.colorIdentity.sizeFilter.method = operator;
+          params.colorIdentity.sizeFilter.value = Number(value);
+        } else {
+          params.colorIdentity.colorFilter.method = operator;
+          params.colorIdentity.colorFilter.value = parseColorIdentity(value);
+        }
         break;
       case "card":
         params.cards.include.push(value);
@@ -123,6 +128,10 @@ export default function parseQuery(query: string): SearchParameters {
       colorFilter: {
         method: "none",
         value: [],
+      },
+      sizeFilter: {
+        method: "none",
+        value: 5,
       },
     },
     prerequisites: {

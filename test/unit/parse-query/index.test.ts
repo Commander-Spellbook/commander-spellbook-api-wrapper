@@ -28,6 +28,10 @@ describe("parseQuery", () => {
           method: "none",
           value: [],
         },
+        sizeFilter: {
+          method: "none",
+          value: 5,
+        },
       },
       prerequisites: {
         include: [],
@@ -93,6 +97,10 @@ describe("parseQuery", () => {
           method: ":",
           value: ["w", "b", "r"],
         },
+        sizeFilter: {
+          method: "none",
+          value: 5,
+        },
       },
       prerequisites: {
         include: ["prereq"],
@@ -138,6 +146,10 @@ describe("parseQuery", () => {
             method: ":",
             value: ["w", "b", "r"],
           },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
         },
       })
     );
@@ -153,6 +165,10 @@ describe("parseQuery", () => {
           colorFilter: {
             method: ":",
             value: ["w", "b", "r"],
+          },
+          sizeFilter: {
+            method: "none",
+            value: 5,
           },
         },
       })
@@ -170,6 +186,10 @@ describe("parseQuery", () => {
             method: ":",
             value: ["w", "b", "r"],
           },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
         },
       })
     );
@@ -185,6 +205,73 @@ describe("parseQuery", () => {
           colorFilter: {
             method: ":",
             value: ["g", "r"],
+          },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
+        },
+      })
+    );
+  });
+
+  it.each([":", "=", ">", "<", ">=", "<="])(
+    "parses ci query with number with %s",
+    (operator) => {
+      const result = parseQuery(`ci${operator}4`);
+
+      expect(result).toEqual(
+        expect.objectContaining({
+          errors: [],
+          colorIdentity: {
+            colorFilter: {
+              method: "none",
+              value: [],
+            },
+            sizeFilter: {
+              method: operator,
+              value: 4,
+            },
+          },
+        })
+      );
+    }
+  );
+
+  it("ignores color identity when number is greater than 5", () => {
+    const result = parseQuery("ci:6");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          colorFilter: {
+            method: ":",
+            value: [],
+          },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
+        },
+      })
+    );
+  });
+
+  it("ignores color identity when number is less than 0", () => {
+    const result = parseQuery(`ci:"-1"`);
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        colorIdentity: {
+          colorFilter: {
+            method: ":",
+            value: [],
+          },
+          sizeFilter: {
+            method: "none",
+            value: 5,
           },
         },
       })
@@ -202,6 +289,10 @@ describe("parseQuery", () => {
             method: "=",
             value: ["g", "r"],
           },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
         },
       })
     );
@@ -217,6 +308,10 @@ describe("parseQuery", () => {
           colorFilter: {
             method: ">",
             value: ["g", "r"],
+          },
+          sizeFilter: {
+            method: "none",
+            value: 5,
           },
         },
       })
@@ -234,6 +329,10 @@ describe("parseQuery", () => {
             method: ">=",
             value: ["g", "r"],
           },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
         },
       })
     );
@@ -250,6 +349,10 @@ describe("parseQuery", () => {
             method: "<",
             value: ["g", "r"],
           },
+          sizeFilter: {
+            method: "none",
+            value: 5,
+          },
         },
       })
     );
@@ -265,6 +368,10 @@ describe("parseQuery", () => {
           colorFilter: {
             method: "<=",
             value: ["g", "r"],
+          },
+          sizeFilter: {
+            method: "none",
+            value: 5,
           },
         },
       })
