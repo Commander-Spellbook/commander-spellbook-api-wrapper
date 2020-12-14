@@ -22,6 +22,14 @@ export default class ColorIdentity {
     return this.colors.length === 1 && this.colors[0] === "c";
   }
 
+  numberOfColors(): number {
+    if (this.isColorless()) {
+      return 0;
+    }
+
+    return this.colors.length;
+  }
+
   isWithin(colors: ColorIdentityColors[]): boolean {
     if (this.isColorless()) {
       return true;
