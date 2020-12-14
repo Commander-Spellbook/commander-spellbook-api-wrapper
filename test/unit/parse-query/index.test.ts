@@ -24,8 +24,10 @@ describe("parseQuery", () => {
         exclude: [],
       },
       colorIdentity: {
-        method: "none",
-        colors: [],
+        colorFilter: {
+          method: "none",
+          value: [],
+        },
       },
       prerequisites: {
         include: [],
@@ -87,8 +89,10 @@ describe("parseQuery", () => {
         include: ["Kiki", "Daxos", "Akroma", "Grave Titan"],
       },
       colorIdentity: {
-        method: ":",
-        colors: ["w", "b", "r"],
+        colorFilter: {
+          method: ":",
+          value: ["w", "b", "r"],
+        },
       },
       prerequisites: {
         include: ["prereq"],
@@ -130,8 +134,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: ":",
-          colors: ["w", "b", "r"],
+          colorFilter: {
+            method: ":",
+            value: ["w", "b", "r"],
+          },
         },
       })
     );
@@ -144,8 +150,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: ":",
-          colors: ["w", "b", "r"],
+          colorFilter: {
+            method: ":",
+            value: ["w", "b", "r"],
+          },
         },
       })
     );
@@ -158,8 +166,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: ":",
-          colors: ["w", "b", "r"],
+          colorFilter: {
+            method: ":",
+            value: ["w", "b", "r"],
+          },
         },
       })
     );
@@ -172,8 +182,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: ":",
-          colors: ["g", "r"],
+          colorFilter: {
+            method: ":",
+            value: ["g", "r"],
+          },
         },
       })
     );
@@ -186,8 +198,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "=",
-          colors: ["g", "r"],
+          colorFilter: {
+            method: "=",
+            value: ["g", "r"],
+          },
         },
       })
     );
@@ -200,8 +214,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: ">",
-          colors: ["g", "r"],
+          colorFilter: {
+            method: ">",
+            value: ["g", "r"],
+          },
         },
       })
     );
@@ -214,8 +230,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: ">=",
-          colors: ["g", "r"],
+          colorFilter: {
+            method: ">=",
+            value: ["g", "r"],
+          },
         },
       })
     );
@@ -228,8 +246,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "<",
-          colors: ["g", "r"],
+          colorFilter: {
+            method: "<",
+            value: ["g", "r"],
+          },
         },
       })
     );
@@ -242,8 +262,10 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          method: "<=",
-          colors: ["g", "r"],
+          colorFilter: {
+            method: "<=",
+            value: ["g", "r"],
+          },
         },
       })
     );

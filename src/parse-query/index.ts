@@ -46,8 +46,8 @@ function collectKeywordedQueries(
       case "ci":
       case "color_identity":
       case "coloridentity":
-        params.colorIdentity.method = operator;
-        params.colorIdentity.colors = parseColorIdentity(value);
+        params.colorIdentity.colorFilter.method = operator;
+        params.colorIdentity.colorFilter.value = parseColorIdentity(value);
         break;
       case "card":
         params.cards.include.push(value);
@@ -120,8 +120,10 @@ export default function parseQuery(query: string): SearchParameters {
       exclude: [],
     },
     colorIdentity: {
-      method: "none",
-      colors: [],
+      colorFilter: {
+        method: "none",
+        value: [],
+      },
     },
     prerequisites: {
       include: [],

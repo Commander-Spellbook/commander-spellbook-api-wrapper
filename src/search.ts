@@ -9,10 +9,10 @@ export default async function search(
 ): Promise<FormattedApiResponse[]> {
   const searchParams = parseQuery(query);
   const cards = searchParams.cards;
-  let colorIdentity = searchParams.colorIdentity.colors;
+  let colorIdentityFilter = searchParams.colorIdentity.colorFilter.value;
 
-  if (colorIdentity) {
-    colorIdentity = colorIdentity.map((color) =>
+  if (colorIdentityFilter) {
+    colorIdentityFilter = colorIdentityFilter.map((color) =>
       normalizeStringInput(color)
     ) as ColorIdentityColors[];
   }
@@ -38,26 +38,26 @@ export default async function search(
     combos = combos.filter((combo) => !combo.cards.matches(cards.exclude));
   }
 
-  if (colorIdentity.length > 0) {
+  if (colorIdentityFilter.length > 0) {
     combos = combos.filter((combo) => {
-      switch (searchParams.colorIdentity.method) {
+      switch (searchParams.colorIdentity.colorFilter.method) {
         case "=":
-          return combo.colorIdentity.is(colorIdentity);
+          return combo.colorIdentity.is(colorIdentityFilter);
         case ">":
           return (
-            combo.colorIdentity.includes(colorIdentity) &&
-            !combo.colorIdentity.is(colorIdentity)
+            combo.colorIdentity.includes(colorIdentityFilter) &&
+            !combo.colorIdentity.is(colorIdentityFilter)
           );
         case ">=":
-          return combo.colorIdentity.includes(colorIdentity);
+          return combo.colorIdentity.includes(colorIdentityFilter);
         case "<":
           return (
-            combo.colorIdentity.isWithin(colorIdentity) &&
-            !combo.colorIdentity.is(colorIdentity)
+            combo.colorIdentity.isWithin(colorIdentityFilter) &&
+            !combo.colorIdentity.is(colorIdentityFilter)
           );
         case "<=":
         case ":":
-          return combo.colorIdentity.isWithin(colorIdentity);
+          return combo.colorIdentity.isWithin(colorIdentityFilter);
         default:
           return true;
       }

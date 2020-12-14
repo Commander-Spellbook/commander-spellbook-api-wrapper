@@ -45,8 +45,10 @@ export type SearchParameters = {
   results: IncludeExclude;
   id?: string;
   colorIdentity: {
-    method: string;
-    colors: ColorIdentityColors[];
+    colorFilter: {
+      method: string;
+      value: ColorIdentityColors[];
+    };
   };
   errors: SearchError[];
 };
