@@ -1,4 +1,4 @@
-# unreleased
+# 0.4.0
 - Fix issue where `parseQuery` was using an old module, causing all searches to fail
 - `search`
   - Support numeric values for `coloridentity`
