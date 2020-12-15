@@ -67,14 +67,14 @@ describe("parseQuery", () => {
             message: 'Could not parse keyword "unknown" with value "value"',
           },
           {
-            key: "unknown3",
-            value: "value 3",
-            message: 'Could not parse keyword "unknown3" with value "value 3"',
-          },
-          {
             key: "unknown2",
             value: "value 2",
             message: 'Could not parse keyword "unknown2" with value "value 2"',
+          },
+          {
+            key: "unknown3",
+            value: "value 3",
+            message: 'Could not parse keyword "unknown3" with value "value 3"',
           },
         ],
       })
@@ -90,7 +90,7 @@ describe("parseQuery", () => {
       id: "12345",
       cards: {
         exclude: ["Food"],
-        include: ["Kiki", "Daxos", "Akroma", "Grave Titan"],
+        include: ["Kiki", "Daxos", "Grave Titan", "Akroma"],
       },
       colorIdentity: {
         colorFilter: {
@@ -472,7 +472,7 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           exclude: [],
-          include: ["Arjun", "Rashmi, Eternities Crafter", "Sydri, Galvanic"],
+          include: ["Rashmi, Eternities Crafter", "Arjun", "Sydri, Galvanic"],
         },
       })
     );

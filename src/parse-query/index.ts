@@ -9,18 +9,21 @@ function collectKeywordedQueries(
   params: SearchParameters,
   query: string
 ): void {
-  // captures keywords in the form key:value
-  const simpleQueryGroups =
-    query.match(/(-)?\b[\w_]+(:|=|>=|<=|<|>)[^'"\s]+\b/gi) || [];
-  // captures keywords in the form key:"value inside double quotes'
-  const queryGroupsWithDoubleQuotes =
-    query.match(/(-)?\b[\w_]+(:|=|>=|<=|<|>)"[^"]+"/gi) || [];
-  // captures keywords in the form key:'value inside single quotes'
-  const queryGroupsWithSingleQuotes =
-    query.match(/(-)?\b[\w_]+(:|=|>=|<=|<|>)'[^']+'/gi) || [];
-  const queries = simpleQueryGroups
-    .concat(queryGroupsWithDoubleQuotes)
-    .concat(queryGroupsWithSingleQuotes);
+  // this is pretty complex, thanks to @lejeunerenard for help with it
+  // (-)? optional negative sign
+  // \b(\w+) a word boundary and any number of word characters
+  // (:|=|>=|<=|>|<) the operators we look for
+  // (['"]?) an optional capture for either a single or double quote
+  // ( an open capture group
+  //   (?:.(?!\4))+. any number of characters that do not match \4, the captured quote
+  //   | or
+  //   [^\s]+ any number of characters that are not spaces
+  // ) the closing of the capture group
+  // \4 the closing single or double quote
+  const queries =
+    query.match(
+      /(-)?\b(\w+)(:|=|>=|<=|>|<)(['"]?)((?:.(?!\4))+.|[^\s]+)\4/gi
+    ) || [];
 
   queries.forEach((group) => {
     const operator = (group.match(OPERATOR_REGEX) || [":"])[0];
