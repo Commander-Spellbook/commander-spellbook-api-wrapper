@@ -4,7 +4,7 @@ An unofficial wrapper for the [Commander Spellbook](https://commanderspellbook.c
 
 # Installation
 
-```
+```sh
 npm install --save commander-spellbook
 ```
 
@@ -51,7 +51,7 @@ See the [Models](#models) section for more information on the custom classes.
 Look up a specific combo by the combos id
 
 ```js
-spellbook.findById('123').then((combo) => {
+spellbook.findById("123").then((combo) => {
   combo; // combo with commanderSpellbookId '123'
 });
 ```
@@ -67,7 +67,7 @@ spellbook.findById(123).then((combo) => {
 If a combo with the specified id does not exist, the promise will reject.
 
 ```js
-spellbook.findById('not-an-id').catch((err) => {
+spellbook.findById("not-an-id").catch((err) => {
   err.message; // 'Combo with id "not-an-id" could not be found.'
 });
 ```
@@ -144,6 +144,29 @@ Look up a random combo using the `random` method:
 spellbook.seach().then((combo) => {
   combo; // a randomly chosen combo
 });
+```
+
+## Make Fake Combo
+
+A utility for using the module within a test environment to create a combo object that fulfills the type requirements in a Typescript environemnt.
+
+```js
+const combo = spellbook.makeFakeCombo();
+combo; // a combo object to use as a test fixture
+```
+
+Any of the attributes can be overwritten:
+
+```js
+const combo = spellbook.makeFakeCombo({
+  commanderSpellbookId: "custom-id",
+  cards: ["Arjun", "Sydri"],
+  colorIdentity: "URWB",
+  prerquisites: ["a", "b", "c"],
+  steps: ["a", "b", "c"],
+  results: ["a", "b", "c"],
+});
+combo; // a combo object to use as a test fixture
 ```
 
 ## Models
