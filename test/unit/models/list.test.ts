@@ -28,17 +28,31 @@ describe("SpellbookList", () => {
     });
   });
 
-  describe("matches", () => {
+  describe("matchesAll", () => {
     it("returns true if every item matches", () => {
       const list = SpellbookList.create("Step 1. Step 2. Step 3.");
 
-      expect(list.matches(["step", "2", "3"])).toBe(true);
+      expect(list.matchesAll(["step", "2", "3"])).toBe(true);
     });
 
     it("returns false if any item does not match", () => {
       const list = SpellbookList.create("Step 1. Step 2. Step 3.");
 
-      expect(list.matches(["step", "foo", "2", "3"])).toBe(false);
+      expect(list.matchesAll(["step", "foo", "2", "3"])).toBe(false);
+    });
+  });
+
+  describe("matchesAny", () => {
+    it("returns true if any item matches", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+
+      expect(list.matchesAny(["foo", "step", "bar"])).toBe(true);
+    });
+
+    it("returns false if no item matches", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+
+      expect(list.matchesAny(["foo", "bar"])).toBe(false);
     });
   });
 

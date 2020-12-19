@@ -26,10 +26,16 @@ export default class SpellbookList extends Array<string> {
     return list;
   }
 
-  matches(items: string[]): boolean {
-    return items.every((item) =>
-      this.find((i) => i.toLowerCase().indexOf(item.toLowerCase()) > -1)
-    );
+  private findItem(item: string) {
+    return this.find((i) => i.toLowerCase().indexOf(item.toLowerCase()) > -1);
+  }
+
+  matchesAll(items: string[]): boolean {
+    return items.every((item) => this.findItem(item));
+  }
+
+  matchesAny(items: string[]): boolean {
+    return Boolean(items.find((item) => this.findItem(item)));
   }
 
   toString(): string {

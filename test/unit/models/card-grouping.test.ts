@@ -29,12 +29,31 @@ describe("CardGrouping", () => {
     });
   });
 
-  describe("matches", () => {
+  describe("matchesAll", () => {
     it("returns true when every card name passed matches a card in the array", () => {
       const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
 
-      expect(group.matches(["Card a", "Card b"])).toBe(true);
-      expect(group.matches(["Card a", "Card z"])).toBe(false);
+      expect(group.matchesAll(["Card a", "Card b"])).toBe(true);
+    });
+
+    it("returns false when not every card name passed matches a card in the array", () => {
+      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+
+      expect(group.matchesAll(["Card a", "Card z"])).toBe(false);
+    });
+  });
+
+  describe("matchesAny", () => {
+    it("returns true when any card name passed matches a card in the array", () => {
+      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+
+      expect(group.matchesAny(["Card a", "Card z"])).toBe(true);
+    });
+
+    it("returns false when no card names passed match those in the array", () => {
+      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+
+      expect(group.matchesAny(["Card y", "Card z"])).toBe(false);
     });
   });
 

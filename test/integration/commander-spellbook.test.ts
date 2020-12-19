@@ -57,15 +57,17 @@ describe("Commander Spellbook", () => {
     });
 
     it("can filter out specific cards", async () => {
-      const combos = await spellbook.search("-card:Sydri");
+      const combos = await spellbook.search("-card:Sydri -card:aetherflux");
 
       expect(combos.length).toBeGreaterThan(0);
       combos.forEach((combo) => {
-        const hasSydriInCombo = combo.cards.find(
-          (card) => card.name === "Sydri, Galvanic Genius"
+        const hasSydriOrAetherfluxInCombo = combo.cards.find(
+          (card) =>
+            card.name === "Sydri, Galvanic Genius" ||
+            card.name === "Aetherflux Reservoir"
         );
 
-        expect(hasSydriInCombo).toBeFalsy();
+        expect(hasSydriOrAetherfluxInCombo).toBeFalsy();
       });
     });
 
@@ -184,6 +186,26 @@ describe("Commander Spellbook", () => {
       expect(hasWordPermanentsInComboPreq).toBeTruthy();
     });
 
+    it("looks up combos that exclude specific prerequisites in combos", async () => {
+      const combos = await spellbook.search(
+        "-prerequisites:permanents -prerequisite:tap -pre:mana"
+      );
+
+      expect(combos.length).toBeGreaterThan(0);
+      const doesNotHaveWordPermanentsTapOrManaInPrerequisites = combos.every(
+        (combo) => {
+          return !combo.prerequisites.find(
+            (res) =>
+              res.toLowerCase().indexOf("permanents") > -1 ||
+              res.toLowerCase().indexOf("tap") > -1 ||
+              res.toLowerCase().indexOf("mana") > -1
+          );
+        }
+      );
+
+      expect(doesNotHaveWordPermanentsTapOrManaInPrerequisites).toBeTruthy();
+    });
+
     it("looks up specific step in combos", async () => {
       const combos = await spellbook.search("steps:Tap");
 
@@ -197,6 +219,21 @@ describe("Commander Spellbook", () => {
       expect(hasWordTapInSteps).toBeTruthy();
     });
 
+    it("looks up combos that exclude specific steps in combos", async () => {
+      const combos = await spellbook.search("-step:Tap -steps:Sacrifice");
+
+      expect(combos.length).toBeGreaterThan(0);
+      const doesNotHaveWordTapOrSacrificeInSteps = combos.every((combo) => {
+        return !combo.steps.find(
+          (res) =>
+            res.toLowerCase().indexOf("tap") > -1 ||
+            res.toLowerCase().indexOf("sacrifice") > -1
+        );
+      });
+
+      expect(doesNotHaveWordTapOrSacrificeInSteps).toBeTruthy();
+    });
+
     it("looks up specific result in combos", async () => {
       const combos = await spellbook.search("results:Infinite");
 
@@ -208,6 +245,21 @@ describe("Commander Spellbook", () => {
       });
 
       expect(hasWordInfiniteInResult).toBeTruthy();
+    });
+
+    it("looks up combos that exclude specific result in combos", async () => {
+      const combos = await spellbook.search("-results:Infinite -result:win");
+
+      expect(combos.length).toBeGreaterThan(0);
+      const doesNotHaveWordInfiniteOrWinInResult = combos.every((combo) => {
+        return !combo.results.find(
+          (res) =>
+            res.toLowerCase().indexOf("infinite") > -1 ||
+            res.toLowerCase().indexOf("win") > -1
+        );
+      });
+
+      expect(doesNotHaveWordInfiniteOrWinInResult).toBeTruthy();
     });
   });
 

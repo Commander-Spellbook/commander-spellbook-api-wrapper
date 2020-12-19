@@ -21,7 +21,8 @@ describe("search", () => {
       },
     ]);
 
-    jest.spyOn(CardGrouping.prototype, "matches");
+    jest.spyOn(CardGrouping.prototype, "matchesAll");
+    jest.spyOn(CardGrouping.prototype, "matchesAny");
   });
 
   afterEach(() => {
@@ -37,8 +38,8 @@ describe("search", () => {
   it("can filter by cards", async () => {
     await search("Sydri Arjun Rashmi");
 
-    expect(CardGrouping.prototype.matches).toBeCalledTimes(1);
-    expect(CardGrouping.prototype.matches).toBeCalledWith([
+    expect(CardGrouping.prototype.matchesAll).toBeCalledTimes(1);
+    expect(CardGrouping.prototype.matchesAll).toBeCalledWith([
       "Sydri",
       "Arjun",
       "Rashmi",
@@ -48,8 +49,8 @@ describe("search", () => {
   it("can filter out cards", async () => {
     await search("-card:Sydri");
 
-    expect(CardGrouping.prototype.matches).toBeCalledTimes(1);
-    expect(CardGrouping.prototype.matches).toBeCalledWith(["Sydri"]);
+    expect(CardGrouping.prototype.matchesAny).toBeCalledTimes(1);
+    expect(CardGrouping.prototype.matchesAny).toBeCalledWith(["Sydri"]);
   });
 
   describe("color identity: color filter", () => {

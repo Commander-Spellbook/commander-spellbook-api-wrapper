@@ -1,3 +1,8 @@
+# unrleased
+
+- `search`
+  - Fix issue where negated values with multiple options did not properly negate
+
 # 0.5.0
 
 - Add `makeFakeCombo` method

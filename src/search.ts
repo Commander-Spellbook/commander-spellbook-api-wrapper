@@ -31,11 +31,11 @@ export default async function search(
   }
 
   if (cards.include.length > 0) {
-    combos = combos.filter((combo) => combo.cards.matches(cards.include));
+    combos = combos.filter((combo) => combo.cards.matchesAll(cards.include));
   }
 
   if (cards.exclude.length > 0) {
-    combos = combos.filter((combo) => !combo.cards.matches(cards.exclude));
+    combos = combos.filter((combo) => !combo.cards.matchesAny(cards.exclude));
   }
 
   if (colorIdentityFilter.length > 0) {
@@ -90,36 +90,36 @@ export default async function search(
 
   if (searchParams.prerequisites.include.length > 0) {
     combos = combos.filter((combo) =>
-      combo.prerequisites.matches(searchParams.prerequisites.include)
+      combo.prerequisites.matchesAll(searchParams.prerequisites.include)
     );
   }
   if (searchParams.prerequisites.exclude.length > 0) {
     combos = combos.filter(
       (combo) =>
-        !combo.prerequisites.matches(searchParams.prerequisites.exclude)
+        !combo.prerequisites.matchesAny(searchParams.prerequisites.exclude)
     );
   }
 
   if (searchParams.steps.include.length > 0) {
     combos = combos.filter((combo) =>
-      combo.steps.matches(searchParams.steps.include)
+      combo.steps.matchesAll(searchParams.steps.include)
     );
   }
   if (searchParams.steps.exclude.length > 0) {
     combos = combos.filter(
-      (combo) => !combo.steps.matches(searchParams.steps.exclude)
+      (combo) => !combo.steps.matchesAny(searchParams.steps.exclude)
     );
   }
 
   if (searchParams.results.include.length > 0) {
     combos = combos.filter((combo) =>
-      combo.results.matches(searchParams.results.include)
+      combo.results.matchesAll(searchParams.results.include)
     );
   }
   if (searchParams.results.exclude.length > 0) {
-    combos = combos.filter(
-      (combo) => !combo.results.matches(searchParams.results.exclude)
-    );
+    combos = combos.filter((combo) => {
+      return !combo.results.matchesAny(searchParams.results.exclude);
+    });
   }
 
   return combos;
