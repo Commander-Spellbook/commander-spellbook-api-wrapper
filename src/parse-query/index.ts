@@ -28,7 +28,7 @@ function collectKeywordedQueries(
   queries.forEach((group) => {
     const operator = (group.match(OPERATOR_REGEX) || [":"])[0];
     const pair = group.split(operator);
-    const key = pair[0];
+    const key = pair[0]?.toLowerCase();
     let value = pair[1];
 
     if (value.length > 2) {

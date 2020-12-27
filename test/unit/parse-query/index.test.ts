@@ -124,6 +124,49 @@ describe("parseQuery", () => {
     });
   });
 
+  it("ignores capitalization on keys", () => {
+    const result = parseQuery(
+      "Kiki CI:wbr CARD:Daxos ID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult"
+    );
+
+    expect(result).toEqual({
+      id: "12345",
+      cards: {
+        exclude: ["Food"],
+        include: ["Kiki", "Daxos", "Grave Titan", "Akroma"],
+      },
+      colorIdentity: {
+        colorFilter: {
+          method: ":",
+          value: ["w", "b", "r"],
+        },
+        sizeFilter: {
+          method: "none",
+          value: 5,
+        },
+      },
+      prerequisites: {
+        include: ["prereq"],
+        exclude: ["xprereq"],
+      },
+      steps: {
+        include: ["step"],
+        exclude: ["xstep"],
+      },
+      results: {
+        include: ["result"],
+        exclude: ["xresult"],
+      },
+      errors: [
+        {
+          key: "unknown",
+          value: "value",
+          message: 'Could not parse keyword "unknown" with value "value"',
+        },
+      ],
+    });
+  });
+
   it("parses id query into id", () => {
     const result = parseQuery("id:12345");
 

@@ -2,6 +2,7 @@
 
 - `search`
   - Fix issue where negated values with multiple options did not properly negate
+  - Disregard capitalization for search keys
 
 # 0.5.0
 
