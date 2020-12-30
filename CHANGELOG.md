@@ -1,4 +1,4 @@
-# unrleased
+# 0.5.1
 
 - `search`
   - Fix issue where negated values with multiple options did not properly negate
