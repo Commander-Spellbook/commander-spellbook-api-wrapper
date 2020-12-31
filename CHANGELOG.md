@@ -1,3 +1,8 @@
+# 0.5.2
+
+- `search`
+  - Fix issue where parsing search caused an error in Safari browsers
+
 # 0.5.1
 
 - `search`

@@ -112,12 +112,12 @@ function collectPlainNameQueries(
       // (\w+) - any number of word characters
       // (?=$|\s) - ends the line or ends with a space
       // (?=([^"']*["'][^"']*["'])*[^"']*$) - does some lookaheads to avoid quotes
-      /(?<=^|\s)(?!:)(\w+)(?=$|\s)(?=([^"']*["'][^"']*["'])*[^"']*$)/gi
+      /(^|\s)(?!:)(\w+)(?=$|\s)(?=([^"']*["'][^"']*["'])*[^"']*$)/gi
     ) || [];
   const queries = simpleQueryGroups;
 
   queries.forEach((value) => {
-    params.cards.include.push(value);
+    params.cards.include.push(value.trim());
   });
 }
 
