@@ -1,3 +1,8 @@
+# unreleased
+
+- `search`
+  - Add ability to search for coloreless color identity with `ci:c` and `ci:colorless`
+
 # 0.5.2
 
 - `search`

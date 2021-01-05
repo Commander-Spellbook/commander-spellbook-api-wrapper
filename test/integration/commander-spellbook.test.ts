@@ -94,6 +94,15 @@ describe("Commander Spellbook", () => {
         });
       });
 
+      it("looks up colorless combos", async () => {
+        const combos = await spellbook.search("ci:c");
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          expect(combo.colorIdentity.colors).toEqual(["c"]);
+        });
+      });
+
       it("looks up greater than color combos", async () => {
         const combos = await spellbook.search("ci>wr");
 

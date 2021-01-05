@@ -4,6 +4,9 @@ export default function parseColorIdentity(val: string): ColorIdentityColors[] {
   const normalizedValue = val.replace(/[\s-]/g, "").toLowerCase();
 
   switch (normalizedValue) {
+    case "c":
+    case "colorless":
+      return ["c"];
     case "white":
     case "monowhite":
       return ["w"];

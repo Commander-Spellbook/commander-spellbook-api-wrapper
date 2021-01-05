@@ -21,6 +21,8 @@ describe("parseColorIdentity", () => {
 
   it.each`
     name            | expectedResult
+    ${"c"}          | ${"c"}
+    ${"Colorless"}  | ${"c"}
     ${"White"}      | ${"w"}
     ${"Blue"}       | ${"u"}
     ${"Black"}      | ${"b"}
