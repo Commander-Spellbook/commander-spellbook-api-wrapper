@@ -54,11 +54,11 @@ describe("search", () => {
   });
 
   it("includes errors", async () => {
-    const combos = await search(
+    const result = await search(
       "unknownkey:value card:sydri unknownkey2:value2"
     );
 
-    expect(combos.errors).toEqual([
+    expect(result.errors).toEqual([
       {
         key: "unknownkey",
         value: "value",
@@ -151,18 +151,18 @@ describe("search", () => {
         mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
 
         let result = await search(`ci${operator}3`);
-        expect(result.length).toBe(1);
-        expect(result[0].commanderSpellbookId).toBe("1");
+        expect(result.combos.length).toBe(1);
+        expect(result.combos[0].commanderSpellbookId).toBe("1");
 
         mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
 
         result = await search(`ci${operator}3`);
-        expect(result.length).toBe(0);
+        expect(result.combos.length).toBe(0);
 
         mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
 
         result = await search(`ci${operator}3`);
-        expect(result.length).toBe(0);
+        expect(result.combos.length).toBe(0);
       }
     );
 
@@ -170,74 +170,74 @@ describe("search", () => {
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
 
       let result = await search("ci>3");
-      expect(result.length).toBe(1);
-      expect(result[0].commanderSpellbookId).toBe("1");
+      expect(result.combos.length).toBe(1);
+      expect(result.combos[0].commanderSpellbookId).toBe("1");
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
 
       result = await search("ci>3");
-      expect(result.length).toBe(0);
+      expect(result.combos.length).toBe(0);
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
 
       result = await search("ci>3");
-      expect(result.length).toBe(0);
+      expect(result.combos.length).toBe(0);
     });
 
     it("can filter by color identity number of colors using >=", async () => {
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
 
       let result = await search("ci>=3");
-      expect(result.length).toBe(1);
-      expect(result[0].commanderSpellbookId).toBe("1");
+      expect(result.combos.length).toBe(1);
+      expect(result.combos[0].commanderSpellbookId).toBe("1");
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
 
       result = await search("ci>=3");
-      expect(result.length).toBe(1);
-      expect(result[0].commanderSpellbookId).toBe("1");
+      expect(result.combos.length).toBe(1);
+      expect(result.combos[0].commanderSpellbookId).toBe("1");
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
 
       result = await search("ci>=3");
-      expect(result.length).toBe(0);
+      expect(result.combos.length).toBe(0);
     });
 
     it("can filter by color identity number of colors using <", async () => {
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
 
       let result = await search("ci<3");
-      expect(result.length).toBe(1);
-      expect(result[0].commanderSpellbookId).toBe("1");
+      expect(result.combos.length).toBe(1);
+      expect(result.combos[0].commanderSpellbookId).toBe("1");
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
 
       result = await search("ci<3");
-      expect(result.length).toBe(0);
+      expect(result.combos.length).toBe(0);
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
 
       result = await search("ci<3");
-      expect(result.length).toBe(0);
+      expect(result.combos.length).toBe(0);
     });
 
     it("can filter by color identity number of colors using <=", async () => {
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
 
       let result = await search("ci<=3");
-      expect(result.length).toBe(1);
-      expect(result[0].commanderSpellbookId).toBe("1");
+      expect(result.combos.length).toBe(1);
+      expect(result.combos[0].commanderSpellbookId).toBe("1");
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
 
       result = await search("ci<=3");
-      expect(result.length).toBe(1);
-      expect(result[0].commanderSpellbookId).toBe("1");
+      expect(result.combos.length).toBe(1);
+      expect(result.combos[0].commanderSpellbookId).toBe("1");
 
       mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
 
       result = await search("ci<=3");
-      expect(result.length).toBe(0);
+      expect(result.combos.length).toBe(0);
     });
   });
 });

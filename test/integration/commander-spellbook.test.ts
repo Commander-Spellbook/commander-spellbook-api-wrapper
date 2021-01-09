@@ -31,20 +31,20 @@ describe("Commander Spellbook", () => {
 
   describe("search", () => {
     it("looks up all combos", async () => {
-      const combos = await spellbook.search("");
+      const { combos } = await spellbook.search("");
 
       expect(combos.length).toBeGreaterThan(0);
     });
 
     it("looks up specific id", async () => {
-      const combos = await spellbook.search("id:123");
+      const { combos } = await spellbook.search("id:123");
 
       expect(combos.length).toBe(1);
       expect(combos[0].commanderSpellbookId).toBe("123");
     });
 
     it("looks up specific cards", async () => {
-      const combos = await spellbook.search("Sydri");
+      const { combos } = await spellbook.search("Sydri");
 
       expect(combos.length).toBeGreaterThan(0);
       combos.forEach((combo) => {
@@ -57,7 +57,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("can filter out specific cards", async () => {
-      const combos = await spellbook.search("-card:Sydri -card:aetherflux");
+      const { combos } = await spellbook.search("-card:Sydri -card:aetherflux");
 
       expect(combos.length).toBeGreaterThan(0);
       combos.forEach((combo) => {
@@ -73,7 +73,7 @@ describe("Commander Spellbook", () => {
 
     describe("color identity", () => {
       it("looks up specific color combos", async () => {
-        const combos = await spellbook.search("ci:wr");
+        const { combos } = await spellbook.search("ci:wr");
 
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
@@ -86,7 +86,7 @@ describe("Commander Spellbook", () => {
       });
 
       it("looks up exact color combos", async () => {
-        const combos = await spellbook.search("ci=wr");
+        const { combos } = await spellbook.search("ci=wr");
 
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
@@ -95,7 +95,7 @@ describe("Commander Spellbook", () => {
       });
 
       it("looks up colorless combos", async () => {
-        const combos = await spellbook.search("ci:c");
+        const { combos } = await spellbook.search("ci:c");
 
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
@@ -104,7 +104,7 @@ describe("Commander Spellbook", () => {
       });
 
       it("looks up greater than color combos", async () => {
-        const combos = await spellbook.search("ci>wr");
+        const { combos } = await spellbook.search("ci>wr");
 
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
@@ -116,7 +116,7 @@ describe("Commander Spellbook", () => {
       });
 
       it("looks up greater than or equal color combos", async () => {
-        const combos = await spellbook.search("ci>=wr");
+        const { combos } = await spellbook.search("ci>=wr");
 
         let hasExactMatch = false;
 
@@ -136,7 +136,7 @@ describe("Commander Spellbook", () => {
       });
 
       it("looks up less than color combos", async () => {
-        const combos = await spellbook.search("ci<wru");
+        const { combos } = await spellbook.search("ci<wru");
 
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
@@ -155,7 +155,7 @@ describe("Commander Spellbook", () => {
       });
 
       it("looks up less than or equal color combos", async () => {
-        const combos = await spellbook.search("ci<=wru");
+        const { combos } = await spellbook.search("ci<=wru");
 
         let hasExactMatch = false;
 
@@ -183,7 +183,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up specific prequisite in combos", async () => {
-      const combos = await spellbook.search("prerequisites:permanents");
+      const { combos } = await spellbook.search("prerequisites:permanents");
 
       expect(combos.length).toBeGreaterThan(0);
       const hasWordPermanentsInComboPreq = combos.every((combo) => {
@@ -196,7 +196,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up combos that exclude specific prerequisites in combos", async () => {
-      const combos = await spellbook.search(
+      const { combos } = await spellbook.search(
         "-prerequisites:permanents -prerequisite:tap -pre:mana"
       );
 
@@ -216,7 +216,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up specific step in combos", async () => {
-      const combos = await spellbook.search("steps:Tap");
+      const { combos } = await spellbook.search("steps:Tap");
 
       expect(combos.length).toBeGreaterThan(0);
       const hasWordTapInSteps = combos.every((combo) => {
@@ -229,7 +229,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up combos that exclude specific steps in combos", async () => {
-      const combos = await spellbook.search("-step:Tap -steps:Sacrifice");
+      const { combos } = await spellbook.search("-step:Tap -steps:Sacrifice");
 
       expect(combos.length).toBeGreaterThan(0);
       const doesNotHaveWordTapOrSacrificeInSteps = combos.every((combo) => {
@@ -244,7 +244,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up specific result in combos", async () => {
-      const combos = await spellbook.search("results:Infinite");
+      const { combos } = await spellbook.search("results:Infinite");
 
       expect(combos.length).toBeGreaterThan(0);
       const hasWordInfiniteInResult = combos.every((combo) => {
@@ -257,7 +257,9 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up combos that exclude specific result in combos", async () => {
-      const combos = await spellbook.search("-results:Infinite -result:win");
+      const { combos } = await spellbook.search(
+        "-results:Infinite -result:win"
+      );
 
       expect(combos.length).toBeGreaterThan(0);
       const doesNotHaveWordInfiniteOrWinInResult = combos.every((combo) => {

@@ -15,9 +15,10 @@ export type CommanderSpellbookAPIResponse = {
   ];
 };
 
-export interface SearchResults extends Array<FormattedApiResponse> {
-  errors?: SearchError[];
-}
+export type SearchResults = {
+  combos: FormattedApiResponse[];
+  errors: SearchError[];
+};
 
 export type FormattedApiResponse = {
   commanderSpellbookId: string;

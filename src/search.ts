@@ -6,6 +6,7 @@ import type { ColorIdentityColors, SearchResults } from "./types";
 
 export default async function search(query = ""): Promise<SearchResults> {
   const searchParams = parseQuery(query);
+  const { errors } = searchParams;
   const cards = searchParams.cards;
   let colorIdentityFilter = searchParams.colorIdentity.colorFilter.value;
 
@@ -22,10 +23,16 @@ export default async function search(query = ""): Promise<SearchResults> {
       (combo) => combo.commanderSpellbookId === searchParams.id
     );
     if (matchingCombo) {
-      return [matchingCombo];
+      return {
+        errors,
+        combos: [matchingCombo],
+      };
     }
 
-    return [];
+    return {
+      errors,
+      combos: [],
+    };
   }
 
   if (cards.include.length > 0) {
@@ -120,9 +127,8 @@ export default async function search(query = ""): Promise<SearchResults> {
     });
   }
 
-  if (searchParams.errors) {
-    (combos as SearchResults).errors = searchParams.errors;
-  }
-
-  return combos;
+  return {
+    errors,
+    combos,
+  };
 }

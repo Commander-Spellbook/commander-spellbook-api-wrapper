@@ -4,6 +4,13 @@
   - Add ability to search for coloreless color identity with `ci:c` and `ci:colorless`
   - Add error messages for errors in query parsing
 
+_Breaking Changes_
+
+- `search`
+  - Now returns a result object instead of an array of combos
+  - Combos array found on the `combos` property of the result object
+  - Errors in query are found in the `errors` property of the result object
+
 # 0.5.2
 
 - `search`

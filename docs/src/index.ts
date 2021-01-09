@@ -52,8 +52,8 @@ function search(colorIdentity: string) {
     return;
   }
 
-  spellbook.search(`${value} ci:${colorIdentity}`).then((combos) => {
-    renderResults(results, combos);
+  spellbook.search(`${value} ci:${colorIdentity}`).then((payload) => {
+    renderResults(results, payload.combos);
   });
 }
 cards.addEventListener(

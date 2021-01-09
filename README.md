@@ -77,16 +77,16 @@ spellbook.findById("not-an-id").catch((err) => {
 Look up all the combos with the `search` method:
 
 ```js
-spellbook.seach().then((combos) => {
-  // loop over the array of combos
+spellbook.search().then((result) => {
+  result.combos; // loop over the array of combos
 });
 ```
 
 In addition, `search` takes an optional query string to filter the results.
 
 ```js
-spellbook.seach("sydri scepter").then((combos) => {
-  // all combos that include cards with the name sydri and scepter in them
+spellbook.search("sydri scepter").then((result) => {
+  result.combos; // all combos that include cards with the name sydri and scepter in them
 });
 ```
 
@@ -94,33 +94,33 @@ Full or partial card names can also be used.
 
 ```js
 spellbook
-  .seach("card:'Arjun, the Shifting Flame' card:\"Thought Reflection\"")
-  .then((combos) => {
-    // all combos that include cards with the name Arjun, the Shifting Flrame and Thought Reflection
+  .search("card:'Arjun, the Shifting Flame' card:\"Thought Reflection\"")
+  .then((result) => {
+    result.combos; // all combos that include cards with the name Arjun, the Shifting Flrame and Thought Reflection
   });
 ```
 
 You can also query by color identity using `ci` or `coloridentity`.
 
 ```js
-spellbook.seach("Kiki ci:wbr").then((combos) => {
-  // all combos that include cards with the name Kiki and have a white/black/red color identity
+spellbook.search("Kiki ci:wbr").then((result) => {
+  result.combos; // all combos that include cards with the name Kiki and have a white/black/red color identity
 });
 ```
 
 The `:`, `=`, `>`, `>=`, `<`, and `<=` operators are supported.
 
 ```js
-spellbook.seach("Kiki ci=wbr").then((combos) => {
-  // all combos that include cards with the name Kiki and have an identity of exactly white/black/red
+spellbook.search("Kiki ci=wbr").then((result) => {
+  result.combos; // all combos that include cards with the name Kiki and have an identity of exactly white/black/red
 });
 ```
 
 Using numbers are also supported:
 
 ```js
-spellbook.seach("Kiki ci>2").then((combos) => {
-  // all combos that include cards with the name Kiki and have 3 or more colors in her identity
+spellbook.search("Kiki ci>2").then((result) => {
+  result.combos; // all combos that include cards with the name Kiki and have 3 or more colors in her identity
 });
 ```
 
@@ -128,11 +128,11 @@ You can also query by the prequisites, steps and results in the combo.
 
 ```js
 spellbook
-  .seach(
+  .search(
     "prequisites:'all permanents' steps:'Untap all' results:'infinite' results:'mana'"
   )
-  .then((combos) => {
-    // all combos that include the prerequisites, steps and results
+  .then((result) => {
+    result.combos; // all combos that include the prerequisites, steps and results
   });
 ```
 
@@ -140,11 +140,11 @@ Errors in search can be found in an array of errors:
 
 ```js
 spellbook
-  .seach(
+  .search(
     "unknownkey:value card:Arjun"
   )
-  .then((combos) => {
-    const error = combos.errors[0];
+  .then((result) => {
+    const error = result.errors[0];
 
     error.key; // "unknownkey"
     error.value; // "value"
@@ -157,7 +157,7 @@ spellbook
 Look up a random combo using the `random` method:
 
 ```js
-spellbook.seach().then((combo) => {
+spellbook.random().then((combo) => {
   combo; // a randomly chosen combo
 });
 ```
