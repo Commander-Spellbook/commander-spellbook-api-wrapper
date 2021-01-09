@@ -53,6 +53,25 @@ describe("search", () => {
     expect(CardGrouping.prototype.matchesAny).toBeCalledWith(["Sydri"]);
   });
 
+  it("includes errors", async () => {
+    const combos = await search(
+      "unknownkey:value card:sydri unknownkey2:value2"
+    );
+
+    expect(combos.errors).toEqual([
+      {
+        key: "unknownkey",
+        value: "value",
+        message: 'Could not parse keyword "unknownkey" with value "value"',
+      },
+      {
+        key: "unknownkey2",
+        value: "value2",
+        message: 'Could not parse keyword "unknownkey2" with value "value2"',
+      },
+    ]);
+  });
+
   describe("color identity: color filter", () => {
     it("can filter by color identity array with : operator", async () => {
       jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);

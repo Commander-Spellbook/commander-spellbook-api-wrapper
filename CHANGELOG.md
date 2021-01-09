@@ -2,6 +2,7 @@
 
 - `search`
   - Add ability to search for coloreless color identity with `ci:c` and `ci:colorless`
+  - Add error messages for errors in query parsing
 
 # 0.5.2
 

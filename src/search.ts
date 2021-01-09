@@ -2,11 +2,9 @@ import lookupApi from "./spellbook-api";
 import parseQuery from "./parse-query";
 import normalizeStringInput from "./normalize-string-input";
 
-import type { ColorIdentityColors, FormattedApiResponse } from "./types";
+import type { ColorIdentityColors, SearchResults } from "./types";
 
-export default async function search(
-  query = ""
-): Promise<FormattedApiResponse[]> {
+export default async function search(query = ""): Promise<SearchResults> {
   const searchParams = parseQuery(query);
   const cards = searchParams.cards;
   let colorIdentityFilter = searchParams.colorIdentity.colorFilter.value;
@@ -120,6 +118,10 @@ export default async function search(
     combos = combos.filter((combo) => {
       return !combo.results.matchesAny(searchParams.results.exclude);
     });
+  }
+
+  if (searchParams.errors) {
+    (combos as SearchResults).errors = searchParams.errors;
   }
 
   return combos;

@@ -136,6 +136,22 @@ spellbook
   });
 ```
 
+Errors in search can be found in an array of errors:
+
+```js
+spellbook
+  .seach(
+    "unknownkey:value card:Arjun"
+  )
+  .then((combos) => {
+    const error = combos.errors[0];
+
+    error.key; // "unknownkey"
+    error.value; // "value"
+    error.message; // 'Could not parse keyword "unknownkey" with value "value"'
+  });
+```
+
 ## Random
 
 Look up a random combo using the `random` method:

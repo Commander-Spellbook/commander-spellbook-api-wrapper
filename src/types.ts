@@ -15,6 +15,10 @@ export type CommanderSpellbookAPIResponse = {
   ];
 };
 
+export interface SearchResults extends Array<FormattedApiResponse> {
+  errors?: SearchError[];
+}
+
 export type FormattedApiResponse = {
   commanderSpellbookId: string;
   permalink: string;
