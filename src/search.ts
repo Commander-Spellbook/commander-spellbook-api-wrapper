@@ -8,7 +8,7 @@ export default async function search(query = ""): Promise<SearchResults> {
   const searchParams = parseQuery(query);
   const { errors } = searchParams;
   const cards = searchParams.cards;
-  let colorIdentityFilter = searchParams.colorIdentity.colorFilter.value;
+  let colorIdentityFilter = searchParams.colorIdentity.valueFilter.value;
 
   if (colorIdentityFilter) {
     colorIdentityFilter = colorIdentityFilter.map((color) =>
@@ -45,7 +45,7 @@ export default async function search(query = ""): Promise<SearchResults> {
 
   if (colorIdentityFilter.length > 0) {
     combos = combos.filter((combo) => {
-      switch (searchParams.colorIdentity.colorFilter.method) {
+      switch (searchParams.colorIdentity.valueFilter.method) {
         case "=":
           return combo.colorIdentity.is(colorIdentityFilter);
         case ">":

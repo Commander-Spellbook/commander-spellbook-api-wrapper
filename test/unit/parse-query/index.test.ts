@@ -24,7 +24,7 @@ describe("parseQuery", () => {
         exclude: [],
       },
       colorIdentity: {
-        colorFilter: {
+        valueFilter: {
           method: "none",
           value: [],
         },
@@ -93,7 +93,7 @@ describe("parseQuery", () => {
         include: ["Kiki", "Daxos", "Grave Titan", "Akroma"],
       },
       colorIdentity: {
-        colorFilter: {
+        valueFilter: {
           method: ":",
           value: ["w", "b", "r"],
         },
@@ -136,7 +136,7 @@ describe("parseQuery", () => {
         include: ["Kiki", "Daxos", "Grave Titan", "Akroma"],
       },
       colorIdentity: {
-        colorFilter: {
+        valueFilter: {
           method: ":",
           value: ["w", "b", "r"],
         },
@@ -185,7 +185,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ":",
             value: ["w", "b", "r"],
           },
@@ -205,7 +205,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ":",
             value: ["w", "b", "r"],
           },
@@ -225,7 +225,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ":",
             value: ["w", "b", "r"],
           },
@@ -245,7 +245,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ":",
             value: ["g", "r"],
           },
@@ -267,7 +267,7 @@ describe("parseQuery", () => {
         expect.objectContaining({
           errors: [],
           colorIdentity: {
-            colorFilter: {
+            valueFilter: {
               method: "none",
               value: [],
             },
@@ -288,7 +288,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ":",
             value: [],
           },
@@ -308,7 +308,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ":",
             value: [],
           },
@@ -328,7 +328,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: "=",
             value: ["g", "r"],
           },
@@ -348,7 +348,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ">",
             value: ["g", "r"],
           },
@@ -368,7 +368,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: ">=",
             value: ["g", "r"],
           },
@@ -388,7 +388,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: "<",
             value: ["g", "r"],
           },
@@ -408,7 +408,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          colorFilter: {
+          valueFilter: {
             method: "<=",
             value: ["g", "r"],
           },

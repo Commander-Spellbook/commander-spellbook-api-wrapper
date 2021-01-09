@@ -53,8 +53,8 @@ function collectKeywordedQueries(
           params.colorIdentity.sizeFilter.method = operator;
           params.colorIdentity.sizeFilter.value = Number(value);
         } else {
-          params.colorIdentity.colorFilter.method = operator;
-          params.colorIdentity.colorFilter.value = parseColorIdentity(value);
+          params.colorIdentity.valueFilter.method = operator;
+          params.colorIdentity.valueFilter.value = parseColorIdentity(value);
         }
         break;
       case "card":
@@ -127,7 +127,7 @@ export default function parseQuery(query: string): SearchParameters {
       exclude: [],
     },
     colorIdentity: {
-      colorFilter: {
+      valueFilter: {
         method: "none",
         value: [],
       },

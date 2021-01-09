@@ -50,7 +50,7 @@ export type SearchParameters = {
   results: IncludeExclude;
   id?: string;
   colorIdentity: {
-    colorFilter: {
+    valueFilter: {
       method: string;
       value: ColorIdentityColors[];
     };
