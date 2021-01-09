@@ -8,8 +8,23 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["foo", "bar", "baz"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "foo",
+              },
+              {
+                method: ":",
+                value: "bar",
+              },
+              {
+                method: ":",
+                value: "baz",
+              },
+            ],
+          },
         },
       })
     );
@@ -20,8 +35,10 @@ describe("parseQuery", () => {
 
     expect(result).toEqual({
       cards: {
-        include: [],
-        exclude: [],
+        valueFilter: {
+          include: [],
+          exclude: [],
+        },
       },
       colorIdentity: {
         valueFilter: {
@@ -57,8 +74,19 @@ describe("parseQuery", () => {
     expect(result).toEqual(
       expect.objectContaining({
         cards: {
-          exclude: [],
-          include: ["foo", "bar"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "foo",
+              },
+              {
+                method: ":",
+                value: "bar",
+              },
+            ],
+          },
         },
         errors: [
           {
@@ -89,8 +117,32 @@ describe("parseQuery", () => {
     expect(result).toEqual({
       id: "12345",
       cards: {
-        exclude: ["Food"],
-        include: ["Kiki", "Daxos", "Grave Titan", "Akroma"],
+        valueFilter: {
+          exclude: [
+            {
+              method: ":",
+              value: "Food",
+            },
+          ],
+          include: [
+            {
+              method: ":",
+              value: "Kiki",
+            },
+            {
+              method: ":",
+              value: "Daxos",
+            },
+            {
+              method: ":",
+              value: "Grave Titan",
+            },
+            {
+              method: ":",
+              value: "Akroma",
+            },
+          ],
+        },
       },
       colorIdentity: {
         valueFilter: {
@@ -132,8 +184,32 @@ describe("parseQuery", () => {
     expect(result).toEqual({
       id: "12345",
       cards: {
-        exclude: ["Food"],
-        include: ["Kiki", "Daxos", "Grave Titan", "Akroma"],
+        valueFilter: {
+          exclude: [
+            {
+              method: ":",
+              value: "Food",
+            },
+          ],
+          include: [
+            {
+              method: ":",
+              value: "Kiki",
+            },
+            {
+              method: ":",
+              value: "Daxos",
+            },
+            {
+              method: ":",
+              value: "Grave Titan",
+            },
+            {
+              method: ":",
+              value: "Akroma",
+            },
+          ],
+        },
       },
       colorIdentity: {
         valueFilter: {
@@ -428,8 +504,15 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["Rashmi"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "Rashmi",
+              },
+            ],
+          },
         },
       })
     );
@@ -442,8 +525,23 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["Rashmi", "Arjun", "Sydri"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "Rashmi",
+              },
+              {
+                method: ":",
+                value: "Arjun",
+              },
+              {
+                method: ":",
+                value: "Sydri",
+              },
+            ],
+          },
         },
       })
     );
@@ -456,8 +554,15 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["Rashmi, Eternities Crafter"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "Rashmi, Eternities Crafter",
+              },
+            ],
+          },
         },
       })
     );
@@ -470,8 +575,15 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["Freyalise, Llanowar's Fury"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "Freyalise, Llanowar's Fury",
+              },
+            ],
+          },
         },
       })
     );
@@ -484,8 +596,15 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: [`Kongming, "Sleeping Dragon"`],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: `Kongming, "Sleeping Dragon"`,
+              },
+            ],
+          },
         },
       })
     );
@@ -498,8 +617,15 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["Rashmi, Eternities Crafter"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "Rashmi, Eternities Crafter",
+              },
+            ],
+          },
         },
       })
     );
@@ -514,8 +640,23 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: [],
-          include: ["Rashmi, Eternities Crafter", "Arjun", "Sydri, Galvanic"],
+          valueFilter: {
+            exclude: [],
+            include: [
+              {
+                method: ":",
+                value: "Rashmi, Eternities Crafter",
+              },
+              {
+                method: ":",
+                value: "Arjun",
+              },
+              {
+                method: ":",
+                value: "Sydri, Galvanic",
+              },
+            ],
+          },
         },
       })
     );
@@ -530,8 +671,27 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
-          exclude: ["Rashmi", "Arjun", "Food", "Sydri"],
-          include: [],
+          valueFilter: {
+            exclude: [
+              {
+                method: ":",
+                value: "Rashmi",
+              },
+              {
+                method: ":",
+                value: "Arjun",
+              },
+              {
+                method: ":",
+                value: "Food",
+              },
+              {
+                method: ":",
+                value: "Sydri",
+              },
+            ],
+            include: [],
+          },
         },
       })
     );

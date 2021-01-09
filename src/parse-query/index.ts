@@ -58,10 +58,16 @@ function collectKeywordedQueries(
         }
         break;
       case "card":
-        params.cards.include.push(value);
+        params.cards.valueFilter.include.push({
+          method: ":",
+          value,
+        });
         break;
       case "-card":
-        params.cards.exclude.push(value);
+        params.cards.valueFilter.exclude.push({
+          method: ":",
+          value,
+        });
         break;
       case "pre":
       case "prerequisite":
@@ -116,15 +122,20 @@ function collectPlainNameQueries(
   const queries = simpleQueryGroups;
 
   queries.forEach((value) => {
-    params.cards.include.push(value.trim());
+    params.cards.valueFilter.include.push({
+      method: ":",
+      value: value.trim(),
+    });
   });
 }
 
 export default function parseQuery(query: string): SearchParameters {
   const parameters = {
     cards: {
-      include: [],
-      exclude: [],
+      valueFilter: {
+        include: [],
+        exclude: [],
+      },
     },
     colorIdentity: {
       valueFilter: {

@@ -43,21 +43,38 @@ export type IncludeExclude = {
   exclude: string[];
 };
 
+type SizeFilter = {
+  method: string;
+  value: number;
+};
+
+type ValueFilter = {
+  method: string;
+  value: string;
+};
+
+export type Filters = {
+  // sizeFilter: SizeFilter;
+  valueFilter: {
+    include: ValueFilter[];
+    exclude: ValueFilter[];
+  };
+};
+
+interface ColorIdentityValueFilter {
+  method: string;
+  value: ColorIdentityColors[];
+}
+
 export type SearchParameters = {
-  cards: IncludeExclude;
+  cards: Filters;
   prerequisites: IncludeExclude;
   steps: IncludeExclude;
   results: IncludeExclude;
   id?: string;
   colorIdentity: {
-    valueFilter: {
-      method: string;
-      value: ColorIdentityColors[];
-    };
-    sizeFilter: {
-      method: string;
-      value: number;
-    };
+    valueFilter: ColorIdentityValueFilter;
+    sizeFilter: SizeFilter;
   };
   errors: SearchError[];
 };

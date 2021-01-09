@@ -35,12 +35,21 @@ export default async function search(query = ""): Promise<SearchResults> {
     };
   }
 
-  if (cards.include.length > 0) {
-    combos = combos.filter((combo) => combo.cards.matchesAll(cards.include));
+  if (cards.valueFilter.include.length > 0) {
+    combos = combos.filter((combo) =>
+      combo.cards.matchesAll(
+        cards.valueFilter.include.map((data) => data.value)
+      )
+    );
   }
 
-  if (cards.exclude.length > 0) {
-    combos = combos.filter((combo) => !combo.cards.matchesAny(cards.exclude));
+  if (cards.valueFilter.exclude.length > 0) {
+    combos = combos.filter(
+      (combo) =>
+        !combo.cards.matchesAny(
+          cards.valueFilter.exclude.map((data) => data.value)
+        )
+    );
   }
 
   if (colorIdentityFilter.length > 0) {
