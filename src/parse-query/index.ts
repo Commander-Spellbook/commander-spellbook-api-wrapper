@@ -90,7 +90,6 @@ function collectKeywordedQueries(
         params.results.exclude.push(value);
         break;
       default:
-        params.errors = params.errors || [];
         params.errors.push({
           key,
           value,
