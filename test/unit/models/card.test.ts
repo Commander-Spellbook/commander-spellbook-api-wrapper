@@ -20,26 +20,47 @@ describe("Card", () => {
     expect(card.name).toEqual("Sydri, Galvanic Genius");
   });
 
-  describe("matches", () => {
+  describe("matchesName", () => {
     it("returns true when the input is the name", () => {
       const card = new Card("Sydri, Galvanic Genius");
 
-      expect(card.matches("Sydri, Galvanic Genius")).toBe(true);
-      expect(card.matches("Arjun, the Shifting Flame")).toBe(false);
+      expect(card.matchesName("Sydri, Galvanic Genius")).toBe(true);
+      expect(card.matchesName("Arjun, the Shifting Flame")).toBe(false);
     });
 
     it("returns true for partial matches", () => {
       const card = new Card("Sydri, Galvanic Genius");
 
-      expect(card.matches("Sydri")).toBe(true);
-      expect(card.matches("alv")).toBe(true);
-      expect(card.matches("nius")).toBe(true);
+      expect(card.matchesName("Sydri")).toBe(true);
+      expect(card.matchesName("alv")).toBe(true);
+      expect(card.matchesName("nius")).toBe(true);
     });
 
     it("disregards punctuation and casing", () => {
       const card = new Card("Sydri, Galvanic Genius");
 
-      expect(card.matches("sYd~Ri G!alva??nIc GENIUS")).toBe(true);
+      expect(card.matchesName("sYd~Ri G!alva??nIc GENIUS")).toBe(true);
+    });
+  });
+
+  describe("matchesNameExactly", () => {
+    it("returns true when the input is the name", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.matchesNameExactly("Sydri, Galvanic Genius")).toBe(true);
+      expect(card.matchesNameExactly("Arjun, the Shifting Flame")).toBe(false);
+    });
+
+    it("returns false for partial matches", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.matchesNameExactly("Sydri")).toBe(false);
+    });
+
+    it("disregards punctuation and casing", () => {
+      const card = new Card("Sydri, Galvanic Genius");
+
+      expect(card.matchesNameExactly("sYd~Ri G!alva??nIc GENIUS")).toBe(true);
     });
   });
 

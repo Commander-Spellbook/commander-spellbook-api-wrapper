@@ -29,31 +29,31 @@ describe("CardGrouping", () => {
     });
   });
 
-  describe("matchesAll", () => {
-    it("returns true when every card name passed matches a card in the array", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+  describe("includesCard", () => {
+    it("returns true when card grouping contains a partial name", () => {
+      const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.matchesAll(["Card a", "Card b"])).toBe(true);
+      expect(group.includesCard("fo")).toBe(true);
     });
 
-    it("returns false when not every card name passed matches a card in the array", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+    it("returns false when card grouping does not contain a partial name", () => {
+      const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.matchesAll(["Card a", "Card z"])).toBe(false);
+      expect(group.includesCard("bo")).toBe(false);
     });
   });
 
-  describe("matchesAny", () => {
-    it("returns true when any card name passed matches a card in the array", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+  describe("includesCardExactly", () => {
+    it("returns true when card grouping contains a partial name", () => {
+      const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.matchesAny(["Card a", "Card z"])).toBe(true);
+      expect(group.includesCardExactly("bar")).toBe(true);
     });
 
-    it("returns false when no card names passed match those in the array", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+    it("returns false when card grouping does not contain a partial name", () => {
+      const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.matchesAny(["Card y", "Card z"])).toBe(false);
+      expect(group.includesCardExactly("fo")).toBe(false);
     });
   });
 

@@ -49,8 +49,12 @@ export default class Card {
       CARD_IMAGE_NAMED_BASE_URL + encodeURIComponent(this.name);
   }
 
-  matches(cardName: string): boolean {
+  matchesName(cardName: string): boolean {
     return this.normalizedName.indexOf(normalizeStringInput(cardName)) > -1;
+  }
+
+  matchesNameExactly(cardName: string): boolean {
+    return this.normalizedName === normalizeStringInput(cardName);
   }
 
   getScryfallData(): ReturnType<typeof scryfall.getCard> {

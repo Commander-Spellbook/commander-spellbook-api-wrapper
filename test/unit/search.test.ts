@@ -21,8 +21,7 @@ describe("search", () => {
       },
     ]);
 
-    jest.spyOn(CardGrouping.prototype, "matchesAll");
-    jest.spyOn(CardGrouping.prototype, "matchesAny");
+    jest.spyOn(CardGrouping.prototype, "includesCard");
   });
 
   afterEach(() => {
@@ -36,21 +35,23 @@ describe("search", () => {
   });
 
   it("can filter by cards", async () => {
+    mocked(CardGrouping.prototype.includesCard).mockReturnValueOnce(true);
+    mocked(CardGrouping.prototype.includesCard).mockReturnValueOnce(false);
+    mocked(CardGrouping.prototype.includesCard).mockReturnValueOnce(false);
+
     await search("Sydri Arjun Rashmi");
 
-    expect(CardGrouping.prototype.matchesAll).toBeCalledTimes(1);
-    expect(CardGrouping.prototype.matchesAll).toBeCalledWith([
-      "Sydri",
-      "Arjun",
-      "Rashmi",
-    ]);
+    expect(CardGrouping.prototype.includesCard).toBeCalledTimes(2);
+    expect(CardGrouping.prototype.includesCard).toBeCalledWith("Sydri");
+    expect(CardGrouping.prototype.includesCard).toBeCalledWith("Arjun");
+    expect(CardGrouping.prototype.includesCard).not.toBeCalledWith("Rashmi");
   });
 
   it("can filter out cards", async () => {
     await search("-card:Sydri");
 
-    expect(CardGrouping.prototype.matchesAny).toBeCalledTimes(1);
-    expect(CardGrouping.prototype.matchesAny).toBeCalledWith(["Sydri"]);
+    expect(CardGrouping.prototype.includesCard).toBeCalledTimes(1);
+    expect(CardGrouping.prototype.includesCard).toBeCalledWith("Sydri");
   });
 
   it("includes errors", async () => {

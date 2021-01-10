@@ -36,20 +36,19 @@ export default async function search(query = ""): Promise<SearchResults> {
   }
 
   if (cards.valueFilter.include.length > 0) {
-    combos = combos.filter((combo) =>
-      combo.cards.matchesAll(
-        cards.valueFilter.include.map((data) => data.value)
-      )
-    );
+    combos = combos.filter((combo) => {
+      return cards.valueFilter.include.every((filter) => {
+        return combo.cards.includesCard(filter.value);
+      });
+    });
   }
 
   if (cards.valueFilter.exclude.length > 0) {
-    combos = combos.filter(
-      (combo) =>
-        !combo.cards.matchesAny(
-          cards.valueFilter.exclude.map((data) => data.value)
-        )
-    );
+    combos = combos.filter((combo) => {
+      return !cards.valueFilter.exclude.find((filter) => {
+        return combo.cards.includesCard(filter.value);
+      });
+    });
   }
 
   if (colorIdentityFilter.length > 0) {

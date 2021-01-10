@@ -10,6 +10,9 @@ _Breaking Changes_
   - Now returns a result object instead of an array of combos
   - Combos array found on the `combos` property of the result object
   - Errors in query are found in the `errors` property of the result object
+- `CardGrouping`
+  - Remove `matchesAll`
+  - Remove `matchesAny`
 
 # 0.5.2
 

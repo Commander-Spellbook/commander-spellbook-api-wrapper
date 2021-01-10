@@ -17,12 +17,12 @@ export default class CardGrouping extends Array<Card> {
     return list;
   }
 
-  matchesAll(cardNames: string[]): boolean {
-    return cardNames.every((card) => this.find((c) => c.matches(card)));
+  includesCard(cardName: string): boolean {
+    return Boolean(this.find((c) => c.matchesName(cardName)));
   }
 
-  matchesAny(cardNames: string[]): boolean {
-    return Boolean(cardNames.find((card) => this.find((c) => c.matches(card))));
+  includesCardExactly(cardName: string): boolean {
+    return Boolean(this.find((c) => c.matchesNameExactly(cardName)));
   }
 
   toString(): string {
