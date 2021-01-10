@@ -20,7 +20,7 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".js", ".css"],
+    extensions: [".ts", ".js"],
   },
   output: {
     filename: "browser.js",
@@ -43,7 +43,7 @@ describe("built file (be patient, this can take a while)", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     webpack(config, (err: Error, stats: any) => {
       if (err || stats.hasErrors()) {
-        console.log(err.message);
+        console.log(err && err.message);
         console.log(stats && stats.toJson("minimal"));
         done(new Error("something went wrong"));
 
