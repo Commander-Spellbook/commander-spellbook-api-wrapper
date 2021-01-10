@@ -55,10 +55,8 @@ type ValueFilter = {
 
 export type Filters = {
   sizeFilters: SizeFilter[];
-  valueFilter: {
-    include: ValueFilter[];
-    exclude: ValueFilter[];
-  };
+  includeFilters: ValueFilter[];
+  excludeFilters: ValueFilter[];
 };
 
 interface ColorIdentityValueFilter {

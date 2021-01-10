@@ -35,17 +35,17 @@ export default async function search(query = ""): Promise<SearchResults> {
     };
   }
 
-  if (cards.valueFilter.include.length > 0) {
+  if (cards.includeFilters.length > 0) {
     combos = combos.filter((combo) => {
-      return cards.valueFilter.include.every((filter) => {
+      return cards.includeFilters.every((filter) => {
         return combo.cards.includesCard(filter.value);
       });
     });
   }
 
-  if (cards.valueFilter.exclude.length > 0) {
+  if (cards.excludeFilters.length > 0) {
     combos = combos.filter((combo) => {
-      return !cards.valueFilter.exclude.find((filter) => {
+      return !cards.excludeFilters.find((filter) => {
         return combo.cards.includesCard(filter.value);
       });
     });

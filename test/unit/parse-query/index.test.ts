@@ -9,23 +9,21 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "foo",
-              },
-              {
-                method: ":",
-                value: "bar",
-              },
-              {
-                method: ":",
-                value: "baz",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "foo",
+            },
+            {
+              method: ":",
+              value: "bar",
+            },
+            {
+              method: ":",
+              value: "baz",
+            },
+          ],
         },
       })
     );
@@ -37,10 +35,8 @@ describe("parseQuery", () => {
     expect(result).toEqual({
       cards: {
         sizeFilters: [],
-        valueFilter: {
-          include: [],
-          exclude: [],
-        },
+        includeFilters: [],
+        excludeFilters: [],
       },
       colorIdentity: {
         valueFilter: {
@@ -77,19 +73,17 @@ describe("parseQuery", () => {
       expect.objectContaining({
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "foo",
-              },
-              {
-                method: ":",
-                value: "bar",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "foo",
+            },
+            {
+              method: ":",
+              value: "bar",
+            },
+          ],
         },
         errors: [
           {
@@ -121,32 +115,30 @@ describe("parseQuery", () => {
       id: "12345",
       cards: {
         sizeFilters: [],
-        valueFilter: {
-          exclude: [
-            {
-              method: ":",
-              value: "Food",
-            },
-          ],
-          include: [
-            {
-              method: ":",
-              value: "Kiki",
-            },
-            {
-              method: ":",
-              value: "Daxos",
-            },
-            {
-              method: ":",
-              value: "Grave Titan",
-            },
-            {
-              method: ":",
-              value: "Akroma",
-            },
-          ],
-        },
+        excludeFilters: [
+          {
+            method: ":",
+            value: "Food",
+          },
+        ],
+        includeFilters: [
+          {
+            method: ":",
+            value: "Kiki",
+          },
+          {
+            method: ":",
+            value: "Daxos",
+          },
+          {
+            method: ":",
+            value: "Grave Titan",
+          },
+          {
+            method: ":",
+            value: "Akroma",
+          },
+        ],
       },
       colorIdentity: {
         valueFilter: {
@@ -189,32 +181,30 @@ describe("parseQuery", () => {
       id: "12345",
       cards: {
         sizeFilters: [],
-        valueFilter: {
-          exclude: [
-            {
-              method: ":",
-              value: "Food",
-            },
-          ],
-          include: [
-            {
-              method: ":",
-              value: "Kiki",
-            },
-            {
-              method: ":",
-              value: "Daxos",
-            },
-            {
-              method: ":",
-              value: "Grave Titan",
-            },
-            {
-              method: ":",
-              value: "Akroma",
-            },
-          ],
-        },
+        excludeFilters: [
+          {
+            method: ":",
+            value: "Food",
+          },
+        ],
+        includeFilters: [
+          {
+            method: ":",
+            value: "Kiki",
+          },
+          {
+            method: ":",
+            value: "Daxos",
+          },
+          {
+            method: ":",
+            value: "Grave Titan",
+          },
+          {
+            method: ":",
+            value: "Akroma",
+          },
+        ],
       },
       colorIdentity: {
         valueFilter: {
@@ -510,15 +500,13 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "Rashmi",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Rashmi",
+            },
+          ],
         },
       })
     );
@@ -532,23 +520,21 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "Rashmi",
-              },
-              {
-                method: ":",
-                value: "Arjun",
-              },
-              {
-                method: ":",
-                value: "Sydri",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Rashmi",
+            },
+            {
+              method: ":",
+              value: "Arjun",
+            },
+            {
+              method: ":",
+              value: "Sydri",
+            },
+          ],
         },
       })
     );
@@ -562,15 +548,13 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "Rashmi, Eternities Crafter",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Rashmi, Eternities Crafter",
+            },
+          ],
         },
       })
     );
@@ -584,15 +568,13 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "Freyalise, Llanowar's Fury",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Freyalise, Llanowar's Fury",
+            },
+          ],
         },
       })
     );
@@ -606,15 +588,13 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: `Kongming, "Sleeping Dragon"`,
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: `Kongming, "Sleeping Dragon"`,
+            },
+          ],
         },
       })
     );
@@ -628,15 +608,13 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "Rashmi, Eternities Crafter",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Rashmi, Eternities Crafter",
+            },
+          ],
         },
       })
     );
@@ -652,23 +630,21 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [],
-            include: [
-              {
-                method: ":",
-                value: "Rashmi, Eternities Crafter",
-              },
-              {
-                method: ":",
-                value: "Arjun",
-              },
-              {
-                method: ":",
-                value: "Sydri, Galvanic",
-              },
-            ],
-          },
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Rashmi, Eternities Crafter",
+            },
+            {
+              method: ":",
+              value: "Arjun",
+            },
+            {
+              method: ":",
+              value: "Sydri, Galvanic",
+            },
+          ],
         },
       })
     );
@@ -684,27 +660,25 @@ describe("parseQuery", () => {
         errors: [],
         cards: {
           sizeFilters: [],
-          valueFilter: {
-            exclude: [
-              {
-                method: ":",
-                value: "Rashmi",
-              },
-              {
-                method: ":",
-                value: "Arjun",
-              },
-              {
-                method: ":",
-                value: "Food",
-              },
-              {
-                method: ":",
-                value: "Sydri",
-              },
-            ],
-            include: [],
-          },
+          excludeFilters: [
+            {
+              method: ":",
+              value: "Rashmi",
+            },
+            {
+              method: ":",
+              value: "Arjun",
+            },
+            {
+              method: ":",
+              value: "Food",
+            },
+            {
+              method: ":",
+              value: "Sydri",
+            },
+          ],
+          includeFilters: [],
         },
       })
     );

@@ -58,13 +58,13 @@ function collectKeywordedQueries(
         }
         break;
       case "card":
-        params.cards.valueFilter.include.push({
+        params.cards.includeFilters.push({
           method: operator,
           value,
         });
         break;
       case "-card":
-        params.cards.valueFilter.exclude.push({
+        params.cards.excludeFilters.push({
           method: operator,
           value,
         });
@@ -122,7 +122,7 @@ function collectPlainNameQueries(
   const queries = simpleQueryGroups;
 
   queries.forEach((value) => {
-    params.cards.valueFilter.include.push({
+    params.cards.includeFilters.push({
       method: ":",
       value: value.trim(),
     });
@@ -133,10 +133,8 @@ export default function parseQuery(query: string): SearchParameters {
   const parameters = {
     cards: {
       sizeFilters: [],
-      valueFilter: {
-        include: [],
-        exclude: [],
-      },
+      includeFilters: [],
+      excludeFilters: [],
     },
     colorIdentity: {
       valueFilter: {
