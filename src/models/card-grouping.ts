@@ -28,36 +28,4 @@ export default class CardGrouping extends Array<Card> {
   toString(): string {
     return this.join(" | ");
   }
-
-  toHTMLOrderedList(): HTMLOListElement {
-    return this.toHTMLList("ol");
-  }
-
-  toHTMLUnorderedList(): HTMLUListElement {
-    return this.toHTMLList("ul");
-  }
-
-  toMarkdown(): string {
-    return this.reduce((md, item) => {
-      if (md) {
-        md = `${md}\n`;
-      }
-      return `${md}- ${item.name}`;
-    }, "");
-  }
-
-  private toHTMLList(kind: "ul"): HTMLUListElement;
-  private toHTMLList(kind: "ol"): HTMLOListElement;
-  private toHTMLList(kind: string): HTMLElement {
-    const lis = this.map((item) => {
-      const li = document.createElement("li");
-      li.appendChild(item.toHTML());
-
-      return li;
-    });
-    const container = document.createElement(kind);
-    lis.forEach((li) => container.appendChild(li));
-
-    return container;
-  }
 }

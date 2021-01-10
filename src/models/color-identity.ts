@@ -1,4 +1,3 @@
-import scryfall from "scryfall-client";
 import type { ColorIdentityColors } from "../types";
 
 const WUBRG_ORDER: ColorIdentityColors[] = ["w", "u", "b", "r", "g"];
@@ -52,22 +51,5 @@ export default class ColorIdentity {
 
   toString(): string {
     return this.rawString;
-  }
-
-  toMarkdown(): string {
-    return this.colors.map((color) => `:mana${color}:`).join("");
-  }
-
-  toHTML(): DocumentFragment {
-    const fragment = document.createDocumentFragment();
-
-    this.colors.forEach((color) => {
-      const img = document.createElement("img");
-      img.src = scryfall.getSymbolUrl(color);
-
-      fragment.appendChild(img);
-    });
-
-    return fragment;
   }
 }

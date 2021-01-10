@@ -67,43 +67,4 @@ describe("CardGrouping", () => {
       );
     });
   });
-
-  describe("toHTMLOrderedList", () => {
-    it("returns an HTMLOListElement", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
-      const ol = group.toHTMLOrderedList();
-      const lis = ol.querySelectorAll("li");
-
-      expect(ol).toBeInstanceOf(HTMLOListElement);
-      expect(lis.length).toBe(3);
-      expect(lis[0].querySelector("span")?.innerText).toBe("Card a");
-      expect(lis[1].querySelector("span")?.innerText).toBe("Card b");
-      expect(lis[2].querySelector("span")?.innerText).toBe("Card c");
-    });
-  });
-
-  describe("toHTMLUnorderedList", () => {
-    it("returns an HTMLUListElement", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
-      const ul = group.toHTMLUnorderedList();
-      const lis = ul.querySelectorAll("li");
-
-      expect(ul).toBeInstanceOf(HTMLUListElement);
-      expect(lis.length).toBe(3);
-      expect(lis[0].querySelector("span")?.innerText).toBe("Card a");
-      expect(lis[1].querySelector("span")?.innerText).toBe("Card b");
-      expect(lis[2].querySelector("span")?.innerText).toBe("Card c");
-    });
-  });
-
-  describe("toMarkdown", () => {
-    it("returns a markdown list", () => {
-      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
-      const md = group.toMarkdown();
-
-      expect(md).toBe(`- Card a
-- Card b
-- Card c`);
-    });
-  });
 });

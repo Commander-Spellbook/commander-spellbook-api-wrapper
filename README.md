@@ -239,51 +239,6 @@ Returns the raw result from the Commander Spellbook API.
 card.toString(); // Rashmi, Eternities Crafter
 ```
 
-### toImage
-
-Returns a `img` tag of the card.
-
-```js
-card.toImage(); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter" />
-```
-
-A string may be passed as an argument to specify what kind of image you would like. See the [Scryfyall `version` documentation](https://scryfall.com/docs/api/cards/named) for more details. The possible values are:
-
-- small
-- normal
-- large
-- png
-- art_crop
-- border_crop
-
-```js
-card.toImage("art_crop"); // <img src="https://api.scryfall.com/cards/named?format=image&exact=Rashmi,%2C%20Eternities%20Crafter&version=art_crop" />
-```
-
-### toHTML
-
-Returns a `span` tag of the card name that displays the card image when hovered over.
-
-```js
-card.toHTML(); // <span>Rashmi, Eternities Crafter</span>
-```
-
-It takes an options object:
-
-```
-{
-  skipName?: boolean;
-  skipTooltip?: boolean;
-  className?: string;
-}
-```
-
-`skipName` will not include the name of the card in the span, but will still attach the listeners for display the card image tooltip.
-
-`skipTooltip` will skip adding code to generate the tooltip when hovering over the card name.
-
-`className` will add any classes as the `className` attribute on the `span`.
-
 ### ColorIdentity
 
 An object that has a few convenience methods for rendering the color identity.
@@ -302,22 +257,6 @@ Returns the raw result from the Commander Spellbook API.
 
 ```js
 ci.toString(); // w,u
-```
-
-### toMarkdown
-
-Returns a string that renders teh color identity as markdown.
-
-```js
-ci.toMarkdown(); // :manaw::manau:
-```
-
-### toHTML
-
-Returns a document fragment that includes the colors as mana symbols in img tags.
-
-```js
-ci.toHTML(); // <img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"><img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/U.svg">
 ```
 
 ### SpellbookList
@@ -363,89 +302,6 @@ This method will be envoked when it is interpolated:
 const text = `Here are the steps: ${list}`;
 // Here are the steps: Step 1. Step 2. Step 3.
 ```
-
-#### toHTMLUnorderedList
-
-Provides the list as an `HTMLUListElement`.
-
-```js
-list.toHTMLUnorderedList();
-// <ul>
-//   <li>Step 1</li>
-//   <li>Step 2</li>
-//   <li>Step 3</li>
-// </ul>
-```
-
-If a step includes a mana symbol, it is automatically converted to an svg:
-
-```js
-list[1] === "Step 2 :manaw:";
-list.toHTMLUnorderedList();
-// <ul>
-//   <li>Step 1</li>
-//   <li>Step 2 <img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></li>
-//   <li>Step 3</li>
-// </ul>
-```
-
-An options object can be passed when creating the list:
-
-```
-{
-  className?: string;
-}
-```
-
-`className` will apply a class name string to the `ul` element.
-
-#### toHTMLOrderedList
-
-Provides the list as an `HTMLOListElement`.
-
-```js
-list.toHTMLOrderedList();
-// <ol>
-//   <li>Step 1</li>
-//   <li>Step 2</li>
-//   <li>Step 3</li>
-// </ol>
-```
-
-If a step includes a mana symbol, it is automatically converted to an svg:
-
-```js
-list[1] === "Step 2 :manaw:";
-list.toHTMLOrderedList();
-// <ol>
-//   <li>Step 1</li>
-//   <li>Step 2 <img src="https://c2.scryfall.com/file/scryfall-symbols/card-symbols/W.svg"></li>
-//   <li>Step 3</li>
-// </ol>
-```
-
-An options object can be passed when creating the list:
-
-```
-{
-  className?: string;
-}
-```
-
-`className` will apply a class name string to the `ol` element.
-
-#### toMarkdown
-
-Provides the list as a markdown string.
-
-```js
-list.toMarkdown();
-// * Step 1
-// * Step 2
-// * Step 3
-```
-
-If a step includes a mana symbol, it is assumed that your markdown parser will handle the conversion.
 
 # Browser Support
 

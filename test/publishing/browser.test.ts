@@ -1,25 +1,40 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require("webpack");
 const checkES5 = require("check-ecmascript-version-compatibility");
-const config = require("../../webpack.config");
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 import path = require("path");
 import fs = require("fs");
 
+const outputPath = path.resolve(__dirname, "..", "..", "publishing-test-dist");
+const config = {
+  mode: "production",
+  entry: path.resolve(__dirname, "..", "..", "src", "index.ts"),
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".js", ".css"],
+  },
+  output: {
+    filename: "browser.js",
+    path: outputPath,
+    environment: {
+      arrowFunction: false,
+    },
+  },
+};
+
 describe("built file (be patient, this can take a while)", () => {
   let pathToBuild: string;
 
   beforeAll((done) => {
-    const outputPath = path.resolve(
-      __dirname,
-      "..",
-      "..",
-      "publishing-test-dist"
-    );
-    config.entry = path.resolve(__dirname, "..", "..", "src", "index.ts");
-    config.output.path = outputPath;
-    config.output.filename = "browser.js";
     fs.rmdirSync(outputPath, { recursive: true });
     fs.mkdirSync(outputPath);
 
