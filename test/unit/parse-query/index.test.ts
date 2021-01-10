@@ -8,6 +8,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -35,6 +36,7 @@ describe("parseQuery", () => {
 
     expect(result).toEqual({
       cards: {
+        sizeFilters: [],
         valueFilter: {
           include: [],
           exclude: [],
@@ -74,6 +76,7 @@ describe("parseQuery", () => {
     expect(result).toEqual(
       expect.objectContaining({
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -117,6 +120,7 @@ describe("parseQuery", () => {
     expect(result).toEqual({
       id: "12345",
       cards: {
+        sizeFilters: [],
         valueFilter: {
           exclude: [
             {
@@ -184,6 +188,7 @@ describe("parseQuery", () => {
     expect(result).toEqual({
       id: "12345",
       cards: {
+        sizeFilters: [],
         valueFilter: {
           exclude: [
             {
@@ -504,6 +509,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -525,6 +531,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -554,6 +561,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -575,6 +583,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -596,6 +605,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -617,6 +627,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -640,6 +651,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [],
             include: [
@@ -671,6 +683,7 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         cards: {
+          sizeFilters: [],
           valueFilter: {
             exclude: [
               {

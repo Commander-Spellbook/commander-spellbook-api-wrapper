@@ -59,13 +59,13 @@ function collectKeywordedQueries(
         break;
       case "card":
         params.cards.valueFilter.include.push({
-          method: ":",
+          method: operator,
           value,
         });
         break;
       case "-card":
         params.cards.valueFilter.exclude.push({
-          method: ":",
+          method: operator,
           value,
         });
         break;
@@ -132,6 +132,7 @@ function collectPlainNameQueries(
 export default function parseQuery(query: string): SearchParameters {
   const parameters = {
     cards: {
+      sizeFilters: [],
       valueFilter: {
         include: [],
         exclude: [],

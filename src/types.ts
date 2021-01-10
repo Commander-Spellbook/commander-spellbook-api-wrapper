@@ -54,7 +54,7 @@ type ValueFilter = {
 };
 
 export type Filters = {
-  // sizeFilter: SizeFilter;
+  sizeFilters: SizeFilter[];
   valueFilter: {
     include: ValueFilter[];
     exclude: ValueFilter[];
