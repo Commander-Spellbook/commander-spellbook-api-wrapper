@@ -1,27 +1,62 @@
 import search from "../../src/search";
 import lookup from "../../src/spellbook-api";
+import filterCards from "../../src/search-filters/cards";
+import filterColorIdentity from "../../src/search-filters/color-identity";
+import filterComboData from "../../src/search-filters/combo-data";
+import parseQuery from "../../src/parse-query";
 import CardGrouping from "../../src/models/card-grouping";
 import SpellbookList from "../../src/models/list";
 import ColorIdentity from "../../src/models/color-identity";
 
 import { mocked } from "ts-jest/utils";
+
 jest.mock("../../src/spellbook-api");
+jest.mock("../../src/search-filters/cards");
+jest.mock("../../src/search-filters/color-identity");
+jest.mock("../../src/search-filters/combo-data");
+jest.mock("../../src/parse-query");
 
 describe("search", () => {
   beforeEach(() => {
-    mocked(lookup).mockResolvedValue([
-      {
-        commanderSpellbookId: "1",
-        permalink: "https://commanderspellbook.com/?id=1",
-        cards: CardGrouping.create(["Card 1", "Card 2"]),
-        colorIdentity: new ColorIdentity("r,g"),
-        prerequisites: SpellbookList.create("Step 1. Step 2"),
-        steps: SpellbookList.create("Step 1. Step 2"),
-        results: SpellbookList.create("Step 1. Step 2"),
-      },
-    ]);
+    const combo = {
+      commanderSpellbookId: "1",
+      permalink: "https://commanderspellbook.com/?id=1",
+      cards: CardGrouping.create(["Card 1", "Card 2"]),
+      colorIdentity: new ColorIdentity("r,g"),
+      prerequisites: SpellbookList.create("Step 1. Step 2"),
+      steps: SpellbookList.create("Step 1. Step 2"),
+      results: SpellbookList.create("Step 1. Step 2"),
+    };
+    mocked(lookup).mockResolvedValue([combo]);
 
-    jest.spyOn(CardGrouping.prototype, "includesCard");
+    mocked(parseQuery).mockReturnValue({
+      cards: {
+        sizeFilters: [],
+        includeFilters: [],
+        excludeFilters: [],
+      },
+      colorIdentity: {
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
+      },
+      prerequisites: {
+        include: [],
+        exclude: [],
+      },
+      steps: {
+        include: [],
+        exclude: [],
+      },
+      results: {
+        include: [],
+        exclude: [],
+      },
+      errors: [],
+    });
+    mocked(filterCards).mockReturnValue([combo]);
+    mocked(filterColorIdentity).mockReturnValue([combo]);
+    mocked(filterComboData).mockReturnValue([combo]);
   });
 
   afterEach(() => {
@@ -34,27 +69,61 @@ describe("search", () => {
     expect(lookup).toBeCalledTimes(1);
   });
 
-  it("can filter by cards", async () => {
-    mocked(CardGrouping.prototype.includesCard).mockReturnValueOnce(true);
-    mocked(CardGrouping.prototype.includesCard).mockReturnValueOnce(false);
-    mocked(CardGrouping.prototype.includesCard).mockReturnValueOnce(false);
-
+  it("filters by cards", async () => {
     await search("Sydri Arjun Rashmi");
 
-    expect(CardGrouping.prototype.includesCard).toBeCalledTimes(2);
-    expect(CardGrouping.prototype.includesCard).toBeCalledWith("Sydri");
-    expect(CardGrouping.prototype.includesCard).toBeCalledWith("Arjun");
-    expect(CardGrouping.prototype.includesCard).not.toBeCalledWith("Rashmi");
+    expect(filterCards).toBeCalledTimes(1);
   });
 
-  it("can filter out cards", async () => {
-    await search("-card:Sydri");
+  it("filters by color identity", async () => {
+    await search("Sydri Arjun Rashmi");
 
-    expect(CardGrouping.prototype.includesCard).toBeCalledTimes(1);
-    expect(CardGrouping.prototype.includesCard).toBeCalledWith("Sydri");
+    expect(filterColorIdentity).toBeCalledTimes(1);
+  });
+
+  it("filters by combo data", async () => {
+    await search("Sydri Arjun Rashmi");
+
+    expect(filterComboData).toBeCalledTimes(1);
   });
 
   it("includes errors", async () => {
+    mocked(parseQuery).mockReturnValue({
+      cards: {
+        sizeFilters: [],
+        includeFilters: [],
+        excludeFilters: [],
+      },
+      colorIdentity: {
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
+      },
+      prerequisites: {
+        include: [],
+        exclude: [],
+      },
+      steps: {
+        include: [],
+        exclude: [],
+      },
+      results: {
+        include: [],
+        exclude: [],
+      },
+      errors: [
+        {
+          key: "unknownkey",
+          value: "value",
+          message: 'Could not parse keyword "unknownkey" with value "value"',
+        },
+        {
+          key: "unknownkey2",
+          value: "value2",
+          message: 'Could not parse keyword "unknownkey2" with value "value2"',
+        },
+      ],
+    });
     const result = await search(
       "unknownkey:value card:sydri unknownkey2:value2"
     );
@@ -71,174 +140,5 @@ describe("search", () => {
         message: 'Could not parse keyword "unknownkey2" with value "value2"',
       },
     ]);
-  });
-
-  describe("color identity: color filter", () => {
-    it("can filter by color identity array with : operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
-      jest.spyOn(ColorIdentity.prototype, "is");
-
-      await search("ci:grw");
-
-      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
-      expect(ColorIdentity.prototype.is).not.toBeCalled();
-    });
-
-    it("can filter by color identity array with >= operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
-      jest.spyOn(ColorIdentity.prototype, "is");
-
-      await search("ci>=grw");
-
-      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
-      expect(ColorIdentity.prototype.is).not.toBeCalled();
-    });
-
-    it("can filter by color identity array with > operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "includes").mockReturnValue(true);
-      jest.spyOn(ColorIdentity.prototype, "is");
-
-      await search("ci>grw");
-
-      expect(ColorIdentity.prototype.includes).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.includes).toBeCalledWith(["g", "r", "w"]);
-      expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
-    });
-
-    it("can filter by color identity array with < operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
-      jest.spyOn(ColorIdentity.prototype, "is");
-
-      await search("ci<grw");
-
-      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
-      expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
-    });
-
-    it("can filter by color identity array with <= operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "isWithin").mockReturnValue(true);
-      jest.spyOn(ColorIdentity.prototype, "is");
-
-      await search("ci<=grw");
-
-      expect(ColorIdentity.prototype.isWithin).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.isWithin).toBeCalledWith(["g", "r", "w"]);
-      expect(ColorIdentity.prototype.is).not.toBeCalled();
-    });
-
-    it("can filter by color identity array with = operator", async () => {
-      jest.spyOn(ColorIdentity.prototype, "is").mockReturnValue(true);
-
-      await search("ci=grw");
-
-      expect(ColorIdentity.prototype.is).toBeCalledTimes(1);
-      expect(ColorIdentity.prototype.is).toBeCalledWith(["g", "r", "w"]);
-    });
-  });
-
-  describe("color identity: size filter", () => {
-    beforeEach(() => {
-      jest.spyOn(ColorIdentity.prototype, "numberOfColors");
-    });
-
-    it.each([":", "="])(
-      "can filter by color identity number of colors using %s",
-      async (operator) => {
-        mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
-
-        let result = await search(`ci${operator}3`);
-        expect(result.combos.length).toBe(1);
-        expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-        mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
-
-        result = await search(`ci${operator}3`);
-        expect(result.combos.length).toBe(0);
-
-        mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
-
-        result = await search(`ci${operator}3`);
-        expect(result.combos.length).toBe(0);
-      }
-    );
-
-    it("can filter by color identity number of colors using >", async () => {
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
-
-      let result = await search("ci>3");
-      expect(result.combos.length).toBe(1);
-      expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
-
-      result = await search("ci>3");
-      expect(result.combos.length).toBe(0);
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
-
-      result = await search("ci>3");
-      expect(result.combos.length).toBe(0);
-    });
-
-    it("can filter by color identity number of colors using >=", async () => {
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
-
-      let result = await search("ci>=3");
-      expect(result.combos.length).toBe(1);
-      expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
-
-      result = await search("ci>=3");
-      expect(result.combos.length).toBe(1);
-      expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
-
-      result = await search("ci>=3");
-      expect(result.combos.length).toBe(0);
-    });
-
-    it("can filter by color identity number of colors using <", async () => {
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
-
-      let result = await search("ci<3");
-      expect(result.combos.length).toBe(1);
-      expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
-
-      result = await search("ci<3");
-      expect(result.combos.length).toBe(0);
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
-
-      result = await search("ci<3");
-      expect(result.combos.length).toBe(0);
-    });
-
-    it("can filter by color identity number of colors using <=", async () => {
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(2);
-
-      let result = await search("ci<=3");
-      expect(result.combos.length).toBe(1);
-      expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(3);
-
-      result = await search("ci<=3");
-      expect(result.combos.length).toBe(1);
-      expect(result.combos[0].commanderSpellbookId).toBe("1");
-
-      mocked(ColorIdentity.prototype.numberOfColors).mockReturnValue(4);
-
-      result = await search("ci<=3");
-      expect(result.combos.length).toBe(0);
-    });
   });
 });
