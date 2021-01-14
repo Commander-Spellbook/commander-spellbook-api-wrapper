@@ -58,6 +58,7 @@
     "testEnvironment": "jsdom",
     "testTimeout": 10000,
     "restoreMocks": true,
+    "clearMocks": true,
     "setupFilesAfterEnv": [
       "./test/helpers/setup.ts"
     ]

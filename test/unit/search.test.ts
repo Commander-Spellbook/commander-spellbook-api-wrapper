@@ -62,10 +62,6 @@ describe("search", () => {
     mocked(filterSize).mockReturnValue([combo]);
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("looks up combos from api", async () => {
     await search("");
 
