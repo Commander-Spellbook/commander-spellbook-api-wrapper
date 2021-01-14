@@ -37,17 +37,17 @@ describe("ColorIdentity", () => {
     expect(ci.colors).toEqual(["w", "u"]);
   });
 
-  describe("numberOfColors", () => {
+  describe("size", () => {
     it("returns the number of colors", () => {
       const ci = new ColorIdentity("wu");
 
-      expect(ci.numberOfColors()).toBe(2);
+      expect(ci.size()).toBe(2);
     });
 
     it("returns 0 for colorless", () => {
       const ci = new ColorIdentity("c");
 
-      expect(ci.numberOfColors()).toBe(0);
+      expect(ci.size()).toBe(0);
     });
   });
 

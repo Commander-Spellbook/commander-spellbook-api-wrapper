@@ -13,7 +13,7 @@ describe("cards", () => {
   let params: SearchParameters;
 
   beforeEach(() => {
-    combos = [makeFakeCombo({ commanderSpellbookId: "1" })];
+    combos = [makeFakeCombo()];
     params = {
       cards: {
         sizeFilters: [],

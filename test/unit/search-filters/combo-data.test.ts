@@ -1,4 +1,6 @@
-import filterComboData from "../../../src/search-filters/combo-data";
+import filterComboData, {
+  DATA_TYPES,
+} from "../../../src/search-filters/combo-data";
 import makeFakeCombo from "../../../src/make-fake-combo";
 
 import { mocked } from "ts-jest/utils";
@@ -7,12 +9,6 @@ import type {
   FormattedApiResponse,
   SearchParameters,
 } from "../../../src/types";
-
-const DATA_TYPES = ["prerequisites", "steps", "results"] as [
-  "prerequisites",
-  "steps",
-  "results"
-];
 
 describe("comboDataFilter", () => {
   let combos: FormattedApiResponse[];

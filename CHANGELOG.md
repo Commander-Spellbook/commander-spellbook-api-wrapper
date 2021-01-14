@@ -10,6 +10,8 @@ _Breaking Changes_
   - Now returns a result object instead of an array of combos
   - Combos array found on the `combos` property of the result object
   - Errors in query are found in the `errors` property of the result object
+- `ColorIdentity`
+  - Remove `numberOfColors` in favor of `size`
 - `CardGrouping`
   - Remove `matchesAll`
   - Remove `matchesAny`

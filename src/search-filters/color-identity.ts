@@ -54,29 +54,5 @@ export default function filterColorIdentity(
     });
   }
 
-  if (params.colorIdentity.sizeFilters.length > 0) {
-    combos = combos.filter((combo) => {
-      const numberOfColors = combo.colorIdentity.numberOfColors();
-
-      return params.colorIdentity.sizeFilters.every((filter) => {
-        switch (filter.method) {
-          case ":":
-          case "=":
-            return numberOfColors === filter.value;
-          case ">":
-            return numberOfColors > filter.value;
-          case ">=":
-            return numberOfColors >= filter.value;
-          case "<":
-            return numberOfColors < filter.value;
-          case "<=":
-            return numberOfColors <= filter.value;
-          default:
-            return true;
-        }
-      });
-    });
-  }
-
   return combos;
 }

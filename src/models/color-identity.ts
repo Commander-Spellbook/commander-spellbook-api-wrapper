@@ -21,7 +21,7 @@ export default class ColorIdentity {
     return this.colors.length === 1 && this.colors[0] === "c";
   }
 
-  numberOfColors(): number {
+  size(): number {
     if (this.isColorless()) {
       return 0;
     }
