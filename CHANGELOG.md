@@ -6,6 +6,8 @@
   - Add ability to search by number of cards in a combo
   - Support `cards` as alias for `card`
   - Support `-cards` as alias for `-card`
+  - Support `res` as alias for `result`
+  - Support `-res` as alias for `-result`
 
 _Breaking Changes_
 

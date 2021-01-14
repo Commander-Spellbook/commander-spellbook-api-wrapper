@@ -676,6 +676,7 @@ describe("parseQuery", () => {
     "prerequisites",
     "step",
     "steps",
+    "res",
     "result",
     "results",
   ])("parses %s through combo data parser", (kind) => {

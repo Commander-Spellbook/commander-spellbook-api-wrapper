@@ -70,8 +70,10 @@ function collectKeywordedQueries(
       case "steps":
       case "-step":
       case "-steps":
+      case "res":
       case "result":
       case "results":
+      case "-res":
       case "-result":
       case "-results":
         parseComboData(params, key, operator, value);
