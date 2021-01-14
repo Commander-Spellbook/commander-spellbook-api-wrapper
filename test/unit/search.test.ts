@@ -1,6 +1,5 @@
 import search from "../../src/search";
 import lookup from "../../src/spellbook-api";
-import filterCards from "../../src/search-filters/cards";
 import filterColorIdentity from "../../src/search-filters/color-identity";
 import filterComboData from "../../src/search-filters/combo-data";
 import filterSize from "../../src/search-filters/size";
@@ -12,7 +11,6 @@ import ColorIdentity from "../../src/models/color-identity";
 import { mocked } from "ts-jest/utils";
 
 jest.mock("../../src/spellbook-api");
-jest.mock("../../src/search-filters/cards");
 jest.mock("../../src/search-filters/color-identity");
 jest.mock("../../src/search-filters/combo-data");
 jest.mock("../../src/search-filters/size");
@@ -59,7 +57,6 @@ describe("search", () => {
       },
       errors: [],
     });
-    mocked(filterCards).mockReturnValue([combo]);
     mocked(filterColorIdentity).mockReturnValue([combo]);
     mocked(filterComboData).mockReturnValue([combo]);
     mocked(filterSize).mockReturnValue([combo]);
@@ -69,12 +66,6 @@ describe("search", () => {
     await search("");
 
     expect(lookup).toBeCalledTimes(1);
-  });
-
-  it("filters by cards", async () => {
-    await search("Sydri Arjun Rashmi");
-
-    expect(filterCards).toBeCalledTimes(1);
   });
 
   it("filters by color identity", async () => {

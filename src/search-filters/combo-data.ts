@@ -1,6 +1,7 @@
 import type { SearchParameters, FormattedApiResponse } from "../types";
 
-export const DATA_TYPES: ["prerequisites", "steps", "results"] = [
+export const DATA_TYPES: ["cards", "prerequisites", "steps", "results"] = [
+  "cards",
   "prerequisites",
   "steps",
   "results",
