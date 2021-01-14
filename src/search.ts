@@ -1,20 +1,12 @@
 import lookupApi from "./spellbook-api";
 import parseQuery from "./parse-query";
-import normalizeStringInput from "./normalize-string-input";
 
-import type { ColorIdentityColors, SearchResults } from "./types";
+import type { SearchResults } from "./types";
 
 export default async function search(query = ""): Promise<SearchResults> {
   const searchParams = parseQuery(query);
   const { errors } = searchParams;
   const cards = searchParams.cards;
-  let colorIdentityFilter = searchParams.colorIdentity.valueFilter.value;
-
-  if (colorIdentityFilter) {
-    colorIdentityFilter = colorIdentityFilter.map((color) =>
-      normalizeStringInput(color)
-    ) as ColorIdentityColors[];
-  }
 
   let combos = await lookupApi();
 
@@ -51,53 +43,55 @@ export default async function search(query = ""): Promise<SearchResults> {
     });
   }
 
-  if (colorIdentityFilter.length > 0) {
+  if (searchParams.colorIdentity.includeFilters.length > 0) {
     combos = combos.filter((combo) => {
-      switch (searchParams.colorIdentity.valueFilter.method) {
-        case "=":
-          return combo.colorIdentity.is(colorIdentityFilter);
-        case ">":
-          return (
-            combo.colorIdentity.includes(colorIdentityFilter) &&
-            !combo.colorIdentity.is(colorIdentityFilter)
-          );
-        case ">=":
-          return combo.colorIdentity.includes(colorIdentityFilter);
-        case "<":
-          return (
-            combo.colorIdentity.isWithin(colorIdentityFilter) &&
-            !combo.colorIdentity.is(colorIdentityFilter)
-          );
-        case "<=":
-        case ":":
-          return combo.colorIdentity.isWithin(colorIdentityFilter);
-        default:
-          return true;
-      }
+      return searchParams.colorIdentity.includeFilters.every((filter) => {
+        switch (filter.method) {
+          case "=":
+            return combo.colorIdentity.is(filter.value);
+          case ">":
+            return (
+              combo.colorIdentity.includes(filter.value) &&
+              !combo.colorIdentity.is(filter.value)
+            );
+          case ">=":
+            return combo.colorIdentity.includes(filter.value);
+          case "<":
+            return (
+              combo.colorIdentity.isWithin(filter.value) &&
+              !combo.colorIdentity.is(filter.value)
+            );
+          case "<=":
+          case ":":
+            return combo.colorIdentity.isWithin(filter.value);
+          default:
+            return true;
+        }
+      });
     });
   }
 
-  if (searchParams.colorIdentity.sizeFilter.method !== "none") {
-    const sizeValue = searchParams.colorIdentity.sizeFilter.value;
-
+  if (searchParams.colorIdentity.sizeFilters.length > 0) {
     combos = combos.filter((combo) => {
       const numberOfColors = combo.colorIdentity.numberOfColors();
 
-      switch (searchParams.colorIdentity.sizeFilter.method) {
-        case ":":
-        case "=":
-          return numberOfColors === sizeValue;
-        case ">":
-          return numberOfColors > sizeValue;
-        case ">=":
-          return numberOfColors >= sizeValue;
-        case "<":
-          return numberOfColors < sizeValue;
-        case "<=":
-          return numberOfColors <= sizeValue;
-        default:
-          return true;
-      }
+      return searchParams.colorIdentity.sizeFilters.every((filter) => {
+        switch (filter.method) {
+          case ":":
+          case "=":
+            return numberOfColors === filter.value;
+          case ">":
+            return numberOfColors > filter.value;
+          case ">=":
+            return numberOfColors >= filter.value;
+          case "<":
+            return numberOfColors < filter.value;
+          case "<=":
+            return numberOfColors <= filter.value;
+          default:
+            return true;
+        }
+      });
     });
   }
 

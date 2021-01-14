@@ -116,7 +116,7 @@ spellbook.search("Kiki ci=wbr").then((result) => {
 });
 ```
 
-Using numbers are also supported:
+Using numbers to restrict the number of colors is also supported:
 
 ```js
 spellbook.search("Kiki ci>2").then((result) => {
@@ -132,7 +132,7 @@ spellbook
     "prequisites:'all permanents' steps:'Untap all' results:'infinite' results:'mana'"
   )
   .then((result) => {
-    result.combos; // all combos that include the prerequisites, steps and results
+    result.combos; // all combos that include the prerequisites, steps and results from the query
   });
 ```
 

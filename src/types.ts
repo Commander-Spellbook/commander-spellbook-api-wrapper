@@ -71,8 +71,9 @@ export type SearchParameters = {
   results: IncludeExclude;
   id?: string;
   colorIdentity: {
-    valueFilter: ColorIdentityValueFilter;
-    sizeFilter: SizeFilter;
+    sizeFilters: SizeFilter[];
+    includeFilters: ColorIdentityValueFilter[];
+    excludeFilters: ColorIdentityValueFilter[];
   };
   errors: SearchError[];
 };

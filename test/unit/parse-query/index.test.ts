@@ -40,14 +40,9 @@ describe("parseQuery", () => {
         excludeFilters: [],
       },
       colorIdentity: {
-        valueFilter: {
-          method: "none",
-          value: [],
-        },
-        sizeFilter: {
-          method: "none",
-          value: 5,
-        },
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       prerequisites: {
         include: [],
@@ -147,14 +142,14 @@ describe("parseQuery", () => {
         ],
       },
       colorIdentity: {
-        valueFilter: {
-          method: ":",
-          value: ["w", "b", "r"],
-        },
-        sizeFilter: {
-          method: "none",
-          value: 5,
-        },
+        includeFilters: [
+          {
+            method: ":",
+            value: ["w", "b", "r"],
+          },
+        ],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       prerequisites: {
         include: ["prereq"],
@@ -213,14 +208,14 @@ describe("parseQuery", () => {
         ],
       },
       colorIdentity: {
-        valueFilter: {
-          method: ":",
-          value: ["w", "b", "r"],
-        },
-        sizeFilter: {
-          method: "none",
-          value: 5,
-        },
+        includeFilters: [
+          {
+            method: ":",
+            value: ["w", "b", "r"],
+          },
+        ],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       prerequisites: {
         include: ["prereq"],
@@ -279,14 +274,14 @@ describe("parseQuery", () => {
         ],
       },
       colorIdentity: {
-        valueFilter: {
-          method: ":",
-          value: ["w", "b", "r"],
-        },
-        sizeFilter: {
-          method: "none",
-          value: 5,
-        },
+        includeFilters: [
+          {
+            method: ":",
+            value: ["w", "b", "r"],
+          },
+        ],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       prerequisites: {
         include: ["prereq"],
@@ -328,14 +323,14 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: ["w", "b", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
+          includeFilters: [
+            {
+              method: ":",
+              value: ["w", "b", "r"],
+            },
+          ],
+          excludeFilters: [],
+          sizeFilters: [],
         },
       })
     );
@@ -348,14 +343,14 @@ describe("parseQuery", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: ["w", "b", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
+          includeFilters: [
+            {
+              method: ":",
+              value: ["w", "b", "r"],
+            },
+          ],
+          excludeFilters: [],
+          sizeFilters: [],
         },
       })
     );

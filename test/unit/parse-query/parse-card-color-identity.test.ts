@@ -13,14 +13,9 @@ describe("parseColorIdentity", () => {
         excludeFilters: [],
       },
       colorIdentity: {
-        valueFilter: {
-          method: "none",
-          value: [],
-        },
-        sizeFilter: {
-          method: "none",
-          value: 5,
-        },
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       prerequisites: {
         include: [],
@@ -47,14 +42,14 @@ describe("parseColorIdentity", () => {
         expect.objectContaining({
           errors: [],
           colorIdentity: {
-            valueFilter: {
-              method: "none",
-              value: [],
-            },
-            sizeFilter: {
-              method: operator,
-              value: 4,
-            },
+            excludeFilters: [],
+            includeFilters: [],
+            sizeFilters: [
+              {
+                method: operator,
+                value: 4,
+              },
+            ],
           },
         })
       );
@@ -68,14 +63,14 @@ describe("parseColorIdentity", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: [],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
+          includeFilters: [
+            {
+              method: ":",
+              value: [],
+            },
+          ],
+          excludeFilters: [],
+          sizeFilters: [],
         },
       })
     );
@@ -88,14 +83,14 @@ describe("parseColorIdentity", () => {
       expect.objectContaining({
         errors: [],
         colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: [],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
+          includeFilters: [
+            {
+              method: ":",
+              value: [],
+            },
+          ],
+          excludeFilters: [],
+          sizeFilters: [],
         },
       })
     );
@@ -110,14 +105,14 @@ describe("parseColorIdentity", () => {
         expect.objectContaining({
           errors: [],
           colorIdentity: {
-            valueFilter: {
-              method: operator,
-              value: ["g", "r"],
-            },
-            sizeFilter: {
-              method: "none",
-              value: 5,
-            },
+            includeFilters: [
+              {
+                method: operator,
+                value: ["g", "r"],
+              },
+            ],
+            excludeFilters: [],
+            sizeFilters: [],
           },
         })
       );

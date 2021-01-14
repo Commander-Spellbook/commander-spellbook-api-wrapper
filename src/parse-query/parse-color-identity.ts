@@ -9,12 +9,16 @@ export default function parseColorIdentity(
   value: string
 ): void {
   if (Number(value) >= 0 && Number(value) < 6) {
-    params.colorIdentity.sizeFilter.method = operator;
-    params.colorIdentity.sizeFilter.value = Number(value);
+    params.colorIdentity.sizeFilters.push({
+      method: operator,
+      value: Number(value),
+    });
 
     return;
   }
 
-  params.colorIdentity.valueFilter.method = operator;
-  params.colorIdentity.valueFilter.value = parseColorFromValue(value);
+  params.colorIdentity.includeFilters.push({
+    method: operator,
+    value: parseColorFromValue(value),
+  });
 }

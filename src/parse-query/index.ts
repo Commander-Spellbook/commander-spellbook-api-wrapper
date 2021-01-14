@@ -120,14 +120,9 @@ export default function parseQuery(query: string): SearchParameters {
       excludeFilters: [],
     },
     colorIdentity: {
-      valueFilter: {
-        method: "none",
-        value: [],
-      },
-      sizeFilter: {
-        method: "none",
-        value: 5,
-      },
+      includeFilters: [],
+      excludeFilters: [],
+      sizeFilters: [],
     },
     prerequisites: {
       include: [],
