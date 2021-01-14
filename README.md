@@ -151,11 +151,9 @@ spellbook.search("unknownkey:value card:Arjun").then((result) => {
 A human readable explanation of the search query can be found on the `message` property.
 
 ```js
-spellbook
-  .search("card:breath result:infinite")
-  .then((result) => {
-    result.message; // 8 combos where cards have a value containing "breath" and results have a value containing "infinite".
-  });
+spellbook.search("card:breath result:infinite").then((result) => {
+  result.message; // 8 combos where cards have a value containing "breath" and results have a value containing "infinite".
+});
 ```
 
 ## Random

@@ -8,8 +8,7 @@
   ],
   "scripts": {
     "prepublishOnly": "npm run typescript",
-    "prebuild": "npm run pretty",
-    "pretypescript": "rimraf dist",
+    "pretypescript": "rimraf dist && npm run pretty",
     "typescript": "tsc --declaration --project tsconfig.production.json",
     "predemo": "npm run build",
     "demo": "http-server docs -p 3001",
