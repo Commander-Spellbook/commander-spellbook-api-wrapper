@@ -21,6 +21,9 @@ _Breaking Changes_
 - `CardGrouping`
   - Remove `matchesAll`
   - Remove `matchesAny`
+- `List`
+  - Remove `matchesAll`
+  - Remove `matchesAny`
 - Remove methods that return HTML Elements
 
 # 0.5.2

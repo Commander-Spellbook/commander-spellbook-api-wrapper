@@ -51,13 +51,13 @@ describe("cards", () => {
     });
 
     const cards = combos[0].cards;
-    jest.spyOn(cards, "includesCard").mockReturnValue(true);
+    jest.spyOn(cards, "includesValue").mockReturnValue(true);
 
     let result = filterCards(combos, params);
 
     expect(result.length).toBe(1);
 
-    mocked(cards.includesCard).mockReturnValue(false);
+    mocked(cards.includesValue).mockReturnValue(false);
     result = filterCards(combos, params);
 
     expect(result.length).toBe(0);
@@ -84,30 +84,30 @@ describe("cards", () => {
     );
     const cards = combos[0].cards;
 
-    jest.spyOn(cards, "includesCard").mockReturnValue(true);
+    jest.spyOn(cards, "includesValue").mockReturnValue(true);
 
     let result = filterCards(combos, params);
 
     expect(result.length).toBe(1);
-    expect(cards.includesCard).toBeCalledTimes(4);
-    expect(cards.includesCard).toBeCalledWith("data 1");
-    expect(cards.includesCard).toBeCalledWith("data 2");
-    expect(cards.includesCard).toBeCalledWith("data 3");
-    expect(cards.includesCard).toBeCalledWith("data 4");
+    expect(cards.includesValue).toBeCalledTimes(4);
+    expect(cards.includesValue).toBeCalledWith("data 1");
+    expect(cards.includesValue).toBeCalledWith("data 2");
+    expect(cards.includesValue).toBeCalledWith("data 3");
+    expect(cards.includesValue).toBeCalledWith("data 4");
 
-    mocked(cards.includesCard).mockReset();
-    mocked(cards.includesCard).mockReturnValueOnce(true);
-    mocked(cards.includesCard).mockReturnValueOnce(true);
-    mocked(cards.includesCard).mockReturnValueOnce(false);
+    mocked(cards.includesValue).mockReset();
+    mocked(cards.includesValue).mockReturnValueOnce(true);
+    mocked(cards.includesValue).mockReturnValueOnce(true);
+    mocked(cards.includesValue).mockReturnValueOnce(false);
 
     result = filterCards(combos, params);
 
     expect(result.length).toBe(0);
 
-    expect(cards.includesCard).toBeCalledTimes(3);
-    expect(cards.includesCard).toBeCalledWith("data 1");
-    expect(cards.includesCard).toBeCalledWith("data 2");
-    expect(cards.includesCard).toBeCalledWith("data 3");
+    expect(cards.includesValue).toBeCalledTimes(3);
+    expect(cards.includesValue).toBeCalledWith("data 1");
+    expect(cards.includesValue).toBeCalledWith("data 2");
+    expect(cards.includesValue).toBeCalledWith("data 3");
   });
 
   it("excludes cards", () => {
@@ -117,13 +117,13 @@ describe("cards", () => {
     });
 
     const cards = combos[0].cards;
-    jest.spyOn(cards, "includesCard").mockReturnValue(false);
+    jest.spyOn(cards, "includesValue").mockReturnValue(false);
 
     let result = filterCards(combos, params);
 
     expect(result.length).toBe(1);
 
-    mocked(cards.includesCard).mockReturnValue(true);
+    mocked(cards.includesValue).mockReturnValue(true);
     result = filterCards(combos, params);
 
     expect(result.length).toBe(0);
@@ -150,27 +150,27 @@ describe("cards", () => {
     );
     const cards = combos[0].cards;
 
-    jest.spyOn(cards, "includesCard").mockReturnValue(false);
+    jest.spyOn(cards, "includesValue").mockReturnValue(false);
 
     let result = filterCards(combos, params);
 
     expect(result.length).toBe(1);
-    expect(cards.includesCard).toBeCalledTimes(4);
-    expect(cards.includesCard).toBeCalledWith("data 1");
-    expect(cards.includesCard).toBeCalledWith("data 2");
-    expect(cards.includesCard).toBeCalledWith("data 3");
-    expect(cards.includesCard).toBeCalledWith("data 4");
+    expect(cards.includesValue).toBeCalledTimes(4);
+    expect(cards.includesValue).toBeCalledWith("data 1");
+    expect(cards.includesValue).toBeCalledWith("data 2");
+    expect(cards.includesValue).toBeCalledWith("data 3");
+    expect(cards.includesValue).toBeCalledWith("data 4");
 
-    mocked(cards.includesCard).mockReset();
-    mocked(cards.includesCard).mockReturnValueOnce(false);
-    mocked(cards.includesCard).mockReturnValueOnce(true);
+    mocked(cards.includesValue).mockReset();
+    mocked(cards.includesValue).mockReturnValueOnce(false);
+    mocked(cards.includesValue).mockReturnValueOnce(true);
 
     result = filterCards(combos, params);
 
     expect(result.length).toBe(0);
 
-    expect(cards.includesCard).toBeCalledTimes(2);
-    expect(cards.includesCard).toBeCalledWith("data 1");
-    expect(cards.includesCard).toBeCalledWith("data 2");
+    expect(cards.includesValue).toBeCalledTimes(2);
+    expect(cards.includesValue).toBeCalledWith("data 1");
+    expect(cards.includesValue).toBeCalledWith("data 2");
   });
 });

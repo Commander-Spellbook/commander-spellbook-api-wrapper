@@ -12,20 +12,19 @@ export default function filterComboData(
 ): FormattedApiResponse[] {
   DATA_TYPES.forEach((dataType) => {
     if (searchParams[dataType].includeFilters.length > 0) {
-      combos = combos.filter((combo) =>
-        combo[dataType].matchesAll(
-          searchParams[dataType].includeFilters.map((filter) => filter.value)
-        )
-      );
+      combos = combos.filter((combo) => {
+        return searchParams[dataType].includeFilters.every((filter) => {
+          return combo[dataType].includesValue(filter.value);
+        });
+      });
     }
 
     if (searchParams[dataType].excludeFilters.length > 0) {
-      combos = combos.filter(
-        (combo) =>
-          !combo[dataType].matchesAny(
-            searchParams[dataType].excludeFilters.map((filter) => filter.value)
-          )
-      );
+      combos = combos.filter((combo) => {
+        return !searchParams[dataType].excludeFilters.find((filter) => {
+          return combo[dataType].includesValue(filter.value);
+        });
+      });
     }
   });
 

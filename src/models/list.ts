@@ -1,3 +1,5 @@
+import normalizeStringInput from "../normalize-string-input";
+
 // based on https://blog.simontest.net/extend-array-with-typescript-965cc1134b3
 export default class SpellbookList extends Array<string> {
   private rawString: string;
@@ -20,16 +22,27 @@ export default class SpellbookList extends Array<string> {
     return list;
   }
 
-  private findItem(item: string) {
-    return this.find((i) => i.toLowerCase().indexOf(item.toLowerCase()) > -1);
+  size(): number {
+    return this.length;
   }
 
-  matchesAll(items: string[]): boolean {
-    return items.every((item) => this.findItem(item));
+  includesValue(value: string): boolean {
+    value = normalizeStringInput(value);
+
+    const foundItem = this.map(normalizeStringInput).find(
+      (item) => item.indexOf(value) > -1
+    );
+    return Boolean(foundItem);
   }
 
-  matchesAny(items: string[]): boolean {
-    return Boolean(items.find((item) => this.findItem(item)));
+  includesValueExactly(value: string): boolean {
+    value = normalizeStringInput(value);
+
+    const foundItem = this.map(normalizeStringInput).find(
+      (item) => item === value
+    );
+
+    return Boolean(foundItem);
   }
 
   toString(): string {

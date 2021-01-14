@@ -38,31 +38,31 @@ describe("CardGrouping", () => {
     });
   });
 
-  describe("includesCard", () => {
+  describe("includesValue", () => {
     it("returns true when card grouping contains a partial name", () => {
       const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.includesCard("fo")).toBe(true);
+      expect(group.includesValue("fo")).toBe(true);
     });
 
     it("returns false when card grouping does not contain a partial name", () => {
       const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.includesCard("bo")).toBe(false);
+      expect(group.includesValue("bo")).toBe(false);
     });
   });
 
-  describe("includesCardExactly", () => {
+  describe("includesValueExactly", () => {
     it("returns true when card grouping contains a partial name", () => {
       const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.includesCardExactly("bar")).toBe(true);
+      expect(group.includesValueExactly("bar")).toBe(true);
     });
 
     it("returns false when card grouping does not contain a partial name", () => {
       const group = CardGrouping.create(["foo", "bar", "baz"]);
 
-      expect(group.includesCardExactly("fo")).toBe(false);
+      expect(group.includesValueExactly("fo")).toBe(false);
     });
   });
 

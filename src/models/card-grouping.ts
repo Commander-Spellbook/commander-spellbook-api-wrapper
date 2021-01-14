@@ -21,11 +21,11 @@ export default class CardGrouping extends Array<Card> {
     return this.length;
   }
 
-  includesCard(cardName: string): boolean {
+  includesValue(cardName: string): boolean {
     return Boolean(this.find((c) => c.matchesName(cardName)));
   }
 
-  includesCardExactly(cardName: string): boolean {
+  includesValueExactly(cardName: string): boolean {
     return Boolean(this.find((c) => c.matchesNameExactly(cardName)));
   }
 

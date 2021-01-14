@@ -53,13 +53,13 @@ describe("comboDataFilter", () => {
         value: "data",
       });
 
-      jest.spyOn(combos[0][dataType], "matchesAll").mockReturnValue(true);
+      jest.spyOn(combos[0][dataType], "includesValue").mockReturnValue(true);
 
       let result = filterComboData(combos, params);
 
       expect(result.length).toBe(1);
 
-      mocked(combos[0][dataType].matchesAll).mockReturnValue(false);
+      mocked(combos[0][dataType].includesValue).mockReturnValue(false);
       result = filterComboData(combos, params);
 
       expect(result.length).toBe(0);
@@ -71,13 +71,13 @@ describe("comboDataFilter", () => {
         value: "data",
       });
 
-      jest.spyOn(combos[0][dataType], "matchesAny").mockReturnValue(false);
+      jest.spyOn(combos[0][dataType], "includesValue").mockReturnValue(false);
 
       let result = filterComboData(combos, params);
 
       expect(result.length).toBe(1);
 
-      mocked(combos[0][dataType].matchesAny).mockReturnValue(true);
+      mocked(combos[0][dataType].includesValue).mockReturnValue(true);
       result = filterComboData(combos, params);
 
       expect(result.length).toBe(0);

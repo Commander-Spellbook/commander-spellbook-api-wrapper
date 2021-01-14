@@ -28,31 +28,33 @@ describe("SpellbookList", () => {
     });
   });
 
-  describe("matchesAll", () => {
-    it("returns true if every item matches", () => {
-      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
-
-      expect(list.matchesAll(["step", "2", "3"])).toBe(true);
-    });
-
-    it("returns false if any item does not match", () => {
-      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
-
-      expect(list.matchesAll(["step", "foo", "2", "3"])).toBe(false);
-    });
-  });
-
-  describe("matchesAny", () => {
+  describe("includesValue", () => {
     it("returns true if any item matches", () => {
       const list = SpellbookList.create("Step 1. Step 2. Step 3.");
 
-      expect(list.matchesAny(["foo", "step", "bar"])).toBe(true);
+      expect(list.includesValue("1")).toBe(true);
+      expect(list.includesValue("4")).toBe(false);
     });
 
-    it("returns false if no item matches", () => {
+    it("ignores casing", () => {
       const list = SpellbookList.create("Step 1. Step 2. Step 3.");
 
-      expect(list.matchesAny(["foo", "bar"])).toBe(false);
+      expect(list.includesValue("stEp")).toBe(true);
+    });
+  });
+
+  describe("includesValueExactly", () => {
+    it("returns true if any item matches exactly", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+
+      expect(list.includesValueExactly("Step 1")).toBe(true);
+      expect(list.includesValueExactly("Step")).toBe(false);
+    });
+
+    it("ignores casing", () => {
+      const list = SpellbookList.create("Step 1. Step 2. Step 3.");
+
+      expect(list.includesValueExactly("stEp 3")).toBe(true);
     });
   });
 
