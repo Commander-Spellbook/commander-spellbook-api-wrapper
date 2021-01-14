@@ -28,16 +28,19 @@ describe("comboDataFilter", () => {
         sizeFilters: [],
       },
       prerequisites: {
-        include: [],
-        exclude: [],
+        sizeFilters: [],
+        includeFilters: [],
+        excludeFilters: [],
       },
       steps: {
-        include: [],
-        exclude: [],
+        sizeFilters: [],
+        includeFilters: [],
+        excludeFilters: [],
       },
       results: {
-        include: [],
-        exclude: [],
+        sizeFilters: [],
+        includeFilters: [],
+        excludeFilters: [],
       },
       errors: [],
     };
@@ -45,7 +48,10 @@ describe("comboDataFilter", () => {
 
   describe.each(DATA_TYPES)("%s", (dataType) => {
     it(`includes data for ${dataType}`, () => {
-      params[dataType].include.push("data");
+      params[dataType].includeFilters.push({
+        method: ":",
+        value: "data",
+      });
 
       jest.spyOn(combos[0][dataType], "matchesAll").mockReturnValue(true);
 
@@ -60,7 +66,10 @@ describe("comboDataFilter", () => {
     });
 
     it(`excludes data for ${dataType}`, () => {
-      params[dataType].exclude.push("data");
+      params[dataType].excludeFilters.push({
+        method: ":",
+        value: "data",
+      });
 
       jest.spyOn(combos[0][dataType], "matchesAny").mockReturnValue(false);
 

@@ -21,11 +21,17 @@ export default function parseComboData(
     }
 
     if (isNegativeKey) {
-      params[dataType].exclude.push(value);
+      params[dataType].excludeFilters.push({
+        method: operator,
+        value,
+      });
 
       return;
     }
 
-    params[dataType].include.push(value);
+    params[dataType].includeFilters.push({
+      method: operator,
+      value,
+    });
   });
 }

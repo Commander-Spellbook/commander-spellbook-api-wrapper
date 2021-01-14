@@ -119,16 +119,19 @@ export default function parseQuery(query: string): SearchParameters {
       sizeFilters: [],
     },
     prerequisites: {
-      include: [],
-      exclude: [],
+      sizeFilters: [],
+      includeFilters: [],
+      excludeFilters: [],
     },
     steps: {
-      include: [],
-      exclude: [],
+      sizeFilters: [],
+      includeFilters: [],
+      excludeFilters: [],
     },
     results: {
-      include: [],
-      exclude: [],
+      sizeFilters: [],
+      includeFilters: [],
+      excludeFilters: [],
     },
     errors: [],
   } as SearchParameters;

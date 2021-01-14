@@ -38,11 +38,6 @@ export type SearchError = {
   message: string;
 };
 
-export type IncludeExclude = {
-  include: string[];
-  exclude: string[];
-};
-
 type SizeFilter = {
   method: string;
   value: number;
@@ -66,9 +61,9 @@ export interface ColorIdentityValueFilter {
 
 export type SearchParameters = {
   cards: Filters;
-  prerequisites: IncludeExclude;
-  steps: IncludeExclude;
-  results: IncludeExclude;
+  prerequisites: Filters;
+  steps: Filters;
+  results: Filters;
   colorIdentity: {
     sizeFilters: SizeFilter[];
     includeFilters: ColorIdentityValueFilter[];

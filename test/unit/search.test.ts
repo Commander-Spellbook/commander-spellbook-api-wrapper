@@ -43,16 +43,19 @@ describe("search", () => {
         sizeFilters: [],
       },
       prerequisites: {
-        include: [],
-        exclude: [],
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       steps: {
-        include: [],
-        exclude: [],
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       results: {
-        include: [],
-        exclude: [],
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       errors: [],
     });
@@ -105,16 +108,19 @@ describe("search", () => {
         sizeFilters: [],
       },
       prerequisites: {
-        include: [],
-        exclude: [],
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       steps: {
-        include: [],
-        exclude: [],
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       results: {
-        include: [],
-        exclude: [],
+        includeFilters: [],
+        excludeFilters: [],
+        sizeFilters: [],
       },
       errors: [
         {
