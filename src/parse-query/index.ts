@@ -29,7 +29,7 @@ function collectKeywordedQueries(
   queries.forEach((group) => {
     const operator = (group.match(OPERATOR_REGEX) || [":"])[0];
     const pair = group.split(operator);
-    const key = pair[0]?.toLowerCase();
+    const key = pair[0]?.toLowerCase().replace(/_/g, "");
     let value = pair[1];
 
     if (value.length > 2) {
@@ -48,7 +48,6 @@ function collectKeywordedQueries(
         params.id = value;
         break;
       case "ci":
-      case "color_identity":
       case "coloridentity":
         if (Number(value) >= 0 && Number(value) < 6) {
           params.colorIdentity.sizeFilter.method = operator;
