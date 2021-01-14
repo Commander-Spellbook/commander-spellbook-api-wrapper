@@ -1,5 +1,4 @@
 import parseColorIdentity from "./parse-color-identity";
-import parseCardQuery from "./parse-card-query";
 import parseComboData from "./parse-combo-data";
 
 import type { SearchParameters } from "../types";
@@ -55,8 +54,6 @@ function collectKeywordedQueries(
       case "cards":
       case "-card":
       case "-cards":
-        parseCardQuery(params, key, operator, value);
-        break;
       case "pre":
       case "prerequisite":
       case "prerequisites":
@@ -102,7 +99,7 @@ function collectPlainNameQueries(
   const queries = simpleQueryGroups;
 
   queries.forEach((value) => {
-    parseCardQuery(params, "card", ":", value.trim());
+    parseComboData(params, "card", ":", value.trim());
   });
 }
 

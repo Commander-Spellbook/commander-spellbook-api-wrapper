@@ -4,6 +4,9 @@
   - Add ability to search for coloreless color identity with `ci:c` and `ci:colorless`
   - Add error messages for errors in query parsing
   - Add ability to search by number of cards in a combo
+  - Add ability to search by number of prerequisites in a combo
+  - Add ability to search by number of steps in a combo
+  - Add ability to search by number of results in a combo
   - Support `cards` as alias for `card`
   - Support `-cards` as alias for `-card`
   - Support `res` as alias for `result`

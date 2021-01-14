@@ -1,9 +1,12 @@
 import type { SearchParameters, FormattedApiResponse } from "../types";
 
-export const SIZE_RESTRICTED_FILTERS: ["colorIdentity", "cards"] = [
+export const SIZE_RESTRICTED_FILTERS: [
   "colorIdentity",
   "cards",
-];
+  "prerequisites",
+  "steps",
+  "results"
+] = ["colorIdentity", "cards", "prerequisites", "steps", "results"];
 
 export default function filterSize(
   combos: FormattedApiResponse[],
