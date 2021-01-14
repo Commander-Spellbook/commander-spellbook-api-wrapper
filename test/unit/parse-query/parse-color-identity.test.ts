@@ -70,7 +70,7 @@ describe("parseColorIdentity", () => {
             {
               key: "-ci",
               value: "4",
-              message: `The key "-ci" does not support operator "${operator}"`,
+              message: `The key "-ci" does not support operator "${operator}".`,
             },
           ],
           colorIdentity: {

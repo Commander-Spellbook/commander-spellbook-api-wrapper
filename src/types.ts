@@ -18,6 +18,7 @@ export type CommanderSpellbookAPIResponse = {
 export type SearchResults = {
   combos: FormattedApiResponse[];
   errors: SearchError[];
+  message: string;
 };
 
 export type FormattedApiResponse = {

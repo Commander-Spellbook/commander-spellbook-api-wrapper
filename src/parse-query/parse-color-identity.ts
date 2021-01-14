@@ -15,7 +15,7 @@ export default function parseColorIdentity(
       params.errors.push({
         key,
         value,
-        message: `The key "${key}" does not support operator "${operator}"`,
+        message: `The key "${key}" does not support operator "${operator}".`,
       });
 
       return;

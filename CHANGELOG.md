@@ -2,6 +2,7 @@
 
 - `search`
   - Add ability to search for coloreless color identity with `ci:c` and `ci:colorless`
+  - Add human readable message to describe query
   - Add error messages for errors in query parsing
   - Add ability to search by number of cards in a combo
   - Add ability to search by number of prerequisites in a combo

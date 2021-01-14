@@ -143,7 +143,7 @@ describe("parseComboData", () => {
               {
                 key: dataType,
                 value: "foo",
-                message: `Operator ${operator} is not compatible with key "${dataType}" and value "foo"`,
+                message: `Operator ${operator} is not compatible with key "${dataType}" and value "foo".`,
               },
             ],
             [dataType]: {
@@ -210,7 +210,7 @@ describe("parseComboData", () => {
               {
                 key: `-${dataType}`,
                 value: "3",
-                message: `The key "-${dataType}" does not support operator "${operator}"`,
+                message: `The key "-${dataType}" does not support operator "${operator}".`,
               },
             ],
             [dataType]: {

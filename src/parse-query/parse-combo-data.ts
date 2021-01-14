@@ -27,7 +27,7 @@ export default function parseComboData(
         params.errors.push({
           key,
           value,
-          message: `The key "${key}" does not support operator "${operator}"`,
+          message: `The key "${key}" does not support operator "${operator}".`,
         });
 
         return;
@@ -45,7 +45,7 @@ export default function parseComboData(
       params.errors.push({
         key,
         value,
-        message: `Operator ${operator} is not compatible with key "${key}" and value "${value}"`,
+        message: `Operator ${operator} is not compatible with key "${key}" and value "${value}".`,
       });
 
       return;

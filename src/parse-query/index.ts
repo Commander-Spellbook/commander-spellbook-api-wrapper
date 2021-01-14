@@ -76,7 +76,7 @@ function collectKeywordedQueries(
         params.errors.push({
           key,
           value,
-          message: `Could not parse keyword "${key}" with value "${value}"`,
+          message: `Could not parse keyword "${key}" with value "${value}".`,
         });
     }
   });
@@ -104,7 +104,7 @@ function collectPlainNameQueries(
 }
 
 export default function parseQuery(query: string): SearchParameters {
-  const parameters = {
+  const parameters: SearchParameters = {
     cards: {
       sizeFilters: [],
       includeFilters: [],
@@ -131,7 +131,7 @@ export default function parseQuery(query: string): SearchParameters {
       excludeFilters: [],
     },
     errors: [],
-  } as SearchParameters;
+  };
 
   if (!query) {
     return parameters;

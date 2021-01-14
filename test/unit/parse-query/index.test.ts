@@ -94,17 +94,17 @@ describe("parseQuery", () => {
           {
             key: "unknown",
             value: "value",
-            message: 'Could not parse keyword "unknown" with value "value"',
+            message: 'Could not parse keyword "unknown" with value "value".',
           },
           {
             key: "unknown2",
             value: "value 2",
-            message: 'Could not parse keyword "unknown2" with value "value 2"',
+            message: 'Could not parse keyword "unknown2" with value "value 2".',
           },
           {
             key: "unknown3",
             value: "value 3",
-            message: 'Could not parse keyword "unknown3" with value "value 3"',
+            message: 'Could not parse keyword "unknown3" with value "value 3".',
           },
         ],
       })
@@ -204,7 +204,7 @@ describe("parseQuery", () => {
           {
             key: "unknown",
             value: "value",
-            message: 'Could not parse keyword "unknown" with value "value"',
+            message: 'Could not parse keyword "unknown" with value "value".',
           },
         ],
       })
@@ -298,7 +298,7 @@ describe("parseQuery", () => {
           {
             key: "unknown",
             value: "value",
-            message: 'Could not parse keyword "unknown" with value "value"',
+            message: 'Could not parse keyword "unknown" with value "value".',
           },
         ],
       })
@@ -392,7 +392,7 @@ describe("parseQuery", () => {
           {
             key: "unknown",
             value: "value",
-            message: 'Could not parse keyword "unknown" with value "value"',
+            message: 'Could not parse keyword "unknown" with value "value".',
           },
         ],
       })

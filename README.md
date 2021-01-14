@@ -139,16 +139,22 @@ spellbook
 Errors in search can be found in an array of errors:
 
 ```js
-spellbook
-  .search(
-    "unknownkey:value card:Arjun"
-  )
-  .then((result) => {
-    const error = result.errors[0];
+spellbook.search("unknownkey:value card:Arjun").then((result) => {
+  const error = result.errors[0];
 
-    error.key; // "unknownkey"
-    error.value; // "value"
-    error.message; // 'Could not parse keyword "unknownkey" with value "value"'
+  error.key; // "unknownkey"
+  error.value; // "value"
+  error.message; // 'Could not parse keyword "unknownkey" with value "value"'
+});
+```
+
+A human readable explanation of the search query can be found on the `message` property.
+
+```js
+spellbook
+  .search("card:breath result:infinite")
+  .then((result) => {
+    result.message; // 8 combos where cards have a value containing "breath" and results have a value containing "infinite".
   });
 ```
 

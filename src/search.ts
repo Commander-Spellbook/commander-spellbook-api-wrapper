@@ -3,6 +3,7 @@ import parseQuery from "./parse-query";
 import filterColorIdentity from "./search-filters/color-identity";
 import filterComboData from "./search-filters/combo-data";
 import filterSize from "./search-filters/size";
+import createMessage from "./parse-query/create-message";
 
 import type { SearchResults } from "./types";
 
@@ -19,5 +20,6 @@ export default async function search(query = ""): Promise<SearchResults> {
   return {
     errors,
     combos,
+    message: createMessage(combos, searchParams),
   };
 }
