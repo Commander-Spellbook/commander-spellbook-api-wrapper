@@ -304,4 +304,19 @@ describe("Commander Spellbook", () => {
       expect(combo.results).toBeTruthy();
     });
   });
+
+  describe("getAllCombos", () => {
+    it("returns a all combos", async () => {
+      const combos = await spellbook.getAllCombos();
+
+      expect(combos.length).toBeGreaterThan(0);
+      expect(combos[0].commanderSpellbookId).toBeTruthy();
+      expect(combos[0].permalink).toBeTruthy();
+      expect(combos[0].cards).toBeTruthy();
+      expect(combos[0].colorIdentity).toBeTruthy();
+      expect(combos[0].prerequisites).toBeTruthy();
+      expect(combos[0].steps).toBeTruthy();
+      expect(combos[0].results).toBeTruthy();
+    });
+  });
 });

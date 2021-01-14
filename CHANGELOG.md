@@ -12,6 +12,7 @@
   - Support `-cards` as alias for `-card`
   - Support `res` as alias for `result`
   - Support `-res` as alias for `-result`
+- Add `getAllCombos` method
 
 _Breaking Changes_
 

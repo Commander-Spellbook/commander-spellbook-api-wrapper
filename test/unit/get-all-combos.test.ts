@@ -1,4 +1,4 @@
-import random from "../../src/random";
+import getAllCombos from "../../src/get-all-combos";
 import lookup from "../../src/spellbook-api";
 import makeFakeCombo from "../../src/make-fake-combo";
 
@@ -7,7 +7,7 @@ import type { FormattedApiResponse } from "../../src/types";
 import { mocked } from "ts-jest/utils";
 jest.mock("../../src/spellbook-api");
 
-describe("random", () => {
+describe("getAllCombos", () => {
   let combos: FormattedApiResponse[];
 
   beforeEach(() => {
@@ -15,20 +15,11 @@ describe("random", () => {
     mocked(lookup).mockResolvedValue(combos);
   });
 
-  it("looks up combos from api", async () => {
-    await random();
+  it("looks up all combos from api", async () => {
+    const result = await getAllCombos();
 
     expect(lookup).toBeCalledTimes(1);
-  });
 
-  it("returns a random combo", async () => {
-    jest.spyOn(Math, "floor");
-    jest.spyOn(Math, "random");
-
-    const combo = await random();
-
-    expect(combos).toContain(combo);
-    expect(Math.floor).toBeCalledTimes(1);
-    expect(Math.random).toBeCalledTimes(1);
+    expect(result).toBe(combos);
   });
 });

@@ -168,6 +168,16 @@ spellbook.random().then((combo) => {
 });
 ```
 
+## Get All Combos
+
+Look up a all combos using the `getAllCombos` method:
+
+```js
+spellbook.getAllCombos().then((combos) => {
+  combos; // an array of combo results
+});
+```
+
 ## Make Fake Combo
 
 A utility for using the module within a test environment to create a combo object that fulfills the type requirements in a Typescript environemnt.
