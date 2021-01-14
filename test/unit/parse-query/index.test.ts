@@ -391,8 +391,28 @@ describe("parseQuery", () => {
     );
   });
 
+  it("parses cards query into cards", () => {
+    const result = parseQuery("cards:Rashmi");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        cards: {
+          sizeFilters: [],
+          excludeFilters: [],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Rashmi",
+            },
+          ],
+        },
+      })
+    );
+  });
+
   it("can parse multiple card queries", () => {
-    const result = parseQuery("card:Rashmi card:Arjun card:Sydri");
+    const result = parseQuery("card:Rashmi cards:Arjun card:Sydri");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -501,7 +521,7 @@ describe("parseQuery", () => {
 
   it("can parse multiple card query types", () => {
     const result = parseQuery(
-      "card:'Rashmi, Eternities Crafter' card:Arjun card:'Sydri, Galvanic'"
+      "card:'Rashmi, Eternities Crafter' cards:Arjun card:'Sydri, Galvanic'"
     );
 
     expect(result).toEqual(
@@ -531,7 +551,7 @@ describe("parseQuery", () => {
 
   it("parses negative card query into cards", () => {
     const result = parseQuery(
-      "-card:Rashmi -card:Arjun -card:\"Food\" -card:'Sydri'"
+      "-card:Rashmi -card:Arjun -cards:\"Food\" -card:'Sydri'"
     );
 
     expect(result).toEqual(

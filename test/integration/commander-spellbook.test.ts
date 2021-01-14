@@ -72,7 +72,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up number of cards", async () => {
-      const { combos } = await spellbook.search("card>5");
+      const { combos } = await spellbook.search("cards>5");
 
       expect(combos.length).toBeGreaterThan(0);
       combos.forEach((combo) => {

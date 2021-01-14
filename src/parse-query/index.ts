@@ -54,7 +54,9 @@ function collectKeywordedQueries(
         parseColorIdentity(params, key, operator, value);
         break;
       case "card":
+      case "cards":
       case "-card":
+      case "-cards":
         parseCardQuery(params, key, operator, value);
         break;
       case "pre":
