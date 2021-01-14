@@ -71,6 +71,15 @@ describe("Commander Spellbook", () => {
       });
     });
 
+    it("looks up number of cards", async () => {
+      const { combos } = await spellbook.search("card>5");
+
+      expect(combos.length).toBeGreaterThan(0);
+      combos.forEach((combo) => {
+        expect(combo.cards.length > 5).toBe(true);
+      });
+    });
+
     describe("color identity", () => {
       it("looks up specific color combos", async () => {
         const { combos } = await spellbook.search("ci:wr");

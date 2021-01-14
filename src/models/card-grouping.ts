@@ -17,6 +17,10 @@ export default class CardGrouping extends Array<Card> {
     return list;
   }
 
+  size(): number {
+    return this.length;
+  }
+
   includesCard(cardName: string): boolean {
     return Boolean(this.find((c) => c.matchesName(cardName)));
   }

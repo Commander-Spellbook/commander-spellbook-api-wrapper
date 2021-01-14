@@ -29,6 +29,15 @@ describe("CardGrouping", () => {
     });
   });
 
+  describe("size", () => {
+    it("retuns the number of cards in grouping", () => {
+      const group = CardGrouping.create(["Card a", "Card b", "Card c"]);
+
+      expect(group.length).toBe(3);
+      expect(group.size()).toBe(3);
+    });
+  });
+
   describe("includesCard", () => {
     it("returns true when card grouping contains a partial name", () => {
       const group = CardGrouping.create(["foo", "bar", "baz"]);

@@ -3,6 +3,7 @@
 - `search`
   - Add ability to search for coloreless color identity with `ci:c` and `ci:colorless`
   - Add error messages for errors in query parsing
+  - Add ability to search by number of cards in a combo
 
 _Breaking Changes_
 
