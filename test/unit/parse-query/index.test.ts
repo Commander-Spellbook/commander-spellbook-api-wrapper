@@ -244,6 +244,72 @@ describe("parseQuery", () => {
     });
   });
 
+  it("ignores underscores in keys", () => {
+    const result = parseQuery(
+      "Kiki c_i:wbr c_ar_d:Daxos i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult"
+    );
+
+    expect(result).toEqual({
+      id: "12345",
+      cards: {
+        sizeFilters: [],
+        excludeFilters: [
+          {
+            method: ":",
+            value: "Food",
+          },
+        ],
+        includeFilters: [
+          {
+            method: ":",
+            value: "Kiki",
+          },
+          {
+            method: ":",
+            value: "Daxos",
+          },
+          {
+            method: ":",
+            value: "Grave Titan",
+          },
+          {
+            method: ":",
+            value: "Akroma",
+          },
+        ],
+      },
+      colorIdentity: {
+        valueFilter: {
+          method: ":",
+          value: ["w", "b", "r"],
+        },
+        sizeFilter: {
+          method: "none",
+          value: 5,
+        },
+      },
+      prerequisites: {
+        include: ["prereq"],
+        exclude: ["xprereq"],
+      },
+      steps: {
+        include: ["step"],
+        exclude: ["xstep"],
+      },
+      results: {
+        include: ["result"],
+        exclude: ["xresult"],
+      },
+      errors: [
+        {
+          key: "unknown",
+          value: "value",
+          message: 'Could not parse keyword "unknown" with value "value"',
+        },
+      ],
+    });
+  });
+
   it("parses id query into id", () => {
     const result = parseQuery("id:12345");
 
@@ -275,26 +341,6 @@ describe("parseQuery", () => {
     );
   });
 
-  it("parses color_identity query into colorIdentity", () => {
-    const result = parseQuery("color_identity:wbr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: ["w", "b", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
   it("parses coloridentity query into colorIdentity", () => {
     const result = parseQuery("coloridentity:wbr");
 
@@ -305,189 +351,6 @@ describe("parseQuery", () => {
           valueFilter: {
             method: ":",
             value: ["w", "b", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("uses only the last ci/color_identity param", () => {
-    const result = parseQuery("ci:w color_identity:ru ci:gr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: ["g", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it.each([":", "=", ">", "<", ">=", "<="])(
-    "parses ci query with number with %s",
-    (operator) => {
-      const result = parseQuery(`ci${operator}4`);
-
-      expect(result).toEqual(
-        expect.objectContaining({
-          errors: [],
-          colorIdentity: {
-            valueFilter: {
-              method: "none",
-              value: [],
-            },
-            sizeFilter: {
-              method: operator,
-              value: 4,
-            },
-          },
-        })
-      );
-    }
-  );
-
-  it("ignores color identity when number is greater than 5", () => {
-    const result = parseQuery("ci:6");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: [],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("ignores color identity when number is less than 0", () => {
-    const result = parseQuery(`ci:"-1"`);
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: ":",
-            value: [],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("supports ci= with method is", () => {
-    const result = parseQuery("ci=gr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: "=",
-            value: ["g", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("supports ci> with method isGreater", () => {
-    const result = parseQuery("ci>gr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: ">",
-            value: ["g", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("supports ci>= with method isGreaterOrEqual", () => {
-    const result = parseQuery("ci>=gr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: ">=",
-            value: ["g", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("supports ci< with method isLesser", () => {
-    const result = parseQuery("ci<gr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: "<",
-            value: ["g", "r"],
-          },
-          sizeFilter: {
-            method: "none",
-            value: 5,
-          },
-        },
-      })
-    );
-  });
-
-  it("supports ci<= with method isLesserOrEqual", () => {
-    const result = parseQuery("ci<=gr");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        colorIdentity: {
-          valueFilter: {
-            method: "<=",
-            value: ["g", "r"],
           },
           sizeFilter: {
             method: "none",

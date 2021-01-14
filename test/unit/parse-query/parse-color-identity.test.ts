@@ -1,22 +1,22 @@
-import parseColorIdentity from "../../../src/parse-query/parse-color-identity";
+import parseColorFromValue from "../../../src/parse-query/parse-color-from-value";
 
-describe("parseColorIdentity", () => {
+describe("parseColorFromValue", () => {
   it("returns an empty array when nothing matches", () => {
     const input = "acdefhijklmnopqstvxyz";
 
-    expect(parseColorIdentity(input)).toEqual([]);
+    expect(parseColorFromValue(input)).toEqual([]);
   });
 
   it("pulls out only acceptable colors", () => {
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    expect(parseColorIdentity(alphabet)).toEqual(["b", "g", "r", "u", "w"]);
+    expect(parseColorFromValue(alphabet)).toEqual(["b", "g", "r", "u", "w"]);
   });
 
   it("ignores duplicates", () => {
     const input = "wwwuuuwwwwb";
 
-    expect(parseColorIdentity(input)).toEqual(["w", "u", "b"]);
+    expect(parseColorFromValue(input)).toEqual(["w", "u", "b"]);
   });
 
   it.each`
@@ -81,11 +81,11 @@ describe("parseColorIdentity", () => {
     ${"Five Color"} | ${"wubrg"}
     ${"FiveColor"}  | ${"wubrg"}
   `("reads $name as $expectedResult", ({ name, expectedResult }) => {
-    expect(parseColorIdentity(name)).toEqual(expectedResult.split(""));
+    expect(parseColorFromValue(name)).toEqual(expectedResult.split(""));
   });
 
   it("ignores casing", () => {
-    expect(parseColorIdentity("AbzAn")).toEqual(["w", "b", "g"]);
-    expect(parseColorIdentity("wUb")).toEqual(["w", "u", "b"]);
+    expect(parseColorFromValue("AbzAn")).toEqual(["w", "b", "g"]);
+    expect(parseColorFromValue("wUb")).toEqual(["w", "u", "b"]);
   });
 });

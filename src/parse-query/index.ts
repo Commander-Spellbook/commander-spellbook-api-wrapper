@@ -49,13 +49,7 @@ function collectKeywordedQueries(
         break;
       case "ci":
       case "coloridentity":
-        if (Number(value) >= 0 && Number(value) < 6) {
-          params.colorIdentity.sizeFilter.method = operator;
-          params.colorIdentity.sizeFilter.value = Number(value);
-        } else {
-          params.colorIdentity.valueFilter.method = operator;
-          params.colorIdentity.valueFilter.value = parseColorIdentity(value);
-        }
+        parseColorIdentity(params, key, operator, value);
         break;
       case "card":
       case "-card":
