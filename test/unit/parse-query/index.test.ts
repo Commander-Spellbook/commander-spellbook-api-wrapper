@@ -109,7 +109,7 @@ describe("parseQuery", () => {
 
   it("can parse a mix of all queries", () => {
     const result = parseQuery(
-      "Kiki ci:wbr card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
+      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
     );
 
     expect(result).toEqual({
@@ -148,7 +148,12 @@ describe("parseQuery", () => {
             value: ["w", "b", "r"],
           },
         ],
-        excludeFilters: [],
+        excludeFilters: [
+          {
+            method: "=",
+            value: ["b", "r"],
+          },
+        ],
         sizeFilters: [],
       },
       prerequisites: {
@@ -317,7 +322,7 @@ describe("parseQuery", () => {
   });
 
   it("parses ci query into colorIdentity", () => {
-    const result = parseQuery("ci:wbr");
+    const result = parseQuery("ci:wbr -ci:br");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -329,7 +334,12 @@ describe("parseQuery", () => {
               value: ["w", "b", "r"],
             },
           ],
-          excludeFilters: [],
+          excludeFilters: [
+            {
+              method: ":",
+              value: ["b", "r"],
+            },
+          ],
           sizeFilters: [],
         },
       })
@@ -337,7 +347,7 @@ describe("parseQuery", () => {
   });
 
   it("parses coloridentity query into colorIdentity", () => {
-    const result = parseQuery("coloridentity:wbr");
+    const result = parseQuery("coloridentity:wbr -coloridentity:br");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -349,7 +359,12 @@ describe("parseQuery", () => {
               value: ["w", "b", "r"],
             },
           ],
-          excludeFilters: [],
+          excludeFilters: [
+            {
+              method: ":",
+              value: ["b", "r"],
+            },
+          ],
           sizeFilters: [],
         },
       })

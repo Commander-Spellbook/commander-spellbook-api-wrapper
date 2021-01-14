@@ -8,10 +8,31 @@ export default function parseColorIdentity(
   operator: string,
   value: string
 ): void {
+  const isNegativeKey = key.charAt(0) === "-";
+
   if (Number(value) >= 0 && Number(value) < 6) {
+    if (isNegativeKey) {
+      params.errors.push({
+        key,
+        value,
+        message: `The key "${key}" does not support operator "${operator}"`,
+      });
+
+      return;
+    }
+
     params.colorIdentity.sizeFilters.push({
       method: operator,
       value: Number(value),
+    });
+
+    return;
+  }
+
+  if (isNegativeKey) {
+    params.colorIdentity.excludeFilters.push({
+      method: operator,
+      value: parseColorFromValue(value),
     });
 
     return;

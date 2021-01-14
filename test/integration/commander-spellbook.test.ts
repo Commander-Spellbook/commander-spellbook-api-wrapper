@@ -180,6 +180,21 @@ describe("Commander Spellbook", () => {
 
         expect(hasExactMatch).toBe(true);
       });
+
+      it("looks up combos without a color identity", async () => {
+        const { combos } = await spellbook.search("-ci=wru");
+
+        expect(combos.length).toBeGreaterThan(0);
+        combos.forEach((combo) => {
+          const { colors } = combo.colorIdentity;
+          const hasColorsFromQuery =
+            colors.includes("w") &&
+            colors.includes("r") &&
+            colors.includes("u") &&
+            colors.length === 3;
+          expect(hasColorsFromQuery).toBe(false);
+        });
+      });
     });
 
     it("looks up specific prequisite in combos", async () => {

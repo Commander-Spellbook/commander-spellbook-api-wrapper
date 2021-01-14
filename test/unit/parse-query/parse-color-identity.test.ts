@@ -56,6 +56,30 @@ describe("parseColorIdentity", () => {
     }
   );
 
+  it.each([":", "=", ">", "<", ">=", "<="])(
+    "does not support %s operator with -ci",
+    (operator) => {
+      parseColorIdentity(searchParams, "-ci", operator, "4");
+
+      expect(searchParams).toEqual(
+        expect.objectContaining({
+          errors: [
+            {
+              key: "-ci",
+              value: "4",
+              message: `The key "-ci" does not support operator "${operator}"`,
+            },
+          ],
+          colorIdentity: {
+            excludeFilters: [],
+            includeFilters: [],
+            sizeFilters: [],
+          },
+        })
+      );
+    }
+  );
+
   it("ignores color identity when number is greater than 5", () => {
     parseColorIdentity(searchParams, "ci", ":", "6");
 
@@ -112,6 +136,29 @@ describe("parseColorIdentity", () => {
               },
             ],
             excludeFilters: [],
+            sizeFilters: [],
+          },
+        })
+      );
+    }
+  );
+
+  it.each(["=", ">", ">=", "<", "<="])(
+    "supports -ci with %s operator",
+    (operator) => {
+      parseColorIdentity(searchParams, "-ci", operator, "gr");
+
+      expect(searchParams).toEqual(
+        expect.objectContaining({
+          errors: [],
+          colorIdentity: {
+            excludeFilters: [
+              {
+                method: operator,
+                value: ["g", "r"],
+              },
+            ],
+            includeFilters: [],
             sizeFilters: [],
           },
         })

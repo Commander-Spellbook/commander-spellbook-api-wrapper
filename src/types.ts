@@ -59,7 +59,7 @@ export type Filters = {
   excludeFilters: ValueFilter[];
 };
 
-interface ColorIdentityValueFilter {
+export interface ColorIdentityValueFilter {
   method: string;
   value: ColorIdentityColors[];
 }

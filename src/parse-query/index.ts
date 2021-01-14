@@ -48,7 +48,9 @@ function collectKeywordedQueries(
         params.id = value;
         break;
       case "ci":
+      case "-ci":
       case "coloridentity":
+      case "-coloridentity":
         parseColorIdentity(params, key, operator, value);
         break;
       case "card":
