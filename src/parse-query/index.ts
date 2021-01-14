@@ -1,5 +1,6 @@
 import parseColorIdentity from "./parse-color-identity";
 import parseCardQuery from "./parse-card-query";
+import parseComboData from "./parse-combo-data";
 
 import type { SearchParameters } from "../types";
 
@@ -62,28 +63,18 @@ function collectKeywordedQueries(
       case "pre":
       case "prerequisite":
       case "prerequisites":
-        params.prerequisites.include.push(value);
-        break;
       case "-pre":
       case "-prerequisite":
       case "-prerequisites":
-        params.prerequisites.exclude.push(value);
-        break;
       case "step":
       case "steps":
-        params.steps.include.push(value);
-        break;
       case "-step":
       case "-steps":
-        params.steps.exclude.push(value);
-        break;
       case "result":
       case "results":
-        params.results.include.push(value);
-        break;
       case "-result":
       case "-results":
-        params.results.exclude.push(value);
+        parseComboData(params, key, operator, value);
         break;
       default:
         params.errors.push({

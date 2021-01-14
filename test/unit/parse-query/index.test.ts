@@ -1,4 +1,7 @@
 import parseQuery from "../../../src/parse-query";
+import parseComboData from "../../../src/parse-query/parse-combo-data";
+
+jest.mock("../../../src/parse-query/parse-combo-data");
 
 describe("parseQuery", () => {
   it("parses plain text into cards", () => {
@@ -112,70 +115,98 @@ describe("parseQuery", () => {
       "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
     );
 
-    expect(result).toEqual({
-      id: "12345",
-      cards: {
-        sizeFilters: [],
-        excludeFilters: [
-          {
-            method: ":",
-            value: "Food",
-          },
-        ],
-        includeFilters: [
-          {
-            method: ":",
-            value: "Kiki",
-          },
-          {
-            method: ":",
-            value: "Daxos",
-          },
-          {
-            method: ":",
-            value: "Grave Titan",
-          },
-          {
-            method: ":",
-            value: "Akroma",
-          },
-        ],
-      },
-      colorIdentity: {
-        includeFilters: [
-          {
-            method: ":",
-            value: ["w", "b", "r"],
-          },
-        ],
-        excludeFilters: [
-          {
-            method: "=",
-            value: ["b", "r"],
-          },
-        ],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        include: ["prereq"],
-        exclude: ["xprereq"],
-      },
-      steps: {
-        include: ["step"],
-        exclude: ["xstep"],
-      },
-      results: {
-        include: ["result"],
-        exclude: ["xresult"],
-      },
-      errors: [
-        {
-          key: "unknown",
-          value: "value",
-          message: 'Could not parse keyword "unknown" with value "value"',
+    expect(parseComboData).toBeCalledTimes(6);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "prerequisites",
+      ":",
+      "prereq"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-prerequisites",
+      ":",
+      "xprereq"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "steps",
+      ":",
+      "step"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-steps",
+      ":",
+      "xstep"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "results",
+      ":",
+      "result"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-result",
+      ":",
+      "xresult"
+    );
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        id: "12345",
+        cards: {
+          sizeFilters: [],
+          excludeFilters: [
+            {
+              method: ":",
+              value: "Food",
+            },
+          ],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Kiki",
+            },
+            {
+              method: ":",
+              value: "Daxos",
+            },
+            {
+              method: ":",
+              value: "Grave Titan",
+            },
+            {
+              method: ":",
+              value: "Akroma",
+            },
+          ],
         },
-      ],
-    });
+        colorIdentity: {
+          includeFilters: [
+            {
+              method: ":",
+              value: ["w", "b", "r"],
+            },
+          ],
+          excludeFilters: [
+            {
+              method: "=",
+              value: ["b", "r"],
+            },
+          ],
+          sizeFilters: [],
+        },
+        errors: [
+          {
+            key: "unknown",
+            value: "value",
+            message: 'Could not parse keyword "unknown" with value "value"',
+          },
+        ],
+      })
+    );
   });
 
   it("ignores capitalization on keys", () => {
@@ -183,65 +214,93 @@ describe("parseQuery", () => {
       "Kiki CI:wbr CARD:Daxos ID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult"
     );
 
-    expect(result).toEqual({
-      id: "12345",
-      cards: {
-        sizeFilters: [],
-        excludeFilters: [
-          {
-            method: ":",
-            value: "Food",
-          },
-        ],
-        includeFilters: [
-          {
-            method: ":",
-            value: "Kiki",
-          },
-          {
-            method: ":",
-            value: "Daxos",
-          },
-          {
-            method: ":",
-            value: "Grave Titan",
-          },
-          {
-            method: ":",
-            value: "Akroma",
-          },
-        ],
-      },
-      colorIdentity: {
-        includeFilters: [
-          {
-            method: ":",
-            value: ["w", "b", "r"],
-          },
-        ],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        include: ["prereq"],
-        exclude: ["xprereq"],
-      },
-      steps: {
-        include: ["step"],
-        exclude: ["xstep"],
-      },
-      results: {
-        include: ["result"],
-        exclude: ["xresult"],
-      },
-      errors: [
-        {
-          key: "unknown",
-          value: "value",
-          message: 'Could not parse keyword "unknown" with value "value"',
+    expect(parseComboData).toBeCalledTimes(6);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "prerequisites",
+      ":",
+      "prereq"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-prerequisites",
+      ":",
+      "xprereq"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "steps",
+      ":",
+      "step"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-steps",
+      ":",
+      "xstep"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "results",
+      ":",
+      "result"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-result",
+      ":",
+      "xresult"
+    );
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        id: "12345",
+        cards: {
+          sizeFilters: [],
+          excludeFilters: [
+            {
+              method: ":",
+              value: "Food",
+            },
+          ],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Kiki",
+            },
+            {
+              method: ":",
+              value: "Daxos",
+            },
+            {
+              method: ":",
+              value: "Grave Titan",
+            },
+            {
+              method: ":",
+              value: "Akroma",
+            },
+          ],
         },
-      ],
-    });
+        colorIdentity: {
+          includeFilters: [
+            {
+              method: ":",
+              value: ["w", "b", "r"],
+            },
+          ],
+          excludeFilters: [],
+          sizeFilters: [],
+        },
+        errors: [
+          {
+            key: "unknown",
+            value: "value",
+            message: 'Could not parse keyword "unknown" with value "value"',
+          },
+        ],
+      })
+    );
   });
 
   it("ignores underscores in keys", () => {
@@ -249,65 +308,93 @@ describe("parseQuery", () => {
       "Kiki c_i:wbr c_ar_d:Daxos i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult"
     );
 
-    expect(result).toEqual({
-      id: "12345",
-      cards: {
-        sizeFilters: [],
-        excludeFilters: [
-          {
-            method: ":",
-            value: "Food",
-          },
-        ],
-        includeFilters: [
-          {
-            method: ":",
-            value: "Kiki",
-          },
-          {
-            method: ":",
-            value: "Daxos",
-          },
-          {
-            method: ":",
-            value: "Grave Titan",
-          },
-          {
-            method: ":",
-            value: "Akroma",
-          },
-        ],
-      },
-      colorIdentity: {
-        includeFilters: [
-          {
-            method: ":",
-            value: ["w", "b", "r"],
-          },
-        ],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        include: ["prereq"],
-        exclude: ["xprereq"],
-      },
-      steps: {
-        include: ["step"],
-        exclude: ["xstep"],
-      },
-      results: {
-        include: ["result"],
-        exclude: ["xresult"],
-      },
-      errors: [
-        {
-          key: "unknown",
-          value: "value",
-          message: 'Could not parse keyword "unknown" with value "value"',
+    expect(parseComboData).toBeCalledTimes(6);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "prerequisites",
+      ":",
+      "prereq"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-prerequisites",
+      ":",
+      "xprereq"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "steps",
+      ":",
+      "step"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-steps",
+      ":",
+      "xstep"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "results",
+      ":",
+      "result"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "-result",
+      ":",
+      "xresult"
+    );
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        id: "12345",
+        cards: {
+          sizeFilters: [],
+          excludeFilters: [
+            {
+              method: ":",
+              value: "Food",
+            },
+          ],
+          includeFilters: [
+            {
+              method: ":",
+              value: "Kiki",
+            },
+            {
+              method: ":",
+              value: "Daxos",
+            },
+            {
+              method: ":",
+              value: "Grave Titan",
+            },
+            {
+              method: ":",
+              value: "Akroma",
+            },
+          ],
         },
-      ],
-    });
+        colorIdentity: {
+          includeFilters: [
+            {
+              method: ":",
+              value: ["w", "b", "r"],
+            },
+          ],
+          excludeFilters: [],
+          sizeFilters: [],
+        },
+        errors: [
+          {
+            key: "unknown",
+            value: "value",
+            message: 'Could not parse keyword "unknown" with value "value"',
+          },
+        ],
+      })
+    );
   });
 
   it("parses id query into id", () => {
@@ -583,54 +670,32 @@ describe("parseQuery", () => {
     );
   });
 
-  it.each(["prerequisites", "steps", "results"])("parses %s", (kind) => {
-    const result = parseQuery(
+  it.each([
+    "pre",
+    "prerequisite",
+    "prerequisites",
+    "step",
+    "steps",
+    "result",
+    "results",
+  ])("parses %s through combo data parser", (kind) => {
+    parseQuery(
       `${kind}:foo ${kind}:"thing in quotes" -${kind}:"excluded thing"`
     );
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        [kind]: {
-          exclude: ["excluded thing"],
-          include: ["foo", "thing in quotes"],
-        },
-        errors: [],
-      })
+    expect(parseComboData).toBeCalledTimes(3);
+    expect(parseComboData).toBeCalledWith(expect.anything(), kind, ":", "foo");
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      kind,
+      ":",
+      "thing in quotes"
     );
-  });
-
-  it.each(["prerequisite", "step", "result"])(
-    "parses %ss in singluar form",
-    (kind) => {
-      const result = parseQuery(
-        `${kind}:foo ${kind}:"thing in quotes" -${kind}:"excluded thing"`
-      );
-
-      expect(result).toEqual(
-        expect.objectContaining({
-          [`${kind}s`]: {
-            exclude: ["excluded thing"],
-            include: ["foo", "thing in quotes"],
-          },
-          errors: [],
-        })
-      );
-    }
-  );
-
-  it("parses pre as prerequisites", () => {
-    const result = parseQuery(
-      `pre:foo pre:"thing in quotes" -pre:"excluded thing"`
-    );
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        prerequisites: {
-          exclude: ["excluded thing"],
-          include: ["foo", "thing in quotes"],
-        },
-        errors: [],
-      })
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      `-${kind}`,
+      ":",
+      "excluded thing"
     );
   });
 });
