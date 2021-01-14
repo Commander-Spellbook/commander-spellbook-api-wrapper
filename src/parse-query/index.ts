@@ -45,9 +45,6 @@ function collectKeywordedQueries(
     }
 
     switch (key) {
-      case "id":
-        params.id = value;
-        break;
       case "ci":
       case "-ci":
       case "coloridentity":

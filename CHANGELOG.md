@@ -12,6 +12,7 @@
 _Breaking Changes_
 
 - `search`
+  - Drop support for searching by id
   - Now returns a result object instead of an array of combos
   - Combos array found on the `combos` property of the result object
   - Errors in query are found in the `errors` property of the result object

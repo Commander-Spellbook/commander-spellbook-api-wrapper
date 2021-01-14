@@ -112,7 +112,7 @@ describe("parseQuery", () => {
 
   it("can parse a mix of all queries", () => {
     const result = parseQuery(
-      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
+      "Kiki ci:wbr -ci=br card:Daxos card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
     );
 
     expect(parseCardQuery).toBeCalledTimes(5);
@@ -201,7 +201,6 @@ describe("parseQuery", () => {
 
     expect(result).toEqual(
       expect.objectContaining({
-        id: "12345",
         errors: [
           {
             key: "unknown",
@@ -215,7 +214,7 @@ describe("parseQuery", () => {
 
   it("ignores capitalization on keys", () => {
     const result = parseQuery(
-      "Kiki CI:wbr CARD:Daxos ID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult"
+      "Kiki CI:wbr CARD:Daxos CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult"
     );
 
     expect(parseCardQuery).toBeCalledTimes(5);
@@ -298,7 +297,6 @@ describe("parseQuery", () => {
 
     expect(result).toEqual(
       expect.objectContaining({
-        id: "12345",
         errors: [
           {
             key: "unknown",
@@ -312,7 +310,7 @@ describe("parseQuery", () => {
 
   it("ignores underscores in keys", () => {
     const result = parseQuery(
-      "Kiki c_i:wbr c_ar_d:Daxos i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult"
+      "Kiki c_i:wbr c_ar_d:Daxos ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult"
     );
 
     expect(parseCardQuery).toBeCalledTimes(5);
@@ -395,7 +393,6 @@ describe("parseQuery", () => {
 
     expect(result).toEqual(
       expect.objectContaining({
-        id: "12345",
         errors: [
           {
             key: "unknown",
@@ -403,17 +400,6 @@ describe("parseQuery", () => {
             message: 'Could not parse keyword "unknown" with value "value"',
           },
         ],
-      })
-    );
-  });
-
-  it("parses id query into id", () => {
-    const result = parseQuery("id:12345");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        id: "12345",
       })
     );
   });

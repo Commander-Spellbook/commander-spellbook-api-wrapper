@@ -13,23 +13,6 @@ export default async function search(query = ""): Promise<SearchResults> {
 
   let combos = await lookupApi();
 
-  if (searchParams.id) {
-    const matchingCombo = combos.find(
-      (combo) => combo.commanderSpellbookId === searchParams.id
-    );
-    if (matchingCombo) {
-      return {
-        errors,
-        combos: [matchingCombo],
-      };
-    }
-
-    return {
-      errors,
-      combos: [],
-    };
-  }
-
   combos = filterCards(combos, searchParams);
   combos = filterColorIdentity(combos, searchParams);
   combos = filterComboData(combos, searchParams);
