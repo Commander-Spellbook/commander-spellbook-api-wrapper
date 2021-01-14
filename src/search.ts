@@ -1,51 +1,42 @@
 import lookupApi from "./spellbook-api";
 import parseQuery from "./parse-query";
 
-import type { SearchResults } from "./types";
+import type {
+  SearchParameters,
+  SearchResults,
+  FormattedApiResponse,
+} from "./types";
 
-export default async function search(query = ""): Promise<SearchResults> {
-  const searchParams = parseQuery(query);
-  const { errors } = searchParams;
-  const cards = searchParams.cards;
-
-  let combos = await lookupApi();
-
-  if (searchParams.id) {
-    const matchingCombo = combos.find(
-      (combo) => combo.commanderSpellbookId === searchParams.id
-    );
-    if (matchingCombo) {
-      return {
-        errors,
-        combos: [matchingCombo],
-      };
-    }
-
-    return {
-      errors,
-      combos: [],
-    };
-  }
-
-  if (cards.includeFilters.length > 0) {
+function filterCards(
+  combos: FormattedApiResponse[],
+  params: SearchParameters
+): FormattedApiResponse[] {
+  if (params.cards.includeFilters.length > 0) {
     combos = combos.filter((combo) => {
-      return cards.includeFilters.every((filter) => {
+      return params.cards.includeFilters.every((filter) => {
         return combo.cards.includesCard(filter.value);
       });
     });
   }
 
-  if (cards.excludeFilters.length > 0) {
+  if (params.cards.excludeFilters.length > 0) {
     combos = combos.filter((combo) => {
-      return !cards.excludeFilters.find((filter) => {
+      return !params.cards.excludeFilters.find((filter) => {
         return combo.cards.includesCard(filter.value);
       });
     });
   }
 
-  if (searchParams.colorIdentity.includeFilters.length > 0) {
+  return combos;
+}
+
+function filterColorIdentity(
+  combos: FormattedApiResponse[],
+  params: SearchParameters
+): FormattedApiResponse[] {
+  if (params.colorIdentity.includeFilters.length > 0) {
     combos = combos.filter((combo) => {
-      return searchParams.colorIdentity.includeFilters.every((filter) => {
+      return params.colorIdentity.includeFilters.every((filter) => {
         switch (filter.method) {
           case "=":
             return combo.colorIdentity.is(filter.value);
@@ -71,11 +62,11 @@ export default async function search(query = ""): Promise<SearchResults> {
     });
   }
 
-  if (searchParams.colorIdentity.sizeFilters.length > 0) {
+  if (params.colorIdentity.sizeFilters.length > 0) {
     combos = combos.filter((combo) => {
       const numberOfColors = combo.colorIdentity.numberOfColors();
 
-      return searchParams.colorIdentity.sizeFilters.every((filter) => {
+      return params.colorIdentity.sizeFilters.every((filter) => {
         switch (filter.method) {
           case ":":
           case "=":
@@ -95,11 +86,19 @@ export default async function search(query = ""): Promise<SearchResults> {
     });
   }
 
+  return combos;
+}
+
+function filterPrerequisites(
+  combos: FormattedApiResponse[],
+  searchParams: SearchParameters
+): FormattedApiResponse[] {
   if (searchParams.prerequisites.include.length > 0) {
     combos = combos.filter((combo) =>
       combo.prerequisites.matchesAll(searchParams.prerequisites.include)
     );
   }
+
   if (searchParams.prerequisites.exclude.length > 0) {
     combos = combos.filter(
       (combo) =>
@@ -107,27 +106,75 @@ export default async function search(query = ""): Promise<SearchResults> {
     );
   }
 
+  return combos;
+}
+
+function filterSteps(
+  combos: FormattedApiResponse[],
+  searchParams: SearchParameters
+): FormattedApiResponse[] {
   if (searchParams.steps.include.length > 0) {
     combos = combos.filter((combo) =>
       combo.steps.matchesAll(searchParams.steps.include)
     );
   }
+
   if (searchParams.steps.exclude.length > 0) {
     combos = combos.filter(
       (combo) => !combo.steps.matchesAny(searchParams.steps.exclude)
     );
   }
 
+  return combos;
+}
+
+function filterResults(
+  combos: FormattedApiResponse[],
+  searchParams: SearchParameters
+): FormattedApiResponse[] {
   if (searchParams.results.include.length > 0) {
     combos = combos.filter((combo) =>
       combo.results.matchesAll(searchParams.results.include)
     );
   }
+
   if (searchParams.results.exclude.length > 0) {
     combos = combos.filter((combo) => {
       return !combo.results.matchesAny(searchParams.results.exclude);
     });
   }
+
+  return combos;
+}
+
+export default async function search(query = ""): Promise<SearchResults> {
+  const searchParams = parseQuery(query);
+  const { errors } = searchParams;
+
+  let combos = await lookupApi();
+
+  if (searchParams.id) {
+    const matchingCombo = combos.find(
+      (combo) => combo.commanderSpellbookId === searchParams.id
+    );
+    if (matchingCombo) {
+      return {
+        errors,
+        combos: [matchingCombo],
+      };
+    }
+
+    return {
+      errors,
+      combos: [],
+    };
+  }
+
+  combos = filterCards(combos, searchParams);
+  combos = filterColorIdentity(combos, searchParams);
+  combos = filterPrerequisites(combos, searchParams);
+  combos = filterSteps(combos, searchParams);
+  combos = filterResults(combos, searchParams);
 
   return {
     errors,
