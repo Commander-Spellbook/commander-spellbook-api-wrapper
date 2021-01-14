@@ -29,6 +29,7 @@ describe("parseQuery", () => {
     );
   });
 
+  // TODO this should not support this
   it("supports an empty string for query", () => {
     const result = parseQuery("");
 
@@ -66,7 +67,7 @@ describe("parseQuery", () => {
 
   it("provides errors", () => {
     const result = parseQuery(
-      "foo unknown:value unknown2:'value 2' unknown3:\"value 3\" bar"
+      "foo unknown:value unknown2:'value 2' unknown3:\"value 3\" bar -card>3"
     );
 
     expect(result).toEqual(
@@ -100,6 +101,11 @@ describe("parseQuery", () => {
             key: "unknown3",
             value: "value 3",
             message: 'Could not parse keyword "unknown3" with value "value 3"',
+          },
+          {
+            key: "-card",
+            value: "3",
+            message: 'The key "-card" does not support operator ">"',
           },
         ],
       })
