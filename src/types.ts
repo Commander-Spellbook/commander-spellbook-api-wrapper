@@ -65,6 +65,10 @@ export type SearchParameters = {
   prerequisites: Filters;
   steps: Filters;
   results: Filters;
+  id: {
+    includeFilters: string[];
+    excludeFilters: string[];
+  };
   colorIdentity: {
     sizeFilters: SizeFilter[];
     includeFilters: ColorIdentityValueFilter[];

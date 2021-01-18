@@ -15,6 +15,10 @@ describe("createMessage", () => {
   beforeEach(() => {
     combos = [makeFakeCombo()];
     searchParams = {
+      id: {
+        includeFilters: [],
+        excludeFilters: [],
+      },
       cards: {
         sizeFilters: [],
         includeFilters: [],

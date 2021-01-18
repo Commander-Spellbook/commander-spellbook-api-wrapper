@@ -17,6 +17,10 @@ describe("comboDataFilter", () => {
   beforeEach(() => {
     combos = [makeFakeCombo({ commanderSpellbookId: "1" })];
     params = {
+      id: {
+        includeFilters: [],
+        excludeFilters: [],
+      },
       cards: {
         sizeFilters: [],
         includeFilters: [],

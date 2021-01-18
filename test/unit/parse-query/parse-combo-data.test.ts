@@ -9,6 +9,10 @@ describe("parseComboData", () => {
 
   beforeEach(() => {
     searchParams = {
+      id: {
+        includeFilters: [],
+        excludeFilters: [],
+      },
       cards: {
         sizeFilters: [],
         includeFilters: [],

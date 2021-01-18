@@ -36,6 +36,22 @@ describe("Commander Spellbook", () => {
       expect(combos.length).toBeGreaterThan(0);
     });
 
+    it("looks up specific id", async () => {
+      const { combos } = await spellbook.search("id:123");
+
+      expect(combos.length).toBe(1);
+      expect(combos[0].commanderSpellbookId).toBe("123");
+    });
+
+    it("can exclude ids", async () => {
+      const { combos } = await spellbook.search("-id:123");
+
+      expect(combos.length).toBeGreaterThan(0);
+      combos.forEach((combo) => {
+        expect(combo.commanderSpellbookId).not.toBe("123");
+      });
+    });
+
     it("looks up specific cards", async () => {
       const { combos } = await spellbook.search("Sydri");
 

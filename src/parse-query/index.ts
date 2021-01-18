@@ -44,6 +44,12 @@ function collectKeywordedQueries(
     }
 
     switch (key) {
+      case "id":
+        params.id.includeFilters.push(value);
+        break;
+      case "-id":
+        params.id.excludeFilters.push(value);
+        break;
       case "ci":
       case "-ci":
       case "coloridentity":
@@ -105,6 +111,10 @@ function collectPlainNameQueries(
 
 export default function parseQuery(query: string): SearchParameters {
   const parameters: SearchParameters = {
+    id: {
+      includeFilters: [],
+      excludeFilters: [],
+    },
     cards: {
       sizeFilters: [],
       includeFilters: [],

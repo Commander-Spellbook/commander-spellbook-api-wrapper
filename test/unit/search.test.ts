@@ -3,6 +3,7 @@ import lookup from "../../src/spellbook-api";
 import filterColorIdentity from "../../src/search-filters/color-identity";
 import filterComboData from "../../src/search-filters/combo-data";
 import filterSize from "../../src/search-filters/size";
+import filterIds from "../../src/search-filters/ids";
 import parseQuery from "../../src/parse-query";
 import CardGrouping from "../../src/models/card-grouping";
 import SpellbookList from "../../src/models/list";
@@ -14,6 +15,7 @@ jest.mock("../../src/spellbook-api");
 jest.mock("../../src/search-filters/color-identity");
 jest.mock("../../src/search-filters/combo-data");
 jest.mock("../../src/search-filters/size");
+jest.mock("../../src/search-filters/ids");
 jest.mock("../../src/parse-query");
 
 describe("search", () => {
@@ -30,6 +32,10 @@ describe("search", () => {
     mocked(lookup).mockResolvedValue([combo]);
 
     mocked(parseQuery).mockReturnValue({
+      id: {
+        includeFilters: [],
+        excludeFilters: [],
+      },
       cards: {
         sizeFilters: [],
         includeFilters: [],
@@ -60,12 +66,19 @@ describe("search", () => {
     mocked(filterColorIdentity).mockReturnValue([combo]);
     mocked(filterComboData).mockReturnValue([combo]);
     mocked(filterSize).mockReturnValue([combo]);
+    mocked(filterIds).mockReturnValue([combo]);
   });
 
   it("looks up combos from api", async () => {
     await search("");
 
     expect(lookup).toBeCalledTimes(1);
+  });
+
+  it("filters by wids", async () => {
+    await search("Sydri Arjun Rashmi");
+
+    expect(filterIds).toBeCalledTimes(1);
   });
 
   it("filters by color identity", async () => {
@@ -88,6 +101,10 @@ describe("search", () => {
 
   it("includes errors", async () => {
     mocked(parseQuery).mockReturnValue({
+      id: {
+        includeFilters: [],
+        excludeFilters: [],
+      },
       cards: {
         sizeFilters: [],
         includeFilters: [],

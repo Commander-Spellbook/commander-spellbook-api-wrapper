@@ -17,6 +17,10 @@ describe("sizeFilter", () => {
   beforeEach(() => {
     combos = [makeFakeCombo()];
     params = {
+      id: {
+        includeFilters: [],
+        excludeFilters: [],
+      },
       cards: {
         sizeFilters: [],
         includeFilters: [],

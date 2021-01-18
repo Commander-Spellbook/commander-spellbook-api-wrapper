@@ -1,5 +1,6 @@
 import lookupApi from "./spellbook-api";
 import parseQuery from "./parse-query";
+import filterIds from "./search-filters/ids";
 import filterColorIdentity from "./search-filters/color-identity";
 import filterComboData from "./search-filters/combo-data";
 import filterSize from "./search-filters/size";
@@ -13,6 +14,7 @@ export default async function search(query = ""): Promise<SearchResults> {
 
   let combos = await lookupApi();
 
+  combos = filterIds(combos, searchParams);
   combos = filterColorIdentity(combos, searchParams);
   combos = filterComboData(combos, searchParams);
   combos = filterSize(combos, searchParams);

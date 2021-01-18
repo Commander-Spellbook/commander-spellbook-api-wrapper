@@ -1,3 +1,9 @@
+# unreleased
+
+- `search`
+  - Restore support for searching by id, but don't limit it to inclusive searching
+  - Support `-id` to exclude combos with id
+
 # 0.6.0
 
 - `search`
