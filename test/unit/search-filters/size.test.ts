@@ -2,6 +2,7 @@ import filterSize, {
   SIZE_RESTRICTED_FILTERS,
 } from "../../../src/search-filters/size";
 import makeFakeCombo from "../../../src/make-fake-combo";
+import { makeSearchParams } from "../helper";
 
 import { mocked } from "ts-jest/utils";
 
@@ -16,38 +17,7 @@ describe("sizeFilter", () => {
 
   beforeEach(() => {
     combos = [makeFakeCombo()];
-    params = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      steps: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      results: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      errors: [],
-    };
+    params = makeSearchParams();
   });
 
   describe.each(SIZE_RESTRICTED_FILTERS)("%s", (dataType) => {

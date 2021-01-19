@@ -2,6 +2,7 @@ import filterComboData, {
   DATA_TYPES,
 } from "../../../src/search-filters/combo-data";
 import makeFakeCombo from "../../../src/make-fake-combo";
+import { makeSearchParams } from "../helper";
 
 import { mocked } from "ts-jest/utils";
 
@@ -16,38 +17,7 @@ describe("comboDataFilter", () => {
 
   beforeEach(() => {
     combos = [makeFakeCombo({ commanderSpellbookId: "1" })];
-    params = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      steps: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      results: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      errors: [],
-    };
+    params = makeSearchParams();
   });
 
   describe.each(DATA_TYPES)("%s", (dataType) => {

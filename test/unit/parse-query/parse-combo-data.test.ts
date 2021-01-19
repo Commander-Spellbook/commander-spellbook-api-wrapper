@@ -1,6 +1,7 @@
 import parseComboData, {
   COMBO_DATA_TYPES,
 } from "../../../src/parse-query/parse-combo-data";
+import { makeSearchParams } from "../helper";
 
 import type { SearchParameters } from "../../../src/types";
 
@@ -8,38 +9,7 @@ describe("parseComboData", () => {
   let searchParams: SearchParameters;
 
   beforeEach(() => {
-    searchParams = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      steps: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      results: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      errors: [],
-    };
+    searchParams = makeSearchParams();
   });
 
   it("ignores when a unsupported key is passed", () => {

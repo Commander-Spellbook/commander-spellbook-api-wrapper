@@ -8,6 +8,7 @@ import parseQuery from "../../src/parse-query";
 import CardGrouping from "../../src/models/card-grouping";
 import SpellbookList from "../../src/models/list";
 import ColorIdentity from "../../src/models/color-identity";
+import { makeSearchParams } from "./helper";
 
 import { mocked } from "ts-jest/utils";
 
@@ -31,38 +32,7 @@ describe("search", () => {
     };
     mocked(lookup).mockResolvedValue([combo]);
 
-    mocked(parseQuery).mockReturnValue({
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      steps: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      results: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      errors: [],
-    });
+    mocked(parseQuery).mockReturnValue(makeSearchParams());
     mocked(filterColorIdentity).mockReturnValue([combo]);
     mocked(filterComboData).mockReturnValue([combo]);
     mocked(filterSize).mockReturnValue([combo]);
@@ -100,49 +70,23 @@ describe("search", () => {
   });
 
   it("includes errors", async () => {
-    mocked(parseQuery).mockReturnValue({
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      steps: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      results: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      errors: [
-        {
-          key: "unknownkey",
-          value: "value",
-          message: 'Could not parse keyword "unknownkey" with value "value"',
-        },
-        {
-          key: "unknownkey2",
-          value: "value2",
-          message: 'Could not parse keyword "unknownkey2" with value "value2"',
-        },
-      ],
-    });
+    mocked(parseQuery).mockReturnValue(
+      makeSearchParams({
+        errors: [
+          {
+            key: "unknownkey",
+            value: "value",
+            message: 'Could not parse keyword "unknownkey" with value "value"',
+          },
+          {
+            key: "unknownkey2",
+            value: "value2",
+            message:
+              'Could not parse keyword "unknownkey2" with value "value2"',
+          },
+        ],
+      })
+    );
     const result = await search(
       "unknownkey:value card:sydri unknownkey2:value2"
     );

@@ -1,5 +1,6 @@
 import filterColorIdentity from "../../../src/search-filters/color-identity";
 import makeFakeCombo from "../../../src/make-fake-combo";
+import { makeSearchParams } from "../helper";
 
 import { mocked } from "ts-jest/utils";
 
@@ -14,38 +15,7 @@ describe("colorIdentityFilter", () => {
 
   beforeEach(() => {
     combos = [makeFakeCombo({ commanderSpellbookId: "1" })];
-    params = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      steps: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      results: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      errors: [],
-    };
+    params = makeSearchParams();
   });
 
   describe("color filter", () => {

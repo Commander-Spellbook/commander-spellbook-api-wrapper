@@ -1,5 +1,6 @@
 import filterIds from "../../../src/search-filters/ids";
 import makeFakeCombo from "../../../src/make-fake-combo";
+import { makeSearchParams } from "../helper";
 
 import type {
   FormattedApiResponse,
@@ -16,38 +17,7 @@ describe("idsFilter", () => {
       makeFakeCombo({ commanderSpellbookId: "2" }),
       makeFakeCombo({ commanderSpellbookId: "3" }),
     ];
-    params = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      steps: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      results: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      errors: [],
-    };
+    params = makeSearchParams();
   });
 
   it("filters by id", () => {

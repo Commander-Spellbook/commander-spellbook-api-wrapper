@@ -1,4 +1,5 @@
 import parseColorIdentity from "../../../src/parse-query/parse-color-identity";
+import { makeSearchParams } from "../helper";
 
 import type { SearchParameters } from "../../../src/types";
 
@@ -6,38 +7,7 @@ describe("parseColorIdentity", () => {
   let searchParams: SearchParameters;
 
   beforeEach(() => {
-    searchParams = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      steps: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      results: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      errors: [],
-    };
+    searchParams = makeSearchParams();
   });
 
   it.each([":", "=", ">", "<", ">=", "<="])(

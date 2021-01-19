@@ -2,6 +2,7 @@ import createMessage, {
   DATA_TYPES,
 } from "../../../src/parse-query/create-message";
 import makeFakeCombo from "../../../src/make-fake-combo";
+import { makeSearchParams } from "../helper";
 
 import type {
   SearchParameters,
@@ -14,38 +15,7 @@ describe("createMessage", () => {
 
   beforeEach(() => {
     combos = [makeFakeCombo()];
-    searchParams = {
-      id: {
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      cards: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      colorIdentity: {
-        includeFilters: [],
-        excludeFilters: [],
-        sizeFilters: [],
-      },
-      prerequisites: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      steps: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      results: {
-        sizeFilters: [],
-        includeFilters: [],
-        excludeFilters: [],
-      },
-      errors: [],
-    };
+    searchParams = makeSearchParams();
   });
 
   it("adds number combos to font of message", () => {
