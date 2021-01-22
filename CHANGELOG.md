@@ -1,4 +1,4 @@
-# unreleased
+# 0.7.0
 
 - `search`
   - Restore support for searching by id, but don't limit it to inclusive searching
