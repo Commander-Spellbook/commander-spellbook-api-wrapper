@@ -33,6 +33,8 @@ The methods in this module typically resolve with an object or an array of objec
   prerequisites: SpellbookList;
   steps: SpellbookList;
   results: SpellbookList;
+  hasBannedCard: boolean;
+  hasSpoiledCard: boolean;
 }
 ```
 
@@ -43,6 +45,8 @@ The methods in this module typically resolve with an object or an array of objec
 - `prerequisites` is a [SpellbookList](#spellbooklist) object that contains the things required before doing the combo.
 - `steps` is a [SpellbookList](#spellbooklist) object that contains steps to do the combo.
 - `result` is a [SpellbookList](#spellbooklist) object that contains the results from doing the combo.
+- `hasBannedCard` is true when at least one card in the combo is banned in the Commander format.
+- `hasSpoiledCard` is true when at least one card uses a newly previewed card that is technically not yet legal in the Commander format.
 
 See the [Models](#models) section for more information on the custom classes.
 

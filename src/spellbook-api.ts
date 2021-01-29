@@ -43,6 +43,8 @@ function formatApiResponse(
       const prerequisites = SpellbookList.create(combo[12]);
       const steps = SpellbookList.create(combo[13]);
       const results = SpellbookList.create(combo[14]);
+      const hasBannedCard = combo[15] === "true";
+      const hasSpoiledCard = combo[16] === "true";
 
       return {
         commanderSpellbookId: id,
@@ -52,6 +54,8 @@ function formatApiResponse(
         prerequisites,
         steps,
         results,
+        hasBannedCard,
+        hasSpoiledCard,
       };
     });
 }

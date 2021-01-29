@@ -29,6 +29,8 @@ export type FormattedApiResponse = {
   prerequisites: SpellbookList;
   steps: SpellbookList;
   results: SpellbookList;
+  hasBannedCard: boolean;
+  hasSpoiledCard: boolean;
 };
 
 export type ColorIdentityColors = "w" | "u" | "b" | "r" | "g" | "c";

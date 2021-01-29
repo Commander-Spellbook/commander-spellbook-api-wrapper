@@ -1,3 +1,9 @@
+# unreleased
+
+- `search`
+  - Expose `hasBannedCard` in combo results
+  - Expose `hasSpoiledCard` in combo results
+
 # 0.7.0
 
 - `search`

@@ -34,6 +34,8 @@ describe("api", () => {
         "prereq 1. prereq 2. prereq 3",
         "step 1. step 2. step 3",
         "result 1. result 2. result 3",
+        "false",
+        "false",
       ],
       [
         "2",
@@ -51,6 +53,8 @@ describe("api", () => {
         "prereq",
         "step",
         "result",
+        "true",
+        "false",
       ],
       [
         "3",
@@ -68,6 +72,8 @@ describe("api", () => {
         "prereq",
         "step",
         "result",
+        "false",
+        "true",
       ],
     ];
     const body = {
@@ -158,6 +164,8 @@ describe("api", () => {
       expect.objectContaining({
         commanderSpellbookId: "1",
         permalink: "https://commanderspellbook.com/?id=1",
+        hasBannedCard: false,
+        hasSpoiledCard: false,
       })
     );
     expect(combos[0].cards.length).toBe(2);
@@ -172,6 +180,8 @@ describe("api", () => {
       expect.objectContaining({
         commanderSpellbookId: "2",
         permalink: "https://commanderspellbook.com/?id=2",
+        hasBannedCard: true,
+        hasSpoiledCard: false,
       })
     );
     expect(combos[1].cards.length).toBe(3);
@@ -187,6 +197,8 @@ describe("api", () => {
       expect.objectContaining({
         commanderSpellbookId: "3",
         permalink: "https://commanderspellbook.com/?id=3",
+        hasBannedCard: false,
+        hasSpoiledCard: true,
       })
     );
     expect(combos[2].cards.length).toBe(4);
