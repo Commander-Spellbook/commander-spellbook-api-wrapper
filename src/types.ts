@@ -80,4 +80,6 @@ export type SearchParameters = {
   errors: SearchError[];
   is: Record<IsNotIncludeExcludeValues, boolean>;
   not: Record<IsNotIncludeExcludeValues, boolean>;
+  include: Record<IsNotIncludeExcludeValues, boolean>;
+  exclude: Record<IsNotIncludeExcludeValues, boolean>;
 };
