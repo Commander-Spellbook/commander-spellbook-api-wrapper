@@ -1,13 +1,12 @@
+import makeFakeCombo from "../../src/make-fake-combo";
 import search from "../../src/search";
 import lookup from "../../src/spellbook-api";
 import filterColorIdentity from "../../src/search-filters/color-identity";
 import filterComboData from "../../src/search-filters/combo-data";
 import filterSize from "../../src/search-filters/size";
 import filterIds from "../../src/search-filters/ids";
+import filterTags from "../../src/search-filters/tags";
 import parseQuery from "../../src/parse-query";
-import CardGrouping from "../../src/models/card-grouping";
-import SpellbookList from "../../src/models/list";
-import ColorIdentity from "../../src/models/color-identity";
 import { makeSearchParams } from "./helper";
 
 import { mocked } from "ts-jest/utils";
@@ -17,19 +16,19 @@ jest.mock("../../src/search-filters/color-identity");
 jest.mock("../../src/search-filters/combo-data");
 jest.mock("../../src/search-filters/size");
 jest.mock("../../src/search-filters/ids");
+jest.mock("../../src/search-filters/tags");
 jest.mock("../../src/parse-query");
 
 describe("search", () => {
   beforeEach(() => {
-    const combo = {
+    const combo = makeFakeCombo({
       commanderSpellbookId: "1",
-      permalink: "https://commanderspellbook.com/?id=1",
-      cards: CardGrouping.create(["Card 1", "Card 2"]),
-      colorIdentity: new ColorIdentity("r,g"),
-      prerequisites: SpellbookList.create("Step 1. Step 2"),
-      steps: SpellbookList.create("Step 1. Step 2"),
-      results: SpellbookList.create("Step 1. Step 2"),
-    };
+      cards: ["Card 1", "Card 2"],
+      colorIdentity: "r,g",
+      prerequisites: ["Step 1. Step 2"],
+      steps: ["Step 1. Step 2"],
+      results: ["Step 1. Step 2"],
+    });
     mocked(lookup).mockResolvedValue([combo]);
 
     mocked(parseQuery).mockReturnValue(makeSearchParams());
@@ -37,6 +36,7 @@ describe("search", () => {
     mocked(filterComboData).mockReturnValue([combo]);
     mocked(filterSize).mockReturnValue([combo]);
     mocked(filterIds).mockReturnValue([combo]);
+    mocked(filterTags).mockReturnValue([combo]);
   });
 
   it("looks up combos from api", async () => {
@@ -45,7 +45,7 @@ describe("search", () => {
     expect(lookup).toBeCalledTimes(1);
   });
 
-  it("filters by wids", async () => {
+  it("filters by ids", async () => {
     await search("Sydri Arjun Rashmi");
 
     expect(filterIds).toBeCalledTimes(1);
@@ -67,6 +67,12 @@ describe("search", () => {
     await search("Sydri Arjun Rashmi");
 
     expect(filterSize).toBeCalledTimes(1);
+  });
+
+  it("filters by tags", async () => {
+    await search("Sydri Arjun Rashmi");
+
+    expect(filterTags).toBeCalledTimes(1);
   });
 
   it("includes errors", async () => {

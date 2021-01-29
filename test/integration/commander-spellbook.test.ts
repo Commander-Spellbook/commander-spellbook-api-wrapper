@@ -305,6 +305,28 @@ describe("Commander Spellbook", () => {
 
       expect(doesNotHaveWordInfiniteOrWinInResult).toBeTruthy();
     });
+
+    it("searches for banned combos", async () => {
+      const { combos } = await spellbook.search("is:banned");
+
+      expect(combos.length).toBeGreaterThan(0);
+      combos.forEach((combo) => {
+        expect(combo.hasBannedCard).toBe(true);
+      });
+    });
+
+    it("excludes banned combos by default", async () => {
+      const allCombos = await spellbook.getAllCombos();
+      const { combos: combosThatAreNotBanned } = await spellbook.search("");
+      const { combos: combosThatIncludeBannedOnes } = await spellbook.search(
+        "include:banned"
+      );
+
+      expect(combosThatIncludeBannedOnes.length).toBeGreaterThan(
+        combosThatAreNotBanned.length
+      );
+      expect(combosThatIncludeBannedOnes.length).toBe(allCombos.length);
+    });
   });
 
   describe("random", () => {

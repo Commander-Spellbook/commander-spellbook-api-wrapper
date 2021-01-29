@@ -3,6 +3,9 @@
 - `search`
   - Expose `hasBannedCard` in combo results
   - Expose `hasSpoiledCard` in combo results
+  - Add support for `is:banned` `not:banned` `include:banned` `exclude:banned`
+  - Add support for `is:spoiled` `not:spoiled` `include:spoiled` `exclude:spoiled`
+  - Add alias for `spoiled` with `previewed`
 
 # 0.7.0
 

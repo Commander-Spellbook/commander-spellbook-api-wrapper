@@ -1,5 +1,6 @@
 import parseColorIdentity from "./parse-color-identity";
 import parseComboData from "./parse-combo-data";
+import parseTags from "./parse-tags";
 
 import type { SearchParameters } from "../types";
 
@@ -49,6 +50,16 @@ function collectKeywordedQueries(
         break;
       case "-id":
         params.id.excludeFilters.push(value);
+        break;
+      case "is":
+      case "-is":
+      case "not":
+      case "-not":
+      case "include":
+      case "-include":
+      case "exclude":
+      case "-exclude":
+        parseTags(params, key, operator, value);
         break;
       case "ci":
       case "-ci":
@@ -140,6 +151,7 @@ export default function parseQuery(query: string): SearchParameters {
       includeFilters: [],
       excludeFilters: [],
     },
+    tags: {},
     errors: [],
   };
 

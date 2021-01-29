@@ -1,9 +1,11 @@
 import parseQuery from "../../../src/parse-query";
 import parseColorIdentity from "../../../src/parse-query/parse-color-identity";
 import parseComboData from "../../../src/parse-query/parse-combo-data";
+import parseTags from "../../../src/parse-query/parse-tags";
 
 jest.mock("../../../src/parse-query/parse-color-identity");
 jest.mock("../../../src/parse-query/parse-combo-data");
+jest.mock("../../../src/parse-query/parse-tags");
 
 describe("parseQuery", () => {
   it("parses plain text into cards", () => {
@@ -68,6 +70,7 @@ describe("parseQuery", () => {
         excludeFilters: [],
         sizeFilters: [],
       },
+      tags: {},
       errors: [],
     });
   });
@@ -117,7 +120,7 @@ describe("parseQuery", () => {
 
   it("can parse a mix of all queries", () => {
     const result = parseQuery(
-      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult"
+      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult is:banned -exclude:spoiled"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -202,6 +205,14 @@ describe("parseQuery", () => {
       "br"
     );
 
+    expect(parseTags).toBeCalledWith(expect.anything(), "is", ":", "banned");
+    expect(parseTags).toBeCalledWith(
+      expect.anything(),
+      "-exclude",
+      ":",
+      "spoiled"
+    );
+
     expect(result).toEqual(
       expect.objectContaining({
         id: {
@@ -221,7 +232,7 @@ describe("parseQuery", () => {
 
   it("ignores capitalization on keys", () => {
     const result = parseQuery(
-      "Kiki CI:wbr CARD:Daxos ID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult"
+      "Kiki CI:wbr CARD:Daxos ID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult iS:banned -eXcludE:spoiled"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -298,6 +309,14 @@ describe("parseQuery", () => {
       "ci",
       ":",
       "wbr"
+    );
+
+    expect(parseTags).toBeCalledWith(expect.anything(), "is", ":", "banned");
+    expect(parseTags).toBeCalledWith(
+      expect.anything(),
+      "-exclude",
+      ":",
+      "spoiled"
     );
 
     expect(result).toEqual(
@@ -319,7 +338,7 @@ describe("parseQuery", () => {
 
   it("ignores underscores in keys", () => {
     const result = parseQuery(
-      "Kiki c_i:wbr c_ar_d:Daxos i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult"
+      "Kiki c_i:wbr c_ar_d:Daxos i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult i_s:banned -ex_clu_de:spoiled"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -396,6 +415,14 @@ describe("parseQuery", () => {
       "ci",
       ":",
       "wbr"
+    );
+
+    expect(parseTags).toBeCalledWith(expect.anything(), "is", ":", "banned");
+    expect(parseTags).toBeCalledWith(
+      expect.anything(),
+      "-exclude",
+      ":",
+      "spoiled"
     );
 
     expect(result).toEqual(
@@ -542,5 +569,20 @@ describe("parseQuery", () => {
       ":",
       "excluded thing"
     );
+  });
+
+  it.each([
+    "is",
+    "-is",
+    "not",
+    "-not",
+    "include",
+    "-include",
+    "exclude",
+    "-exclude",
+  ])("parses %s through tag parser", (kind) => {
+    parseQuery(`${kind}:banned`);
+
+    expect(parseTags).toBeCalledWith(expect.anything(), kind, ":", "banned");
   });
 });
