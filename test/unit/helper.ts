@@ -35,10 +35,7 @@ export function makeSearchParams(
         includeFilters: [],
         excludeFilters: [],
       },
-      is: {},
-      not: {},
-      include: {},
-      exclude: {},
+      tags: {},
       errors: [],
     },
     options

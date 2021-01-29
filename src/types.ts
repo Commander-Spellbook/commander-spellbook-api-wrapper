@@ -63,6 +63,12 @@ export interface ColorIdentityValueFilter {
 }
 
 export type IsNotIncludeExcludeValues = "banned" | "spoiled";
+export type IsNotIncludeExcludeParams = {
+  banned?: boolean;
+  spoiled?: boolean;
+};
+export type TagValue = "is" | "not" | "include" | "exclude";
+
 export type SearchParameters = {
   cards: Filters;
   prerequisites: Filters;
@@ -77,9 +83,9 @@ export type SearchParameters = {
     includeFilters: ColorIdentityValueFilter[];
     excludeFilters: ColorIdentityValueFilter[];
   };
+  tags: {
+    banned?: TagValue;
+    spoiled?: TagValue;
+  };
   errors: SearchError[];
-  is: Record<IsNotIncludeExcludeValues, boolean>;
-  not: Record<IsNotIncludeExcludeValues, boolean>;
-  include: Record<IsNotIncludeExcludeValues, boolean>;
-  exclude: Record<IsNotIncludeExcludeValues, boolean>;
 };
