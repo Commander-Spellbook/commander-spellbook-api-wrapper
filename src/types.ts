@@ -62,6 +62,7 @@ export interface ColorIdentityValueFilter {
   value: ColorIdentityColors[];
 }
 
+export type IsNotIncludeExcludeValues = "banned" | "spoiled";
 export type SearchParameters = {
   cards: Filters;
   prerequisites: Filters;
@@ -77,4 +78,6 @@ export type SearchParameters = {
     excludeFilters: ColorIdentityValueFilter[];
   };
   errors: SearchError[];
+  is: Record<IsNotIncludeExcludeValues, boolean>;
+  not: Record<IsNotIncludeExcludeValues, boolean>;
 };
