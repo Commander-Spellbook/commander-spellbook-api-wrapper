@@ -11,6 +11,8 @@ type FakeComboOptions = {
   prerequisites?: string[];
   steps?: string[];
   results?: string[];
+  hasBannedCard?: boolean;
+  hasSpoiledCard?: boolean;
 };
 
 export default function makeFakeCombo(
@@ -30,5 +32,7 @@ export default function makeFakeCombo(
     results: SpellbookList.create(
       options.results?.join(". ") || "result 1. result 2"
     ),
+    hasBannedCard: options.hasBannedCard || false,
+    hasSpoiledCard: options.hasSpoiledCard || false,
   };
 }
