@@ -26,6 +26,22 @@ describe("createMessage", () => {
     expect(createMessage(combos, searchParams)).toMatch(/^4 combos where/);
   });
 
+  it("includes ids used in query", () => {
+    searchParams.id.includeFilters.push("1", "2");
+
+    expect(createMessage(combos, searchParams)).toContain(
+      'the id is "1" and the id is "2"'
+    );
+  });
+
+  it("includes -ids used in query", () => {
+    searchParams.id.excludeFilters.push("1", "2");
+
+    expect(createMessage(combos, searchParams)).toContain(
+      'the id is not "1" and the id is not "2"'
+    );
+  });
+
   describe.each(DATA_TYPES)("%s", (dataType) => {
     it(`creates a message for number of ${dataType}`, () => {
       searchParams[dataType].sizeFilters.push(

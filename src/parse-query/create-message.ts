@@ -67,6 +67,13 @@ export default function creaetMessage(
     message += newMessage;
   }
 
+  params.id.includeFilters.forEach((id) => {
+    addToMessage(`the id is "${id}"`);
+  });
+  params.id.excludeFilters.forEach((id) => {
+    addToMessage(`the id is not "${id}"`);
+  });
+
   DATA_TYPES.forEach((dataType) => {
     params[dataType].sizeFilters.forEach((filter) => {
       addToMessage(
