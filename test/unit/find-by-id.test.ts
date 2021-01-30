@@ -1,8 +1,6 @@
 import findById from "../../src/find-by-id";
+import makeFakeCombo from "../../src/make-fake-combo";
 import lookup from "../../src/spellbook-api";
-import CardGrouping from "../../src/models/card-grouping";
-import SpellbookList from "../../src/models/list";
-import ColorIdentity from "../../src/models/color-identity";
 
 import type { FormattedApiResponse } from "../../src/types";
 
@@ -14,24 +12,22 @@ describe("findById", () => {
 
   beforeEach(() => {
     combos = [
-      {
+      makeFakeCombo({
         commanderSpellbookId: "1",
-        permalink: "https://commanderspellbook.com/?id=1",
-        cards: CardGrouping.create(["Card 1", "Card 2"]),
-        colorIdentity: new ColorIdentity("r,g"),
-        prerequisites: SpellbookList.create("Step 1. Step 2"),
-        steps: SpellbookList.create("Step 1. Step 2"),
-        results: SpellbookList.create("Step 1. Step 2"),
-      },
-      {
+        cards: ["Card 1", "Card 2"],
+        colorIdentity: "r,g",
+        prerequisites: ["Step 1. Step 2"],
+        steps: ["Step 1. Step 2"],
+        results: ["Step 1. Step 2"],
+      }),
+      makeFakeCombo({
         commanderSpellbookId: "2",
-        permalink: "https://commanderspellbook.com/?id=2",
-        cards: CardGrouping.create(["Card 3", "Card 4"]),
-        colorIdentity: new ColorIdentity("w,b,r"),
-        prerequisites: SpellbookList.create("Step 1. Step 2"),
-        steps: SpellbookList.create("Step 1. Step 2"),
-        results: SpellbookList.create("Step 1. Step 2"),
-      },
+        cards: ["Card 3", "Card 4"],
+        colorIdentity: "w,b,r",
+        prerequisites: ["Step 1.", "Step 2"],
+        steps: ["Step 1.", "Step 2"],
+        results: ["Step 1.", "Step 2"],
+      }),
     ];
     mocked(lookup).mockResolvedValue(combos);
   });
