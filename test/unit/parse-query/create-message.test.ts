@@ -167,4 +167,74 @@ describe("createMessage", () => {
       );
     });
   });
+
+  describe("tags", () => {
+    it("creates a message for searches that include banned cards", () => {
+      searchParams.tags.banned = "include";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain("including combos with banned cards");
+    });
+
+    it("creates a message for searches that exclude banned cards", () => {
+      searchParams.tags.banned = "exclude";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain("excluding combos with banned cards");
+    });
+
+    it("creates a message for searches that have a banned card", () => {
+      searchParams.tags.banned = "is";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain("at least one card is banned in commander");
+    });
+
+    it("creates a message for searches that have a no banned cards", () => {
+      searchParams.tags.banned = "not";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain("no cards are banned in commaander");
+    });
+
+    it("creates a message for searches that include spoiled cards", () => {
+      searchParams.tags.spoiled = "include";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain(
+        "including combos with cards that are not yet released"
+      );
+    });
+
+    it("creates a message for searches that exclude spoiled cards", () => {
+      searchParams.tags.spoiled = "exclude";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain(
+        "excluding combos with cards that are not yet released"
+      );
+    });
+
+    it("creates a message for searches that have a spoiled card", () => {
+      searchParams.tags.spoiled = "is";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain("at least one card is not yet released");
+    });
+
+    it("creates a message for searches that have a no spoiled cards", () => {
+      searchParams.tags.spoiled = "not";
+
+      const message = createMessage(combos, searchParams);
+
+      expect(message).toContain("all cards have been released");
+    });
+  });
 });

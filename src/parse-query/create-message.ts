@@ -59,67 +59,97 @@ export default function creaetMessage(
 ): string {
   let message = "";
 
+  function addToMessage(newMessage: string): void {
+    if (message) {
+      message += " and ";
+    }
+
+    message += newMessage;
+  }
+
   DATA_TYPES.forEach((dataType) => {
     params[dataType].sizeFilters.forEach((filter) => {
-      if (message) {
-        message += " and ";
-      }
-
-      message += `the number of ${dataType} ${numberOperatorAsWord(
-        filter.method
-      )} ${filter.value}`;
+      addToMessage(
+        `the number of ${dataType} ${numberOperatorAsWord(filter.method)} ${
+          filter.value
+        }`
+      );
     });
 
     params[dataType].includeFilters.forEach((filter) => {
-      if (message) {
-        message += " and ";
-      }
-
-      message += `${dataType} have a value ${nameOperatorAsWord(
-        filter.method
-      )} "${filter.value.replace(/"/g, '\\"')}"`;
+      addToMessage(
+        `${dataType} have a value ${nameOperatorAsWord(
+          filter.method
+        )} "${filter.value.replace(/"/g, '\\"')}"`
+      );
     });
 
     params[dataType].excludeFilters.forEach((filter) => {
-      if (message) {
-        message += " and ";
-      }
-
-      message += `${dataType} do not have a value ${nameOperatorAsWord(
-        filter.method
-      )} "${filter.value.replace(/"/g, '\\"')}"`;
+      addToMessage(
+        `${dataType} do not have a value ${nameOperatorAsWord(
+          filter.method
+        )} "${filter.value.replace(/"/g, '\\"')}"`
+      );
     });
   });
 
   params.colorIdentity.sizeFilters.forEach((filter) => {
-    if (message) {
-      message += " and ";
-    }
-
-    message += `the number of colors ${numberOperatorAsWord(filter.method)} ${
-      filter.value
-    }`;
+    addToMessage(
+      `the number of colors ${numberOperatorAsWord(filter.method)} ${
+        filter.value
+      }`
+    );
   });
 
   params.colorIdentity.includeFilters.forEach((filter) => {
-    if (message) {
-      message += " and ";
-    }
-
-    message += `colors that are ${colorOperatorAsWord(
-      filter.method
-    )} "${filter.value.join("")}"`;
+    addToMessage(
+      `colors that are ${colorOperatorAsWord(
+        filter.method
+      )} "${filter.value.join("")}"`
+    );
   });
 
   params.colorIdentity.excludeFilters.forEach((filter) => {
-    if (message) {
-      message += " and ";
-    }
-
-    message += `colors that are not ${colorOperatorAsWord(
-      filter.method
-    )} "${filter.value.join("")}"`;
+    addToMessage(
+      `colors that are not ${colorOperatorAsWord(
+        filter.method
+      )} "${filter.value.join("")}"`
+    );
   });
+
+  if (params.tags.banned) {
+    switch (params.tags.banned) {
+      case "include":
+        addToMessage("including combos with banned cards");
+        break;
+      case "exclude":
+        addToMessage("excluding combos with banned cards");
+        break;
+      case "is":
+        addToMessage("at least one card is banned in commander");
+        break;
+      case "not":
+        addToMessage("no cards are banned in commaander");
+        break;
+    }
+  }
+
+  if (params.tags.spoiled) {
+    switch (params.tags.spoiled) {
+      case "include":
+        addToMessage("including combos with cards that are not yet released");
+        break;
+      case "exclude":
+        addToMessage("excluding combos with cards that are not yet released");
+        break;
+      case "is":
+        addToMessage("at least one card is not yet released");
+        break;
+      case "not":
+        addToMessage("all cards have been released");
+        break;
+    }
+  }
 
   let prefix = `${combos.length} combo`;
 
