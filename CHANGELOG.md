@@ -1,4 +1,4 @@
-# unreleased
+# 0.8.0
 
 - `search`
   - Expose `hasBannedCard` in combo results
@@ -8,6 +8,11 @@
   - Add alias for `spoiled` with `previewed`
   - Fix issue where id was not displayed in query messaage (#15)
   - Adjust language of natural language message (#16)
+
+_Breaking Changes_
+
+- `search`
+  - Filter out banned combos by default
 
 # 0.7.0
 
