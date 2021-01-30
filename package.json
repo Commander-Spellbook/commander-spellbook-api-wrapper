@@ -46,7 +46,7 @@
     "ts-jest": "^26.5.0",
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3",
-    "webpack": "^5.18.0"
+    "webpack": "^5.19.0"
   },
   "dependencies": {
     "scryfall-client": "^0.18.6",
