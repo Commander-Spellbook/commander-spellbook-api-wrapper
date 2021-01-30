@@ -7,6 +7,7 @@
   - Add support for `is:spoiled` `not:spoiled` `include:spoiled` `exclude:spoiled`
   - Add alias for `spoiled` with `previewed`
   - Fix issue where id was not displayed in query messaage (#15)
+  - Adjust language of natural language message (#16)
 
 # 0.7.0
 

@@ -62,7 +62,7 @@ describe("createMessage", () => {
       const message = createMessage(combos, searchParams);
 
       expect(message).toContain(
-        `the number of ${dataType} is greater than 5 and the number of ${dataType} equals 4 and the number of ${dataType} is less than or equal to 2`
+        `the number of ${dataType} in the combo is greater than 5 and the number of ${dataType} in the combo is 4 and the number of ${dataType} in the combo is less than or equal to 2`
       );
     });
 
@@ -133,7 +133,7 @@ describe("createMessage", () => {
       const message = createMessage(combos, searchParams);
 
       expect(message).toContain(
-        `the number of colors is greater than 5 and the number of colors equals 4 and the number of colors is less than or equal to 2`
+        "the number of colors in the combo is greater than 5 and the number of colors in the combo is 4 and the number of colors in the combo is less than or equal to 2"
       );
     });
 
@@ -156,7 +156,7 @@ describe("createMessage", () => {
       const message = createMessage(combos, searchParams);
 
       expect(message).toContain(
-        `colors that are within "wb" and colors that are exactly "rbw" and colors that are greater than "rb"`
+        `the color identity for the combo is within "wb" and the color identity for the combo is exactly "rbw" and the color identity for the combo is greater than "rb".`
       );
     });
 
@@ -179,7 +179,7 @@ describe("createMessage", () => {
       const message = createMessage(combos, searchParams);
 
       expect(message).toContain(
-        `colors that are not within "wb" and colors that are not exactly "rbw" and colors that are not greater than "rb"`
+        `the color identity for the combo is not within "wb" and the color identity for the combo is not exactly "rbw" and the color identity for the combo is not greater than "rb".`
       );
     });
   });

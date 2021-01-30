@@ -10,7 +10,7 @@ export const DATA_TYPES: ["cards", "prerequisites", "steps", "results"] = [
 function numberOperatorAsWord(operator: string): string {
   switch (operator) {
     case "=":
-      return "equals";
+      return "is";
     case ">":
       return "is greater than";
     case "<":
@@ -77,9 +77,9 @@ export default function creaetMessage(
   DATA_TYPES.forEach((dataType) => {
     params[dataType].sizeFilters.forEach((filter) => {
       addToMessage(
-        `the number of ${dataType} ${numberOperatorAsWord(filter.method)} ${
-          filter.value
-        }`
+        `the number of ${dataType} in the combo ${numberOperatorAsWord(
+          filter.method
+        )} ${filter.value}`
       );
     });
 
@@ -102,15 +102,15 @@ export default function creaetMessage(
 
   params.colorIdentity.sizeFilters.forEach((filter) => {
     addToMessage(
-      `the number of colors ${numberOperatorAsWord(filter.method)} ${
-        filter.value
-      }`
+      `the number of colors in the combo ${numberOperatorAsWord(
+        filter.method
+      )} ${filter.value}`
     );
   });
 
   params.colorIdentity.includeFilters.forEach((filter) => {
     addToMessage(
-      `colors that are ${colorOperatorAsWord(
+      `the color identity for the combo is ${colorOperatorAsWord(
         filter.method
       )} "${filter.value.join("")}"`
     );
@@ -118,7 +118,7 @@ export default function creaetMessage(
 
   params.colorIdentity.excludeFilters.forEach((filter) => {
     addToMessage(
-      `colors that are not ${colorOperatorAsWord(
+      `the color identity for the combo is not ${colorOperatorAsWord(
         filter.method
       )} "${filter.value.join("")}"`
     );
