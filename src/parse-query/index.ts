@@ -10,8 +10,18 @@ const OPERATOR_REGEX = new RegExp(`(${OPERATORS.join("|")})`);
 function collectKeywordedQueries(
   params: SearchParameters,
   query: string
-): void {
-  // this is pretty complex, thanks to @lejeunerenard for help with it
+): string {
+  // admittedly, this is kind of weird, but basically
+  // as we parse the keyword search terms, we want to
+  // remove them from the query to make the plaintext
+  // search logic soooooooo much simpler, so we save
+  // the original query in a new variable and mutate
+  // that as we go along, then finally return that new
+  // query string for use in the collectPlainNameQueries
+  // call
+  let newQuery = query;
+
+  // this regex pretty complex, thanks to @lejeunerenard for help with it
   // (-)? optional negative sign
   // \b(\w+) a word boundary and any number of word characters
   // (:|=|>=|<=|>|<) the operators we look for
@@ -28,6 +38,8 @@ function collectKeywordedQueries(
     ) || [];
 
   queries.forEach((group) => {
+    newQuery = newQuery.replace(group, "");
+
     const operator = (group.match(OPERATOR_REGEX) || [":"])[0];
     const pair = group.split(operator);
     const key = pair[0]?.toLowerCase().replace(/_/g, "");
@@ -97,23 +109,22 @@ function collectKeywordedQueries(
         });
     }
   });
+
+  return newQuery;
 }
 
 function collectPlainNameQueries(
   params: SearchParameters,
   query: string
 ): void {
-  const simpleQueryGroups =
-    query.match(
-      // this is pretty complex, thanks to @NilsEnevoldsen for help with it
-      // (?<=^|\s) - either starts at the beginning of the line or begins with a space
-      // (?!:) - does not have a colon
-      // (\w+) - any number of word characters
-      // (?=$|\s) - ends the line or ends with a space
-      // (?=([^"']*["'][^"']*["'])*[^"']*$) - does some lookaheads to avoid quotes
-      /(^|\s)(?!:)(\w+)(?=$|\s)(?=([^"']*["'][^"']*["'])*[^"']*$)/gi
+  const alphanumericQuery = query.replace(/[^\w\d\s]/g, "");
+
+  const queries =
+    alphanumericQuery.match(
+      // (^|\s) - either starts at the beginning of the line or begins with a space
+      // ([\w\d]+) -the captured word
+      /(^|\s)([\w\d]+)/gi
     ) || [];
-  const queries = simpleQueryGroups;
 
   queries.forEach((value) => {
     parseComboData(params, "card", ":", value.trim());
@@ -159,8 +170,13 @@ export default function parseQuery(query: string): SearchParameters {
     return parameters;
   }
 
+  // kind of weird that this returns a query string,
+  // but it was the easiest way to both collect the
+  // capture groups and remove those capture groups
+  // from the query, which ulimately makes the searching
+  // for plain name queries sooooo much easier
+  query = collectKeywordedQueries(parameters, query);
   collectPlainNameQueries(parameters, query);
-  collectKeywordedQueries(parameters, query);
 
   return parameters;
 }

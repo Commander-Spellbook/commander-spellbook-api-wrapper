@@ -32,6 +32,96 @@ describe("parseQuery", () => {
     );
   });
 
+  it("parses cards with single quotes in the name in plain text", () => {
+    parseQuery("Jhoira's Familiar Sensei's Divining Top");
+
+    expect(parseComboData).toBeCalledTimes(5);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Jhoiras"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Familiar"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Senseis"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Divining"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Top"
+    );
+  });
+
+  it("parses cards with double quotes in the name in plain text", () => {
+    parseQuery('Kongming, "Sleeping Dragon" Opalescence');
+
+    expect(parseComboData).toBeCalledTimes(4);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Kongming"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Sleeping"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Dragon"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Opalescence"
+    );
+  });
+
+  it("parses cards with numbers in the name in plain text", () => {
+    parseQuery("Borrowing 10,000 Arrows");
+
+    expect(parseComboData).toBeCalledTimes(3);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Borrowing"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "10000"
+    );
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Arrows"
+    );
+  });
+
   // TODO this should not support this
   it("supports an empty string for query", () => {
     const result = parseQuery("");
