@@ -1,4 +1,5 @@
-# unreleased
+# 0.8.1
+
 - `search`
   - Fix issue where quotes in plaintext dropped parts of the query (#17)
 
