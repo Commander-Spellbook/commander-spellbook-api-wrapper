@@ -560,7 +560,7 @@ describe("parseQuery", () => {
     );
   });
 
-  it.each(["ci", "coloridentity"])(
+  it.each(["ci", "coloridentity", "color", "colors"])(
     "parses %s into color identity parses",
     (kind) => {
       parseQuery(`${kind}:wbr -${kind}:br`);

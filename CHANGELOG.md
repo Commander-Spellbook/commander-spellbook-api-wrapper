@@ -1,3 +1,8 @@
+# unreleased
+
+- `search`
+  - Include `color` and `colors` as alias for `ci`
+
 # 0.8.1
 
 - `search`
