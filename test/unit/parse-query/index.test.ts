@@ -2,10 +2,14 @@ import parseQuery from "../../../src/parse-query";
 import parseColorIdentity from "../../../src/parse-query/parse-color-identity";
 import parseComboData from "../../../src/parse-query/parse-combo-data";
 import parseTags from "../../../src/parse-query/parse-tags";
+import parseOrder from "../../../src/parse-query/parse-order";
+import parseSort from "../../../src/parse-query/parse-sort";
 
 jest.mock("../../../src/parse-query/parse-color-identity");
 jest.mock("../../../src/parse-query/parse-combo-data");
 jest.mock("../../../src/parse-query/parse-tags");
+jest.mock("../../../src/parse-query/parse-order");
+jest.mock("../../../src/parse-query/parse-sort");
 
 describe("parseQuery", () => {
   it("parses plain text into cards", () => {
@@ -210,7 +214,7 @@ describe("parseQuery", () => {
 
   it("can parse a mix of all queries", () => {
     const result = parseQuery(
-      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult is:banned -exclude:spoiled"
+      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult is:banned -exclude:spoiled sort:colors order:descending"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -302,6 +306,9 @@ describe("parseQuery", () => {
       ":",
       "spoiled"
     );
+
+    expect(parseSort).toBeCalledWith(expect.anything(), "colors");
+    expect(parseOrder).toBeCalledWith(expect.anything(), "descending");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -674,5 +681,17 @@ describe("parseQuery", () => {
     parseQuery(`${kind}:banned`);
 
     expect(parseTags).toBeCalledWith(expect.anything(), kind, ":", "banned");
+  });
+
+  it("parses sort through sort parser", () => {
+    parseQuery("sort:colors");
+
+    expect(parseSort).toBeCalledWith(expect.anything(), "colors");
+  });
+
+  it("parses order through order parser", () => {
+    parseQuery("order:ascending");
+
+    expect(parseOrder).toBeCalledWith(expect.anything(), "ascending");
   });
 });

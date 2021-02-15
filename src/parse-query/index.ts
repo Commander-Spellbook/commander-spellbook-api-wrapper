@@ -1,6 +1,8 @@
 import parseColorIdentity from "./parse-color-identity";
 import parseComboData from "./parse-combo-data";
 import parseTags from "./parse-tags";
+import parseSort from "./parse-sort";
+import parseOrder from "./parse-order";
 
 import type { SearchParameters } from "../types";
 
@@ -104,6 +106,12 @@ function collectKeywordedQueries(
       case "-result":
       case "-results":
         parseComboData(params, key, operator, value);
+        break;
+      case "sort":
+        parseSort(params, value);
+        break;
+      case "order":
+        parseOrder(params, value);
         break;
       default:
         params.errors.push({
