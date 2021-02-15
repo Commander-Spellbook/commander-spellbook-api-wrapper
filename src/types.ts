@@ -87,5 +87,7 @@ export type SearchParameters = {
     banned?: TagValue;
     spoiled?: TagValue;
   };
+  sort?: string;
+  order?: "ascending" | "descending";
   errors: SearchError[];
 };
