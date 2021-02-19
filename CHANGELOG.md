@@ -2,6 +2,8 @@
 
 - `search`
   - Include `color` and `colors` as alias for `ci`
+  - Support `sort` keyword
+  - Support `order` keyword
 
 # 0.8.1
 

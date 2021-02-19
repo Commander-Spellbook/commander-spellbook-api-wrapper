@@ -6,6 +6,7 @@ import filterComboData from "../../src/search-filters/combo-data";
 import filterSize from "../../src/search-filters/size";
 import filterIds from "../../src/search-filters/ids";
 import filterTags from "../../src/search-filters/tags";
+import sortCombos from "../../src/sort-combos";
 import parseQuery from "../../src/parse-query";
 import { makeSearchParams } from "./helper";
 
@@ -17,6 +18,7 @@ jest.mock("../../src/search-filters/combo-data");
 jest.mock("../../src/search-filters/size");
 jest.mock("../../src/search-filters/ids");
 jest.mock("../../src/search-filters/tags");
+jest.mock("../../src/sort-combos");
 jest.mock("../../src/parse-query");
 
 describe("search", () => {
@@ -37,6 +39,7 @@ describe("search", () => {
     mocked(filterSize).mockReturnValue([combo]);
     mocked(filterIds).mockReturnValue([combo]);
     mocked(filterTags).mockReturnValue([combo]);
+    mocked(sortCombos).mockReturnValue([combo]);
   });
 
   it("looks up combos from api", async () => {
@@ -73,6 +76,31 @@ describe("search", () => {
     await search("Sydri Arjun Rashmi");
 
     expect(filterTags).toBeCalledTimes(1);
+  });
+
+  it("sorts by colors in ascending order by default", async () => {
+    await search("Sydri Arjun Rashmi");
+
+    expect(sortCombos).toBeCalledTimes(1);
+    expect(sortCombos).toBeCalledWith(expect.anything(), "colors", "ascending");
+  });
+
+  it("can sort by specific attributes", async () => {
+    mocked(parseQuery).mockReturnValue(
+      makeSearchParams({
+        sort: "number-of-cards",
+        order: "descending",
+      })
+    );
+
+    await search("Sydri Arjun Rashmi");
+
+    expect(sortCombos).toBeCalledTimes(1);
+    expect(sortCombos).toBeCalledWith(
+      expect.anything(),
+      "number-of-cards",
+      "descending"
+    );
   });
 
   it("includes errors", async () => {
