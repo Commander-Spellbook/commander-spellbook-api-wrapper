@@ -34,11 +34,13 @@ export default function parseSort(
     case "numberofcards":
       value = "number-of-cards";
       break;
+    // TODO probably drop this
     case "numberofcolors":
       value = "number-of-colors";
       break;
     case "color":
     case "colors":
+      // TODO probably add coloridentity
       value = "colors";
       break;
     case "id":
