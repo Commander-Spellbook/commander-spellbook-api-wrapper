@@ -33,7 +33,7 @@ describe("parseSort", () => {
     }
   );
 
-  it("provides error if invalid valud is ued for sort", () => {
+  it("provides error if invalid value is used for sort", () => {
     parseSort(searchParams, "foo");
 
     expect(searchParams.sort).toBeFalsy();
