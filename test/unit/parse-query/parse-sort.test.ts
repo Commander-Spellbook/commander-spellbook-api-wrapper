@@ -15,7 +15,6 @@ describe("parseSort", () => {
     "number-of-steps",
     "number-of-prerequisites",
     "number-of-cards",
-    "number-of-colors",
     "id",
     "colors",
   ])("suports %s", (kind) => {
@@ -30,6 +29,15 @@ describe("parseSort", () => {
       parseSort(searchParams, kind);
 
       expect(searchParams.sort).toEqual(`number-of-${kind}`);
+    }
+  );
+
+  it.each(["color", "ci", "coloridentity", "color-identity"])(
+    "supports %s as alias for colors",
+    (kind) => {
+      parseSort(searchParams, kind);
+
+      expect(searchParams.sort).toEqual("colors");
     }
   );
 
