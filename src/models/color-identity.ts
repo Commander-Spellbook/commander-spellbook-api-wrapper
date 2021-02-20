@@ -1,6 +1,15 @@
+import COLOR_ORDER from "../color-combo-order";
+
 import type { ColorIdentityColors } from "../types";
 
-const WUBRG_ORDER: ColorIdentityColors[] = ["w", "u", "b", "r", "g"];
+// this is sorted alphabetically on purpose to make sorting
+// the order of the color identity easier
+const WUBRG: ColorIdentityColors[] = ["b", "g", "r", "u", "w"];
+const COLOR_MAP = COLOR_ORDER.reduce((accum, colorCombo) => {
+  accum[[...colorCombo].sort().join("")] = colorCombo;
+
+  return accum;
+}, {} as Record<string, ColorIdentityColors[]>);
 
 export default class ColorIdentity {
   private rawString: string;
@@ -8,13 +17,27 @@ export default class ColorIdentity {
 
   constructor(colors: string) {
     this.rawString = colors;
-    this.colors = WUBRG_ORDER.filter((color) => {
-      return colors.indexOf(color) > -1;
-    });
+    this.colors = this.generateColors(colors);
+  }
 
-    if (this.colors.length === 0) {
-      this.colors.push("c");
+  private generateColors(colorString: string): ColorIdentityColors[] {
+    const colors = WUBRG.filter((color) => {
+      return colorString.indexOf(color) > -1;
+    }) as ColorIdentityColors[];
+
+    if (colors.length === 0) {
+      colors.push("c");
     }
+
+    // if it's 1 color, it's already sorted and we can skip
+    // the color sorting operation
+    if (colors.length <= 1) {
+      return colors;
+    }
+
+    const asKey = colors.join("");
+
+    return COLOR_MAP[asKey];
   }
 
   private isColorless(): boolean {

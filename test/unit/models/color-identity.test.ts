@@ -1,13 +1,43 @@
+import COLOR_ORDER from "../../../src/color-combo-order";
 import ColorIdentity from "../../../src/models/color-identity";
 
 describe("ColorIdentity", () => {
   it("has a colors attribute", () => {
     const ci = new ColorIdentity("w,r,b");
 
-    expect(ci.colors).toEqual(["w", "b", "r"]);
+    expect(ci.colors).toEqual(["r", "w", "b"]);
   });
 
-  it("sorts colors in WUBRG order", () => {
+  it.each(COLOR_ORDER.map((c) => c.join("")))("sorts in %s order", (kind) => {
+    if (kind.length !== 2) {
+      return;
+    }
+    const randomizedOrder = kind
+      .split("")
+      .sort(() => 0.5 - Math.random())
+      .join("");
+    const ci = new ColorIdentity(randomizedOrder);
+    const foundInColorOrderArray = COLOR_ORDER.find((colorOrder) => {
+      if (colorOrder.length !== ci.colors.length) {
+        return false;
+      }
+
+      let index = 0;
+
+      while (index < ci.colors.length) {
+        if (colorOrder[index] !== ci.colors[index]) {
+          return false;
+        }
+        index++;
+      }
+
+      return true;
+    });
+
+    expect(foundInColorOrderArray).toBeTruthy();
+  });
+
+  it("sorts 5 colors in WUBRG order", () => {
     const ci = new ColorIdentity("g,b,r,w,u");
 
     expect(ci.colors).toEqual(["w", "u", "b", "r", "g"]);
@@ -32,9 +62,9 @@ describe("ColorIdentity", () => {
   });
 
   it("handles malformed color idenitity strings", async () => {
-    const ci = new ColorIdentity("w,u,");
+    const ci = new ColorIdentity("w,g,");
 
-    expect(ci.colors).toEqual(["w", "u"]);
+    expect(ci.colors).toEqual(["g", "w"]);
   });
 
   describe("size", () => {

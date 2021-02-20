@@ -114,7 +114,7 @@ describe("Commander Spellbook", () => {
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
           const hasOffColorCombo = combo.colorIdentity.colors.find(
-            (color) => color !== "w" && color !== "r" && color !== "c"
+            (color: string) => color !== "w" && color !== "r" && color !== "c"
           );
 
           expect(hasOffColorCombo).toBeFalsy();
@@ -126,7 +126,7 @@ describe("Commander Spellbook", () => {
 
         expect(combos.length).toBeGreaterThan(0);
         combos.forEach((combo) => {
-          expect(combo.colorIdentity.colors).toEqual(["w", "r"]);
+          expect(combo.colorIdentity.colors).toEqual(["r", "w"]);
         });
       });
 

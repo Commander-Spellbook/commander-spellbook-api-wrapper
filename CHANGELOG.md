@@ -4,6 +4,8 @@
   - Include `color` and `colors` as alias for `ci`
   - Support `sort` keyword
   - Support `order` keyword
+- Color Identity Model
+  - Presents colors in the order WOTC uses (#18)
 
 # 0.8.1
 
