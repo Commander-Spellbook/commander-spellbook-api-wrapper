@@ -30,12 +30,6 @@ describe("Commander Spellbook", () => {
   });
 
   describe("search", () => {
-    it("looks up all combos", async () => {
-      const { combos } = await spellbook.search("");
-
-      expect(combos.length).toBeGreaterThan(0);
-    });
-
     it("looks up specific id", async () => {
       const { combos } = await spellbook.search("id:123");
 
@@ -90,7 +84,7 @@ describe("Commander Spellbook", () => {
     });
 
     it("can specify sort", async () => {
-      const { combos } = await spellbook.search("sort:cards");
+      const { combos } = await spellbook.search("ci:wubrg sort:cards");
 
       expect(combos.length).toBeGreaterThan(0);
       let numberOfCards = 2;

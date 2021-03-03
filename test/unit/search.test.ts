@@ -8,6 +8,7 @@ import filterIds from "../../src/search-filters/ids";
 import filterTags from "../../src/search-filters/tags";
 import sortCombos from "../../src/sort-combos";
 import parseQuery from "../../src/parse-query";
+import validateSearchParams from "../../src/validate-search-params";
 import { makeSearchParams } from "./helper";
 
 import { mocked } from "ts-jest/utils";
@@ -20,6 +21,7 @@ jest.mock("../../src/search-filters/ids");
 jest.mock("../../src/search-filters/tags");
 jest.mock("../../src/sort-combos");
 jest.mock("../../src/parse-query");
+jest.mock("../../src/validate-search-params");
 
 describe("search", () => {
   beforeEach(() => {
@@ -40,12 +42,53 @@ describe("search", () => {
     mocked(filterIds).mockReturnValue([combo]);
     mocked(filterTags).mockReturnValue([combo]);
     mocked(sortCombos).mockReturnValue([combo]);
+    mocked(validateSearchParams).mockReturnValue(true);
   });
 
   it("looks up combos from api", async () => {
-    await search("");
+    await search("card");
 
     expect(lookup).toBeCalledTimes(1);
+  });
+
+  it("does not look up combos if search params are not valid", async () => {
+    mocked(validateSearchParams).mockReturnValue(false);
+
+    const result = await search("card");
+
+    expect(lookup).not.toBeCalled();
+
+    expect(result.combos.length).toBe(0);
+    expect(result.message).toBe("No valid search parameters submitted");
+  });
+
+  it("includes errors when search params are not valid", async () => {
+    mocked(validateSearchParams).mockReturnValue(false);
+    mocked(parseQuery).mockReturnValue(
+      makeSearchParams({
+        errors: [
+          {
+            key: "unknownkey",
+            value: "value",
+            message: 'Could not parse keyword "unknownkey" with value "value"',
+          },
+          {
+            key: "unknownkey2",
+            value: "value2",
+            message:
+              'Could not parse keyword "unknownkey2" with value "value2"',
+          },
+        ],
+      })
+    );
+
+    const result = await search("card");
+
+    expect(lookup).not.toBeCalled();
+
+    expect(result.combos.length).toBe(0);
+    expect(result.message).toBe("No valid search parameters submitted");
+    expect(result.errors[1].key).toBe("unknownkey2");
   });
 
   it("filters by ids", async () => {

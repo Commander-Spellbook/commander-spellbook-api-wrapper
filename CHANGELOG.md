@@ -1,3 +1,8 @@
+# 0.10.0
+
+- `search`
+  - Provide message when no search params are passed
+
 # 0.9.0
 
 - `search`

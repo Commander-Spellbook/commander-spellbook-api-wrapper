@@ -7,6 +7,7 @@ import filterSize from "./search-filters/size";
 import filterTags from "./search-filters/tags";
 import sortCombos from "./sort-combos";
 import createMessage from "./parse-query/create-message";
+import validateSearchParams from "./validate-search-params";
 
 import type { SearchResults } from "./types";
 
@@ -15,6 +16,14 @@ export default async function search(query = ""): Promise<SearchResults> {
   const sort = searchParams.sort || "colors";
   const order = searchParams.order || "ascending";
   const { errors } = searchParams;
+
+  if (!validateSearchParams(searchParams)) {
+    return {
+      errors,
+      combos: [],
+      message: "No valid search parameters submitted",
+    };
+  }
 
   let combos = await lookupApi();
 
