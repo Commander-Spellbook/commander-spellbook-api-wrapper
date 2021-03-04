@@ -1,8 +1,11 @@
 import type { SearchParameters } from "../types";
 import normalizeStringInput from "../normalize-string-input";
 
-export default function parseSort(
+const SUPPORTED_OPERATORS = [":", "="];
+
+export default function parseOrder(
   params: SearchParameters,
+  operator: string,
   value: string
 ): void {
   if (params.order) {
@@ -10,6 +13,16 @@ export default function parseSort(
       key: "order",
       value,
       message: `Order option "${params.order}" already chosen. Ordering by "${value}" will be ignored.`,
+    });
+
+    return;
+  }
+
+  if (!SUPPORTED_OPERATORS.includes(operator)) {
+    params.errors.push({
+      key: "order",
+      value,
+      message: `Order does not support the "${operator}" operator.`,
     });
 
     return;

@@ -108,10 +108,10 @@ function collectKeywordedQueries(
         parseComboData(params, key, operator, value);
         break;
       case "sort":
-        parseSort(params, value);
+        parseSort(params, operator, value);
         break;
       case "order":
-        parseOrder(params, value);
+        parseOrder(params, operator, value);
         break;
       default:
         params.errors.push({

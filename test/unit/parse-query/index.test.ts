@@ -307,8 +307,8 @@ describe("parseQuery", () => {
       "spoiled"
     );
 
-    expect(parseSort).toBeCalledWith(expect.anything(), "colors");
-    expect(parseOrder).toBeCalledWith(expect.anything(), "descending");
+    expect(parseSort).toBeCalledWith(expect.anything(), ":", "colors");
+    expect(parseOrder).toBeCalledWith(expect.anything(), ":", "descending");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -686,12 +686,12 @@ describe("parseQuery", () => {
   it("parses sort through sort parser", () => {
     parseQuery("sort:colors");
 
-    expect(parseSort).toBeCalledWith(expect.anything(), "colors");
+    expect(parseSort).toBeCalledWith(expect.anything(), ":", "colors");
   });
 
   it("parses order through order parser", () => {
     parseQuery("order:ascending");
 
-    expect(parseOrder).toBeCalledWith(expect.anything(), "ascending");
+    expect(parseOrder).toBeCalledWith(expect.anything(), ":", "ascending");
   });
 });

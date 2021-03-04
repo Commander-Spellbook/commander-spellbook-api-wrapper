@@ -1,3 +1,8 @@
+# unreleased
+
+- `search`
+  - validate operators for `sort` and `order` to only allow `:` and `=`
+
 # 0.10.0
 
 - `search`
