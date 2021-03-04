@@ -1,7 +1,8 @@
 # unreleased
 
 - `search`
-  - validate operators for `sort` and `order` to only allow `:` and `=`
+  - Validate operators for `sort` and `order` to only allow `:` and `=`
+  - Add `sort` and `order` properties to search results
 
 # 0.10.0
 

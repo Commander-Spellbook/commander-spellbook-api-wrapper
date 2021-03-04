@@ -122,13 +122,16 @@ describe("search", () => {
   });
 
   it("sorts by colors in ascending order by default", async () => {
-    await search("Sydri Arjun Rashmi");
+    const result = await search("Sydri Arjun Rashmi");
 
     expect(sortCombos).toBeCalledTimes(1);
     expect(sortCombos).toBeCalledWith(expect.anything(), "colors", "ascending");
+
+    expect(result.sort).toBe("colors");
+    expect(result.order).toBe("ascending");
   });
 
-  it("can sort by specific attributes", async () => {
+  it("can sort by specific attributes and order in descending order", async () => {
     mocked(parseQuery).mockReturnValue(
       makeSearchParams({
         sort: "number-of-cards",
@@ -136,7 +139,7 @@ describe("search", () => {
       })
     );
 
-    await search("Sydri Arjun Rashmi");
+    const result = await search("Sydri Arjun Rashmi");
 
     expect(sortCombos).toBeCalledTimes(1);
     expect(sortCombos).toBeCalledWith(
@@ -144,6 +147,9 @@ describe("search", () => {
       "number-of-cards",
       "descending"
     );
+
+    expect(result.sort).toBe("number-of-cards");
+    expect(result.order).toBe("descending");
   });
 
   it("includes errors", async () => {

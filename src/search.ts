@@ -20,6 +20,8 @@ export default async function search(query = ""): Promise<SearchResults> {
   if (!validateSearchParams(searchParams)) {
     return {
       errors,
+      sort,
+      order,
       combos: [],
       message: "No valid search parameters submitted",
     };
@@ -36,6 +38,8 @@ export default async function search(query = ""): Promise<SearchResults> {
 
   return {
     errors,
+    sort,
+    order,
     combos,
     message: createMessage(combos, searchParams),
   };

@@ -18,6 +18,8 @@ export type CommanderSpellbookAPIResponse = {
 export type SearchResults = {
   combos: FormattedApiResponse[];
   errors: SearchError[];
+  sort: string;
+  order: string;
   message: string;
 };
 

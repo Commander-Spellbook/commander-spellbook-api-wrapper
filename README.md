@@ -160,6 +160,24 @@ spellbook.search("card:breath result:infinite").then((result) => {
 });
 ```
 
+The way the combos were sorted and ordered can be found on the `sort` and `order` properties. By default, `sort` will be `colors` and `order` will be `ascending`.
+
+```js
+spellbook.search("Aetherflux").then((result) => {
+  result.sort; // colors
+  result.order; // ascending
+});
+```
+
+You can override the default `sort` and `order`:
+
+```js
+spellbook.search("Aetherflux sort:results order:descending").then((result) => {
+  result.sort; // results
+  result.order; // descending
+});
+```
+
 ## Random
 
 Look up a random combo using the `random` method:
