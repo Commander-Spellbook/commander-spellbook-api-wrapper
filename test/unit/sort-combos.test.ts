@@ -120,11 +120,7 @@ describe("search", () => {
         })
       );
 
-      const sortedCombos = await sortCombos(
-        combos,
-        `number-of-${kind}`,
-        "ascending"
-      );
+      const sortedCombos = await sortCombos(combos, kind, "ascending");
 
       expect(sortedCombos[0].commanderSpellbookId).toBe("1");
       expect(sortedCombos[1].commanderSpellbookId).toBe("2");
@@ -160,11 +156,7 @@ describe("search", () => {
         })
       );
 
-      const sortedCombos = await sortCombos(
-        combos,
-        `number-of-${kind}`,
-        "descending"
-      );
+      const sortedCombos = await sortCombos(combos, kind, "descending");
 
       expect(sortedCombos[0].commanderSpellbookId).toBe("5");
       expect(sortedCombos[1].commanderSpellbookId).toBe("4");

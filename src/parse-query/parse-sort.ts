@@ -31,21 +31,11 @@ export default function parseSort(
   value = normalizeStringInput(value);
 
   switch (value) {
-    case "results":
-    case "numberofresults":
-      value = "number-of-results";
-      break;
-    case "steps":
-    case "numberofsteps":
-      value = "number-of-steps";
-      break;
     case "prerequisites":
-    case "numberofprerequisites":
-      value = "number-of-prerequisites";
-      break;
+    case "steps":
+    case "results":
     case "cards":
-    case "numberofcards":
-      value = "number-of-cards";
+      // make no changes to value
       break;
     case "ci":
     case "coloridentity":

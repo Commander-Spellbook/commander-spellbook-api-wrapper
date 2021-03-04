@@ -10,25 +10,12 @@ describe("parseSort", () => {
     searchParams = makeSearchParams();
   });
 
-  it.each([
-    "number-of-results",
-    "number-of-steps",
-    "number-of-prerequisites",
-    "number-of-cards",
-    "id",
-    "colors",
-  ])("suports %s", (kind) => {
-    parseSort(searchParams, ":", kind);
-
-    expect(searchParams.sort).toEqual(kind);
-  });
-
-  it.each(["results", "steps", "prerequisites", "cards"])(
-    "supports %s (as alias)",
+  it.each(["results", "steps", "prerequisites", "cards", "id", "colors"])(
+    "suports %s",
     (kind) => {
       parseSort(searchParams, ":", kind);
 
-      expect(searchParams.sort).toEqual(`number-of-${kind}`);
+      expect(searchParams.sort).toEqual(kind);
     }
   );
 
@@ -57,11 +44,11 @@ describe("parseSort", () => {
 
     parseSort(searchParams, ":", "cards");
 
-    expect(searchParams.sort).toEqual("number-of-results");
+    expect(searchParams.sort).toEqual("results");
     expect(searchParams.errors[0]).toEqual({
       key: "sort",
       value: "cards",
-      message: `Sort option "number-of-results" already chosen. Sorting by "cards" will be ignored.`,
+      message: `Sort option "results" already chosen. Sorting by "cards" will be ignored.`,
     });
   });
 

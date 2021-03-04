@@ -1,8 +1,11 @@
 # unreleased
 
 - `search`
-  - Validate operators for `sort` and `order` to only allow `:` and `=`
   - Add `sort` and `order` properties to search results
+
+  *Breaking Changes*
+    - Validate operators for `sort` and `order` to only allow `:` and `=`
+    - Remove `number-of` aliases for `sort` options
 
 # 0.10.0
 

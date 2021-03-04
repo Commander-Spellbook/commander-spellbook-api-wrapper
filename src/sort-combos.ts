@@ -10,13 +10,8 @@ type SortingMeta = {
 function handleSortingForNumberOfElements(
   firstCombo: FormattedApiResponse,
   secondCombo: FormattedApiResponse,
-  by: string
+  prop: "cards" | "prerequisites" | "steps" | "results"
 ): SortingMeta {
-  const prop = by.split("number-of-")[1] as
-    | "cards"
-    | "prerequisites"
-    | "steps"
-    | "results";
   const isEqual = firstCombo[prop].length === secondCombo[prop].length;
   const firstRemainsFirst = firstCombo[prop].length > secondCombo[prop].length;
 
@@ -40,11 +35,7 @@ function handleSortingByColorIdentity(
   const firstRemainsFirst = firstIndexInColorOrder > secondIndexInColorOrder;
 
   if (isEqual) {
-    return handleSortingForNumberOfElements(
-      firstCombo,
-      secondCombo,
-      "number-of-cards"
-    );
+    return handleSortingForNumberOfElements(firstCombo, secondCombo, "cards");
   }
 
   return {
@@ -71,10 +62,10 @@ export default function sortCombos(
         meta.firstRemainsFirst =
           firstCombo.commanderSpellbookId > secondCombo.commanderSpellbookId;
         break;
-      case "number-of-cards":
-      case "number-of-prerequisites":
-      case "number-of-steps":
-      case "number-of-results":
+      case "cards":
+      case "prerequisites":
+      case "steps":
+      case "results":
         meta = handleSortingForNumberOfElements(firstCombo, secondCombo, by);
         break;
       case "colors":
