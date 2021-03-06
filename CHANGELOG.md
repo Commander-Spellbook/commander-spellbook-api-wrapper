@@ -1,6 +1,8 @@
 # unreleased
 
+- Add `autocomplete` method
 - `search`
+
   - Add `sort` and `order` properties to search results
   - Remove extraneous new lines in combo data
 

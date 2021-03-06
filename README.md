@@ -178,6 +178,34 @@ spellbook.search("Aetherflux sort:results order:descending").then((result) => {
 });
 ```
 
+## Autocomplete
+
+Look up possible values for card names, results, or colors
+
+```js
+spellbook.autocomplete("cards", "dream").then((cards) => {
+  cards; // cards that contain the word dream in them
+  cards[0].value; // normalized (lowercased, punctuation removed) version of the name
+  cards[0].label; // regular version of the name
+});
+```
+
+```js
+spellbook.autocomplete("results", "infinite").then((results) => {
+  results; // results that contain the word infinite in them
+  results[0].value; // normalized (lowercased, punctuation removed) version of the result
+  results[0].label; // regular version of the result
+});
+```
+
+```js
+spellbook.autocomplete("colors", "wu").then((colors) => {
+  colors; // color combos that contain blue and white in them
+  colors[0].value; // azorius
+  colors[0].label; // Azorius :manaw::manau:
+});
+```
+
 ## Random
 
 Look up a random combo using the `random` method:
