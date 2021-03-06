@@ -26,6 +26,24 @@ describe("SpellbookList", () => {
       expect(list[1]).toBe("Step 2");
       expect(list[2]).toBe("Step 3");
     });
+
+    it("removes any new lines from list", () => {
+      const list = SpellbookList.create("Step 1\n. Step 2\r. Ste\r\np 3.");
+
+      expect(list.length).toBe(3);
+      expect(list[0]).toBe("Step 1");
+      expect(list[1]).toBe("Step 2");
+      expect(list[2]).toBe("Step 3");
+    });
+
+    it("removes trailing spaces from list", () => {
+      const list = SpellbookList.create("    Step 1. Step 2 . Step 3.  ");
+
+      expect(list.length).toBe(3);
+      expect(list[0]).toBe("Step 1");
+      expect(list[1]).toBe("Step 2");
+      expect(list[2]).toBe("Step 3");
+    });
   });
 
   describe("includesValue", () => {

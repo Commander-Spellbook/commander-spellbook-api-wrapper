@@ -2,6 +2,7 @@
 
 - `search`
   - Add `sort` and `order` properties to search results
+  - Remove extraneous new lines in combo data
 
   *Breaking Changes*
     - Validate operators for `sort` and `order` to only allow `:` and `=`
