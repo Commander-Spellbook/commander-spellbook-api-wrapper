@@ -1,4 +1,4 @@
-# unreleased
+# 0.11.0
 
 - Add `autocomplete` method
 - `search`
