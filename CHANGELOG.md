@@ -4,9 +4,10 @@
   - Add `sort` and `order` properties to search results
   - Remove extraneous new lines in combo data
 
-  *Breaking Changes*
-    - Validate operators for `sort` and `order` to only allow `:` and `=`
-    - Remove `number-of` aliases for `sort` options
+  _Breaking Changes_
+
+  - Validate operators for `sort` and `order` to only allow `:` and `=`
+  - Remove `number-of` aliases for `sort` options
 
 # 0.10.0
 
