@@ -163,7 +163,7 @@ describe("api", () => {
     expect(combos[0]).toEqual(
       expect.objectContaining({
         commanderSpellbookId: "1",
-        permalink: "https://commanderspellbook.com/?id=1",
+        permalink: "https://commanderspellbook.com/combo/1",
         hasBannedCard: false,
         hasSpoiledCard: false,
       })
@@ -179,7 +179,7 @@ describe("api", () => {
     expect(combos[1]).toEqual(
       expect.objectContaining({
         commanderSpellbookId: "2",
-        permalink: "https://commanderspellbook.com/?id=2",
+        permalink: "https://commanderspellbook.com/combo/2",
         hasBannedCard: true,
         hasSpoiledCard: false,
       })
@@ -196,7 +196,7 @@ describe("api", () => {
     expect(combos[2]).toEqual(
       expect.objectContaining({
         commanderSpellbookId: "3",
-        permalink: "https://commanderspellbook.com/?id=3",
+        permalink: "https://commanderspellbook.com/combo/3",
         hasBannedCard: false,
         hasSpoiledCard: true,
       })

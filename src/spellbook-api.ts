@@ -48,7 +48,7 @@ function formatApiResponse(
 
       return {
         commanderSpellbookId: id,
-        permalink: `https://commanderspellbook.com/?id=${id}`,
+        permalink: `https://commanderspellbook.com/combo/${id}`,
         cards,
         colorIdentity,
         prerequisites,
