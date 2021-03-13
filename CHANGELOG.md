@@ -1,4 +1,4 @@
-# unreleased
+# 0.12.0
 
 - `autocomplete`
   - filter out repeating values that differ only in casing and punctuation
