@@ -5,10 +5,9 @@
 - `search`
   _Breaking Changes_
 
-  - Use `spellbookId` in place of `id` param
-  - Add `id`, `ids`, `c` as aliases for `coloridentity`
-
-  - Validate operators for `sort` and `order` to only allow `:` and `=`
+  - Use `spellbookId` in place of `id` param (#21)
+  - Add `id`, `ids`, `c` as aliases for `coloridentity` (#23)
+  - Prevent passing values that normalize to empty strings (#26)
 
 # 0.11.0
 
