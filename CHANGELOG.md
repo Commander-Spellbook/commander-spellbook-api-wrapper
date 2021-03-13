@@ -2,6 +2,13 @@
 
 - `autocomplete`
   - filter out repeating values that differ only in casing and punctuation
+- `search`
+  _Breaking Changes_
+
+  - Use `spellbookId` in place of `id` param
+  - Add `id`, `ids`, `c` as aliases for `coloridentity`
+
+  - Validate operators for `sort` and `order` to only allow `:` and `=`
 
 # 0.11.0
 

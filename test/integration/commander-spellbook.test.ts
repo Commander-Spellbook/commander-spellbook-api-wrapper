@@ -31,14 +31,14 @@ describe("Commander Spellbook", () => {
 
   describe("search", () => {
     it("looks up specific id", async () => {
-      const { combos } = await spellbook.search("id:123");
+      const { combos } = await spellbook.search("spellbookid:123");
 
       expect(combos.length).toBe(1);
       expect(combos[0].commanderSpellbookId).toBe("123");
     });
 
     it("can exclude ids", async () => {
-      const { combos } = await spellbook.search("-id:123");
+      const { combos } = await spellbook.search("-spellbookid:123");
 
       expect(combos.length).toBeGreaterThan(0);
       combos.forEach((combo) => {
