@@ -1,4 +1,4 @@
-import autocomplete from "../../src/autocomplete";
+import autocomplete, { clearCache } from "../../src/autocomplete";
 import lookup from "../../src/spellbook-api";
 import makeFakeCombo from "../../src/make-fake-combo";
 
@@ -22,6 +22,10 @@ describe("autocomplete", () => {
       }),
     ];
     mocked(lookup).mockResolvedValue(combos);
+  });
+
+  afterEach(() => {
+    clearCache();
   });
 
   it("looks up all cards from api", async () => {
@@ -62,6 +66,18 @@ describe("autocomplete", () => {
 
     expect(results.length).toBe(1);
     expect(results[0].value).toBe("result b");
+  });
+
+  it("ignores capitalization and punctuation inconsistencies", async () => {
+    combos[0].results[2] = "rEsUlt, c";
+    combos[1].results[0] = "rEsUlt, a";
+    const results = await autocomplete("results", "");
+
+    expect(results.length).toBe(4);
+    expect(results[0].value).toBe("result a");
+    expect(results[0].label).toBe("Result a");
+    expect(results[3].value).toBe("result c");
+    expect(results[3].label).toBe("rEsUlt, c");
   });
 
   it("looks up all colors from api", async () => {

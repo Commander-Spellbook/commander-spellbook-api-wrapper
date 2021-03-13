@@ -220,7 +220,11 @@ function collectResults(combos: FormattedApiResponse[]): AutoCompleteOption[] {
 function collect(items: string[]): AutoCompleteOption[] {
   return items
     .reduce((collection, item) => {
-      if (!collection.includes(item)) {
+      if (
+        !collection.find(
+          (piece) => normalizeStringInput(item) === normalizeStringInput(piece)
+        )
+      ) {
         collection.push(item);
       }
       return collection;
@@ -283,4 +287,8 @@ export default async function autocomplete(
 
     return partial.match(option.alias);
   });
+}
+
+export function clearCache(): void {
+  isCached = false;
 }

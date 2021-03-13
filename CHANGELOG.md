@@ -1,3 +1,8 @@
+# unreleased
+
+- `autocomplete`
+  - filter out repeating values that differ only in casing and punctuation
+
 # 0.11.0
 
 - Add `autocomplete` method
