@@ -2,6 +2,7 @@
 
 - `search`
   - Support alternate names for 4 color combos (#24)
+  - Fix issue where some values from the database had extra spaces or line breaks
 
 # 0.12.0
 
