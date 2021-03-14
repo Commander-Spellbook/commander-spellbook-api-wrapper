@@ -1,3 +1,8 @@
+# unreleased
+
+- `search`
+  - Support alternate names for 4 color combos (#24)
+
 # 0.12.0
 
 - `autocomplete`
