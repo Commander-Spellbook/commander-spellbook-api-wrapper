@@ -90,7 +90,7 @@ export default function parseColorFromValue(
     case "sansgreen":
       return ["w", "u", "b", "r"];
     case "fivecolor":
-    case "wubrg":
+    case "fivecolour":
       return ["w", "u", "b", "r", "g"];
   }
 

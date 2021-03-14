@@ -100,7 +100,8 @@ describe("parseColorFromValue", () => {
     ${"Sans-Green"} | ${"wubr"}
     ${"Five Color"} | ${"wubrg"}
     ${"FiveColor"}  | ${"wubrg"}
-    ${"Wubrg"}      | ${"wubrg"}
+    ${"Five Colour"}| ${"wubrg"}
+    ${"FiveColour"} | ${"wubrg"}
   `("reads $name as $expectedResult", ({ name, expectedResult }) => {
     expect(parseColorFromValue(name)).toEqual(expectedResult.split(""));
   });
