@@ -53,7 +53,7 @@ export default function parseComboData(
       return;
     }
 
-    if (!normalizeStringInput(value).trim()) {
+    if (!normalizeStringInput(value)) {
       params.errors.push({
         key,
         value,
