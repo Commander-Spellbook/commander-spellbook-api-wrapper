@@ -83,7 +83,7 @@ describe("autocomplete", () => {
   it("looks up all colors from api", async () => {
     const colors = await autocomplete("colors", "");
 
-    expect(colors.length).toBe(37);
+    expect(colors.length).toBe(42);
   });
 
   it("looks up subset of colors", async () => {

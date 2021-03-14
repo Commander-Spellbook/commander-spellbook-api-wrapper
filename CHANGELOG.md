@@ -4,7 +4,8 @@
   - Support alternate names for 4 color combos (#24)
   - Fix issue where some values from the database had extra spaces or line breaks
 - `autocomplete`
-  - Add support for full names of 4 color combos
+  - Add support for full names of 4 color names
+  - Add support for alternate 4 color names
 
 # 0.12.0
 

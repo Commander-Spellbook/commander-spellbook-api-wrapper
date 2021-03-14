@@ -185,6 +185,7 @@ const cachedColors: AutoCompleteOption[] = [
   // aliases for their 4 color name so that
   // the 4 color combos don't show up as options
   // when you type the one color they do not contain
+  // or the alternate name for the 4 color combos
   {
     value: "sans white",
     label: "Sans White :manaw::manau::manab::manar:",
@@ -204,6 +205,26 @@ const cachedColors: AutoCompleteOption[] = [
   {
     value: "sans green",
     label: "Sans Green :manaw::manau::manab::manar:",
+  },
+  {
+    value: "chaos",
+    label: "Chaos :manaw::manau::manab::manar:",
+  },
+  {
+    value: "aggression",
+    label: "Aggression :manab::manar::manag::manaw:",
+  },
+  {
+    value: "altruism",
+    label: "Altruism :manar::manag::manaw::manau:",
+  },
+  {
+    value: "growth",
+    label: "Growth :manag::manaw::manau::manab:",
+  },
+  {
+    value: "artifice",
+    label: "Artifice :manaw::manau::manab::manar:",
   },
 ];
 

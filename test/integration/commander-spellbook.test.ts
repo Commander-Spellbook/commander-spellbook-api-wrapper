@@ -415,8 +415,8 @@ describe("Commander Spellbook", () => {
     it("returns all colors", async () => {
       const colors = await spellbook.autocomplete("colors", "");
 
-      // 32 + 5 entries for sans-color
-      expect(colors.length).toBe(37);
+      // 32 + 5 entries for sans-color + 5 entries for alternate 4 color combo names
+      expect(colors.length).toBe(42);
     });
 
     it("returns colors that match partially", async () => {
