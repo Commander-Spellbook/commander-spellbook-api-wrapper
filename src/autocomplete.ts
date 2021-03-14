@@ -149,28 +149,28 @@ const cachedColors: AutoCompleteOption[] = [
 
   // 4 color
   {
-    value: "yore",
-    label: "Yore :manaw::manau::manab::manar:",
+    value: "yoretiller",
+    label: "Yore-Tiller :manaw::manau::manab::manar:",
     alias: /^[wubr]{0,4}$/,
   },
   {
-    value: "glint",
-    label: "Glint :manau::manab::manar::manag:",
+    value: "glinteye",
+    label: "Glint-Eye :manau::manab::manar::manag:",
     alias: /^[ubrg]{0,4}$/,
   },
   {
-    value: "dune",
-    label: "Dune :manab::manar::manag::manaw:",
+    value: "dunebrood",
+    label: "Dune-Brood :manab::manar::manag::manaw:",
     alias: /^[brgw]{0,4}$/,
   },
   {
-    value: "ink",
-    label: "Ink :manar::manag::manaw::manau:",
+    value: "inktreader",
+    label: "Ink-Treader :manar::manag::manaw::manau:",
     alias: /^[rgwu]{0,4}$/,
   },
   {
-    value: "witch",
-    label: "Witch :manag::manaw::manau::manab:",
+    value: "witchmaw",
+    label: "Witch-Maw :manag::manaw::manau::manab:",
     alias: /^[gwub]{0,4}$/,
   },
 
