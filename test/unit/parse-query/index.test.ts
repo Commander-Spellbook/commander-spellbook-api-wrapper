@@ -540,7 +540,7 @@ describe("parseQuery", () => {
   });
 
   it("parses id query into id", () => {
-    const result = parseQuery("spellbookid:12345");
+    const result = parseQuery("sid:12345");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -554,7 +554,7 @@ describe("parseQuery", () => {
   });
 
   it("parses -id query into id", () => {
-    const result = parseQuery("-spellbookid:12345");
+    const result = parseQuery("-sid:12345");
 
     expect(result).toEqual(
       expect.objectContaining({

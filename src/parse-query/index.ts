@@ -64,6 +64,7 @@ function collectKeywordedQueries(
         params.id.includeFilters.push(value);
         break;
       case "-spellbookid":
+      case "-sid":
         params.id.excludeFilters.push(value);
         break;
       case "is":
@@ -77,7 +78,6 @@ function collectKeywordedQueries(
         parseTags(params, key, operator, value);
         break;
       case "ci":
-      case "commander":
       case "color":
       case "colors":
       case "coloridentity":
