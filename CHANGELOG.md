@@ -1,4 +1,4 @@
-# unreleased
+# 0.13.0
 
 - `search`
   - Support alternate names for 4 color combos (#24)
