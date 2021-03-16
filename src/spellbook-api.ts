@@ -1,4 +1,5 @@
 import superagent from "superagent";
+import normalizeDatabaseValue from "./normalize-database-value";
 import CardGrouping from "./models/card-grouping";
 import SpellbookList from "./models/list";
 import ColorIdentity from "./models/color-identity";
@@ -22,6 +23,9 @@ function formatApiResponse(
       // ensures the spreadsheet has all values needed
       // in particular, the first card and a color identity
       return combo.length > 13 && combo[1] && combo[11];
+    })
+    .map((combo) => {
+      return combo.map(normalizeDatabaseValue);
     })
     .map((combo) => {
       const id = combo[0];

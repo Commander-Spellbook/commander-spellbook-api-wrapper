@@ -214,7 +214,7 @@ describe("parseQuery", () => {
 
   it("can parse a mix of all queries", () => {
     const result = parseQuery(
-      "Kiki ci:wbr -ci=br card:Daxos id:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult is:banned -exclude:spoiled sort:colors order:descending"
+      "Kiki ci:wbr -ci=br card:Daxos spellbookid:12345 card:'Grave Titan' card:\"Akroma\" unknown:value -card:Food prerequisites:prereq steps:step results:result -prerequisites:xprereq -steps:xstep -result:xresult is:banned -exclude:spoiled sort:colors order:descending"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -329,7 +329,7 @@ describe("parseQuery", () => {
 
   it("ignores capitalization on keys", () => {
     const result = parseQuery(
-      "Kiki CI:wbr CARD:Daxos ID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult iS:banned -eXcludE:spoiled"
+      "Kiki CI:wbr CARD:Daxos SPELLBOOKID:12345 CARD:'Grave Titan' CARD:\"Akroma\" UNKNOWN:value -CARD:Food PREREQUISITES:prereq STEPS:step RESULTS:result -PREREQUISITES:xprereq -STEPS:xstep -RESULT:xresult iS:banned -eXcludE:spoiled"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -435,7 +435,7 @@ describe("parseQuery", () => {
 
   it("ignores underscores in keys", () => {
     const result = parseQuery(
-      "Kiki c_i:wbr c_ar_d:Daxos i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult i_s:banned -ex_clu_de:spoiled"
+      "Kiki c_i:wbr c_ar_d:Daxos spellbook_i_d:12345 ca_rd:'Grave Titan' ca_rd:\"Akroma\" unknow_n:value -c_ard:Food _prere_quisit_es_:prereq st_eps:step r_esu_lts:result -prer_equisites:xprereq -ste_ps:xstep -res_ult:xresult i_s:banned -ex_clu_de:spoiled"
     );
 
     expect(parseComboData).toBeCalledTimes(11);
@@ -540,7 +540,7 @@ describe("parseQuery", () => {
   });
 
   it("parses id query into id", () => {
-    const result = parseQuery("id:12345");
+    const result = parseQuery("spellbookid:12345");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -554,7 +554,7 @@ describe("parseQuery", () => {
   });
 
   it("parses -id query into id", () => {
-    const result = parseQuery("-id:12345");
+    const result = parseQuery("-spellbookid:12345");
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -567,8 +567,8 @@ describe("parseQuery", () => {
     );
   });
 
-  it.each(["ci", "commander", "coloridentity", "color", "colors"])(
-    "parses %s into color identity parses",
+  it.each(["ci", "coloridentity", "color", "colors", "c", "id", "ids", "commander"])(
+    "parses %s into color identity parser",
     (kind) => {
       parseQuery(`${kind}:wbr -${kind}:br`);
 

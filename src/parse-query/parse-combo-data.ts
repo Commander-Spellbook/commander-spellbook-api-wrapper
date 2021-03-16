@@ -1,3 +1,5 @@
+import normalizeStringInput from "../normalize-string-input";
+
 import type { SearchParameters } from "../types";
 
 export const COMBO_DATA_TYPES: [
@@ -46,6 +48,16 @@ export default function parseComboData(
         key,
         value,
         message: `Operator ${operator} is not compatible with key "${key}" and value "${value}".`,
+      });
+
+      return;
+    }
+
+    if (!normalizeStringInput(value)) {
+      params.errors.push({
+        key,
+        value,
+        message: `The key "${key}" does not support the value "${value}", try using letters and numbers.`,
       });
 
       return;
