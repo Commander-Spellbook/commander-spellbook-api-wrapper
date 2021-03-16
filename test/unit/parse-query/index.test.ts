@@ -539,8 +539,8 @@ describe("parseQuery", () => {
     );
   });
 
-  it("parses id query into id", () => {
-    const result = parseQuery("sid:12345");
+  it.each(["spellbookid", "sid"])("parses %s query into spellbook id", (id) => {
+    const result = parseQuery(`${id}:12345`);
 
     expect(result).toEqual(
       expect.objectContaining({
@@ -553,68 +553,49 @@ describe("parseQuery", () => {
     );
   });
 
-  it("parses -id query into id", () => {
-    const result = parseQuery("-sid:12345");
+  it.each(["-spellbookid", "-sid"])(
+    "parses %s query into spellbook id",
+    (id) => {
+      const result = parseQuery(`${id}:12345`);
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        id: {
-          includeFilters: [],
-          excludeFilters: ["12345"],
-        },
-      })
-    );
-  });
-
-  it("parses id query into id", () => {
-    const result = parseQuery("spellbookid:12345");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        id: {
-          includeFilters: ["12345"],
-          excludeFilters: [],
-        },
-      })
-    );
-  });
-
-  it("parses -id query into id", () => {
-    const result = parseQuery("-spellbookid:12345");
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        errors: [],
-        id: {
-          includeFilters: [],
-          excludeFilters: ["12345"],
-        },
-      })
-    );
-  });
-
-  it.each(["ci", "coloridentity", "color", "colors", "c", "id", "ids", "commander"])(
-    "parses %s into color identity parser",
-    (kind) => {
-      parseQuery(`${kind}:wbr -${kind}:br`);
-
-      expect(parseColorIdentity).toBeCalledTimes(2);
-      expect(parseColorIdentity).toBeCalledWith(
-        expect.anything(),
-        kind,
-        ":",
-        "wbr"
-      );
-      expect(parseColorIdentity).toBeCalledWith(
-        expect.anything(),
-        `-${kind}`,
-        ":",
-        "br"
+      expect(result).toEqual(
+        expect.objectContaining({
+          errors: [],
+          id: {
+            includeFilters: [],
+            excludeFilters: ["12345"],
+          },
+        })
       );
     }
   );
+
+  it.each([
+    "ci",
+    "coloridentity",
+    "color",
+    "colors",
+    "c",
+    "id",
+    "ids",
+    "commander",
+  ])("parses %s into color identity parser", (kind) => {
+    parseQuery(`${kind}:wbr -${kind}:br`);
+
+    expect(parseColorIdentity).toBeCalledTimes(2);
+    expect(parseColorIdentity).toBeCalledWith(
+      expect.anything(),
+      kind,
+      ":",
+      "wbr"
+    );
+    expect(parseColorIdentity).toBeCalledWith(
+      expect.anything(),
+      `-${kind}`,
+      ":",
+      "br"
+    );
+  });
 
   it.each(["card", "cards"])("parses %s into card query parser", (kind) => {
     parseQuery(
