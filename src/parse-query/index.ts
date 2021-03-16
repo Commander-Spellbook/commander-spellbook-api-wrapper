@@ -76,6 +76,7 @@ function collectKeywordedQueries(
         parseTags(params, key, operator, value);
         break;
       case "ci":
+      case "commander":
       case "color":
       case "colors":
       case "coloridentity":
@@ -83,6 +84,7 @@ function collectKeywordedQueries(
       case "ids":
       case "c":
       case "-ci":
+      case "-commander":
       case "-color":
       case "-colors":
       case "-coloridentity":
