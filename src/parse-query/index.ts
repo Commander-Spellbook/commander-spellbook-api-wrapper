@@ -81,6 +81,7 @@ function collectKeywordedQueries(
       case "colors":
       case "coloridentity":
       case "-ci":
+      case "-commander":
       case "-color":
       case "-colors":
       case "-coloridentity":
