@@ -13,10 +13,7 @@ export default class SpellbookList extends Array<string> {
     const list = Object.create(SpellbookList.prototype);
 
     if (items) {
-      const entries = items
-        .split(/\.\s?/)
-        .map((entry) => entry.replace(/\r?\n|\r/g, "").trim())
-        .filter((entry) => entry);
+      const entries = items.split(/\.\s?/).filter((entry) => entry.trim());
 
       list.rawString = items;
       list.push(...entries);

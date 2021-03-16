@@ -64,22 +64,33 @@ export default function parseColorFromValue(
       return ["w", "b", "r"];
     case "sultai":
       return ["b", "u", "g"];
+    case "chaos":
     case "glint":
+    case "glinteye":
     case "sanswhite":
       return ["u", "b", "r", "g"];
+    case "aggression":
     case "dune":
+    case "dunebrood":
     case "sansblue":
       return ["w", "b", "r", "g"];
+    case "altruism":
     case "ink":
+    case "inktreader":
     case "sansblack":
       return ["w", "u", "r", "g"];
+    case "growth":
     case "witch":
+    case "witchmaw":
     case "sansred":
       return ["w", "u", "b", "g"];
+    case "artifice":
     case "yore":
+    case "yoretiller":
     case "sansgreen":
       return ["w", "u", "b", "r"];
     case "fivecolor":
+    case "fivecolour":
       return ["w", "u", "b", "r", "g"];
   }
 

@@ -59,10 +59,10 @@ function collectKeywordedQueries(
     }
 
     switch (key) {
-      case "id":
+      case "spellbookid":
         params.id.includeFilters.push(value);
         break;
-      case "-id":
+      case "-spellbookid":
         params.id.excludeFilters.push(value);
         break;
       case "is":
@@ -80,10 +80,16 @@ function collectKeywordedQueries(
       case "color":
       case "colors":
       case "coloridentity":
+      case "id":
+      case "ids":
+      case "c":
       case "-ci":
       case "-color":
       case "-colors":
       case "-coloridentity":
+      case "-id":
+      case "-ids":
+      case "-c":
         parseColorIdentity(params, key, operator, value);
         break;
       case "card":

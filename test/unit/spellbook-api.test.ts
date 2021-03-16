@@ -1,4 +1,5 @@
 import lookup, { resetCache } from "../../src/spellbook-api";
+import normalizeDatabaseValue from "../../src/normalize-database-value";
 import Card from "../../src/models/card";
 import SpellbookList from "../../src/models/list";
 import ColorIdentity from "../../src/models/color-identity";
@@ -10,6 +11,8 @@ import superagent = require("superagent");
 
 import { mocked } from "ts-jest/utils";
 
+jest.mock("../../src/normalize-database-value");
+
 describe("api", () => {
   let values: CommanderSpellbookCombos;
   let response: {
@@ -17,6 +20,10 @@ describe("api", () => {
   };
 
   beforeEach(() => {
+    mocked(normalizeDatabaseValue).mockImplementation((str: string) => {
+      return str;
+    });
+
     values = [
       [
         "1",
@@ -240,5 +247,12 @@ describe("api", () => {
     expect(combos.length).toBe(2);
     expect(combos[0].commanderSpellbookId).toBe("1");
     expect(combos[1].commanderSpellbookId).toBe("3");
+  });
+
+  it("normalizes the data from the spreadsheet", async () => {
+    await lookup();
+
+    // once for each cell in the spreadsheet
+    expect(normalizeDatabaseValue).toBeCalledTimes(51);
   });
 });

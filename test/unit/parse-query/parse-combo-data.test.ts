@@ -196,5 +196,26 @@ describe("parseComboData", () => {
         );
       }
     );
+
+    it("does not support values that get normalized to an empty string", () => {
+      parseComboData(searchParams, dataType, ":", "-  _  ,  !  @  ");
+
+      expect(searchParams).toEqual(
+        expect.objectContaining({
+          errors: [
+            {
+              key: `${dataType}`,
+              value: "-  _  ,  !  @  ",
+              message: `The key "${dataType}" does not support the value "-  _  ,  !  @  ", try using letters and numbers.`,
+            },
+          ],
+          [dataType]: {
+            includeFilters: [],
+            excludeFilters: [],
+            sizeFilters: [],
+          },
+        })
+      );
+    });
   });
 });

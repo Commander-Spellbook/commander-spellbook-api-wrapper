@@ -83,7 +83,7 @@ describe("autocomplete", () => {
   it("looks up all colors from api", async () => {
     const colors = await autocomplete("colors", "");
 
-    expect(colors.length).toBe(37);
+    expect(colors.length).toBe(42);
   });
 
   it("looks up subset of colors", async () => {
@@ -104,9 +104,9 @@ describe("autocomplete", () => {
     expect(colors[1].value).toBe("esper");
     expect(colors[2].value).toBe("bant");
     expect(colors[3].value).toBe("jeskai");
-    expect(colors[4].value).toBe("yore");
-    expect(colors[5].value).toBe("ink");
-    expect(colors[6].value).toBe("witch");
+    expect(colors[4].value).toBe("yoretiller");
+    expect(colors[5].value).toBe("inktreader");
+    expect(colors[6].value).toBe("witchmaw");
     expect(colors[7].value).toBe("five color");
   });
 
@@ -125,5 +125,47 @@ describe("autocomplete", () => {
 
     expect(colors.length).toBe(1);
     expect(colors[0].value).toBe("azorius");
+  });
+
+  it("can find 4 color combos with or without hyphen", async () => {
+    let colors = await autocomplete("colors", "yoret");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("yoretiller");
+
+    colors = await autocomplete("colors", "yore-t");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("yoretiller");
+
+    colors = await autocomplete("colors", "glinte");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("glinteye");
+
+    colors = await autocomplete("colors", "glint-e");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("glinteye");
+
+    colors = await autocomplete("colors", "duneb");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("dunebrood");
+
+    colors = await autocomplete("colors", "dune-b");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("dunebrood");
+
+    colors = await autocomplete("colors", "inkt");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("inktreader");
+
+    colors = await autocomplete("colors", "ink-t");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("inktreader");
+
+    colors = await autocomplete("colors", "witchm");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("witchmaw");
+
+    colors = await autocomplete("colors", "witch-m");
+    expect(colors.length).toBe(1);
+    expect(colors[0].value).toBe("witchmaw");
   });
 });
