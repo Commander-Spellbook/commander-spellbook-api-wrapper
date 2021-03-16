@@ -567,6 +567,34 @@ describe("parseQuery", () => {
     );
   });
 
+  it("parses id query into id", () => {
+    const result = parseQuery("spellbookid:12345");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        id: {
+          includeFilters: ["12345"],
+          excludeFilters: [],
+        },
+      })
+    );
+  });
+
+  it("parses -id query into id", () => {
+    const result = parseQuery("-spellbookid:12345");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+        id: {
+          includeFilters: [],
+          excludeFilters: ["12345"],
+        },
+      })
+    );
+  });
+
   it.each(["ci", "coloridentity", "color", "colors", "c", "id", "ids"])(
     "parses %s into color identity parser",
     (kind) => {
