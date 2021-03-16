@@ -3,6 +3,8 @@
 - `search`
   - Support alternate names for 4 color combos (#24)
   - Fix issue where some values from the database had extra spaces or line breaks
+  - Support `commander` as alias for `coloridentity` (#30)
+  - Support `sid` as alias for `spellbookid` (#29)
 - `autocomplete`
   - Add support for full names of 4 color names
   - Add support for alternate 4 color names
