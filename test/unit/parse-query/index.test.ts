@@ -539,6 +539,24 @@ describe("parseQuery", () => {
     );
   });
 
+  it("includes `:` character in the value", () => {
+    const result = parseQuery("card:'Circle of Protection: Black'");
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        errors: [],
+      })
+    );
+
+    expect(parseComboData).toBeCalledTimes(1);
+    expect(parseComboData).toBeCalledWith(
+      expect.anything(),
+      "card",
+      ":",
+      "Circle of Protection: Black"
+    );
+  });
+
   it.each(["spellbookid", "sid"])("parses %s query into spellbook id", (id) => {
     const result = parseQuery(`${id}:12345`);
 

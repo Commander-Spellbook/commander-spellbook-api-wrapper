@@ -289,12 +289,14 @@ describe("Commander Spellbook", () => {
     });
 
     it("looks up specific result in combos", async () => {
-      const { combos } = await spellbook.search("results:Infinite");
+      const { combos } = await spellbook.search("results:Infinite res:':mana'");
 
       expect(combos.length).toBeGreaterThan(0);
       const hasWordInfiniteInResult = combos.every((combo) => {
         return combo.results.find(
-          (res) => res.toLowerCase().indexOf("infinite") > -1
+          (res) =>
+            res.toLowerCase().indexOf("infinite") > -1 ||
+            res.toLowerCase().indexOf(":mana") > -1
         );
       });
 
