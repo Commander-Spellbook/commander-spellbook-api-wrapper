@@ -1,4 +1,4 @@
-# unreleased
+# 0.13.1
 
 `search`
   - Fix bug where `:` could not be used in search terms
